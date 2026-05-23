@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PM Intel Digest</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f8f8f6;
+    color: #1a1a1a;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Top bar ── */
+  header {
+    background: #1a1a1a;
+    color: #fff;
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+  header h1 { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
+  header .sub { font-size: 13px; color: #aaa; margin-left: auto; }
+
+  /* ── Layout ── */
+  .layout {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* ── Sidebar ── */
+  aside {
+    width: 260px;
+    flex-shrink: 0;
+    background: #fff;
+    border-right: 1px solid #e5e5e5;
+    overflow-y: auto;
+    padding: 20px 0;
+  }
+  aside h2 {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: #888;
+    padding: 0 20px 12px;
+  }
+  .digest-list { list-style: none; }
+  .digest-list li a {
+    display: block;
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #333;
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: all 0.15s;
+  }
+  .digest-list li a:hover { background: #f5f5f5; color: #1a1a1a; }
+  .digest-list li a.active {
+    border-left-color: #1a1a1a;
+    background: #f0f0f0;
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+  .digest-list .date { display: block; font-size: 13px; font-weight: 600; }
+  .digest-list .teaser { display: block; font-size: 12px; color: #888; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* ── Main content ── */
+  main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 40px 48px;
+    max-width: 900px;
+  }
+
+  /* ── Empty state ── */
+  .empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #999;
+    text-align: center;
+    gap: 12px;
+  }
+  .empty .icon { font-size: 48px; }
+  .empty h2 { font-size: 20px; color: #555; }
+  .empty p { font-size: 14px; max-width: 360px; line-height: 1.6; }
+  .empty code { background: #f0f0f0; padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+
+  /* ── Digest viewer ── */
+  #digest-frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: none;
+  }
+
+  /* ── No-JS fallback notice ── */
+  .no-server-notice {
+    background: #fffbf0;
+    border: 1px solid #e8d860;
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-size: 13px;
+    color: #6b5900;
+    margin-bottom: 24px;
+    display: none;
+  }
+  .no-server-notice strong { display: block; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>🧠 PM Intel Digest</h1>
+  </div>
+  <span class="sub" id="status-line">Loading digests…</span>
+</header>
+
+<div class="layout">
+
+  <aside>
+    <h2>Issues</h2>
+    <ul class="digest-list" id="digest-list">
+      <!-- populated by JS -->
+    </ul>
+  </aside>
+
+  <main id="main-pane">
+    <div class="empty" id="empty-state">
+      <div class="icon">📬</div>
+      <h2>No digest selected</h2>
+      <p>Your weekly PM Intel Digest issues will appear in the sidebar. Select one to read it here.</p>
+      <p style="margin-top:8px;">Digests are saved automatically each Monday and Thursday to:<br>
+        <code>digests/digest-YYYY-MM-DD.html</code>
+      </p>
+    </div>
+    <div class="no-server-notice" id="server-notice">
+      <strong>Running as a local file?</strong>
+      For the sidebar and inline reader to work, serve this folder with <code>python3 -m http.server 8080</code> and open <code>http://localhost:8080</code> — or just double-click any digest file in the <code>digests/</code> folder directly.
+    </div>
+    <iframe id="digest-frame" title="Digest viewer"></iframe>
+  </main>
+
+</div>
+
+<script>
+// ─── Digest index ──────────────────────────────────────────────────────────
+// When served via http://, we fetch the digests/ directory listing.
+// When opened as a file://, we fall back to a manual manifest approach.
+
+const listEl = document.getElementById('digest-list');
+const emptyEl = document.getElementById('empty-state');
+const frameEl = document.getElementById('digest-frame');
+const statusEl = document.getElementById('status-line');
+const noticeEl = document.getElementById('server-notice');
+
+// Extract a human-readable teaser from the digest filename or title
+function formatDate(filename) {
+  // filename: digest-2026-05-23.html
+  const m = filename.match(/digest-(\d{4})-(\d{2})-(\d{2})/);
+  if (!m) return filename;
+  const d = new Date(m[1], m[2]-1, m[3]);
+  return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function loadDigest(path, linkEl) {
+  // Highlight active
+  document.querySelectorAll('.digest-list a').forEach(a => a.classList.remove('active'));
+  linkEl.classList.add('active');
+
+  emptyEl.style.display = 'none';
+  frameEl.style.display = 'block';
+  frameEl.src = path;
+}
+
+function buildSidebar(files) {
+  if (!files.length) {
+    listEl.innerHTML = '<li style="padding:12px 20px;font-size:13px;color:#999;">No digests yet.<br>Run your scheduled task to generate the first one.</li>';
+    statusEl.textContent = '0 issues';
+    return;
+  }
+
+  // Sort newest first
+  files.sort().reverse();
+  statusEl.textContent = `${files.length} issue${files.length !== 1 ? 's' : ''}`;
+
+  files.forEach((filename, i) => {
+    const path = `digests/${filename}`;
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = '#';
+
+    const dateSpan = document.createElement('span');
+    dateSpan.className = 'date';
+    dateSpan.textContent = formatDate(filename);
+
+    const teaserSpan = document.createElement('span');
+    teaserSpan.className = 'teaser';
+    teaserSpan.textContent = 'Loading…';
+
+    a.appendChild(dateSpan);
+    a.appendChild(teaserSpan);
+    a.addEventListener('click', e => { e.preventDefault(); loadDigest(path, a); });
+    li.appendChild(a);
+    listEl.appendChild(li);
+
+    // Try to pull the <title> from the digest file for the teaser
+    fetch(path)
+      .then(r => r.text())
+      .then(html => {
+        const m = html.match(/<title>([^<]+)<\/title>/i);
+        if (m) {
+          // strip "PM Intel Digest — " prefix
+          teaserSpan.textContent = m[1].replace(/PM Intel Digest[^|]*\|\s*/i, '').trim() || 'Weekly digest';
+        } else {
+          teaserSpan.textContent = 'Weekly digest';
+        }
+      })
+      .catch(() => { teaserSpan.textContent = 'Weekly digest'; });
+
+    // Auto-load the most recent
+    if (i === 0) loadDigest(path, a);
+  });
+}
+
+// ─── Fetch directory listing (works when served via http://) ───────────────
+async function fetchDigestList() {
+  try {
+    const res = await fetch('digests/');
+    if (!res.ok) throw new Error('no listing');
+    const text = await res.text();
+
+    // Parse Apache/Python SimpleHTTP directory listing for .html files
+    const matches = [...text.matchAll(/href="(digest-[\d-]+\.html)"/g)];
+    const files = matches.map(m => m[1]);
+
+    if (files.length === 0) {
+      // Try parsing nginx-style listing
+      const m2 = [...text.matchAll(/"(digest-[\d-]+\.html)"/g)];
+      return m2.map(m => m[1]);
+    }
+    return files;
+  } catch (e) {
+    return null; // signal that we're likely in file:// mode
+  }
+}
+
+// ─── Manual manifest fallback (file:// mode) ──────────────────────────────
+// The digest task writes an updated manifest each run.
+async function fetchManifest() {
+  try {
+    const res = await fetch('digests/manifest.json');
+    if (!res.ok) throw new Error();
+    return await res.json(); // array of filenames
+  } catch {
+    return [];
+  }
+}
+
+// ─── Boot ─────────────────────────────────────────────────────────────────
+(async () => {
+  const isFileProtocol = location.protocol === 'file:';
+
+  let files = await fetchDigestList();
+
+  if (files === null) {
+    // Couldn't fetch directory — try manifest
+    files = await fetchManifest();
+    if (isFileProtocol && files.length === 0) {
+      noticeEl.style.display = 'block';
+    }
+  }
+
+  buildSidebar(files);
+})();
+</script>
+
+</body>
+</html>
