@@ -12,26 +12,26 @@ from anthropic import Anthropic
 client = Anthropic()
 
 CREATORS = [
-    ("Lenny Rachitsky",   "Lenny Rachitsky newsletter product management 2026"),
-    ("Ethan Mollick",     "Ethan Mollick One Useful Thing AI 2026"),
-    ("Simon Willison",    "Simon Willison simonwillison.net AI tools 2026"),
-    ("Andrej Karpathy",   "Andrej Karpathy AI machine learning 2026"),
-    ("Swyx",              "swyx latent space AI engineering 2026"),
-    ("Andrew Ng",         "Andrew Ng The Batch deeplearning AI 2026"),
-    ("Aakash Gupta",      "Aakash Gupta product growth management 2026"),
-    ("Harrison Chase",    "Harrison Chase LangChain agents 2026"),
-    ("Kristen Berman",    "Kristen Berman Product Teardown behavioral 2026"),
-    ("Shreyas Doshi",     "Shreyas Doshi product management leadership 2026"),
-    ("Julie Zhuo",        "Julie Zhuo product design leadership 2026"),
-    ("John Cutler",       "John Cutler product management systems 2026"),
-    ("Marty Cagan",       "Marty Cagan SVPG product teams 2026"),
-    ("Pawel Huryn",       "Pawel Huryn Product Compass newsletter 2026"),
-    ("Karo Zieminski",    "Karo Zieminski Product with Attitude 2026"),
-    ("Josh Miller",       "Josh Miller Browser Company product 2026"),
-    ("Claire Vo",         "Claire Vo AI product management 2026"),
-    ("Amjad Masad",       "Amjad Masad Replit AI coding 2026"),
-    ("Logan Kilpatrick",  "Logan Kilpatrick Google AI developer 2026"),
-    ("Gergely Orosz",     "Gergely Orosz Pragmatic Engineer software 2026"),
+    ("Lenny Rachitsky",   "site:lennysnewsletter.com OR \"Lenny Rachitsky\""),
+    ("Ethan Mollick",     "site:oneusefulthing.org OR \"Ethan Mollick\" AI"),
+    ("Simon Willison",    "site:simonwillison.net"),
+    ("Andrej Karpathy",   "\"Andrej Karpathy\" AI"),
+    ("Swyx",              "site:latent.space OR swyx AI engineering"),
+    ("Andrew Ng",         "site:deeplearning.ai OR \"Andrew Ng\" \"The Batch\""),
+    ("Aakash Gupta",      "site:aakashg.com OR \"Aakash Gupta\" product"),
+    ("Harrison Chase",    "site:blog.langchain.dev OR \"Harrison Chase\" LangChain"),
+    ("Kristen Berman",    "site:kristenberman.substack.com OR \"Kristen Berman\" product"),
+    ("Shreyas Doshi",     "\"Shreyas Doshi\" product management"),
+    ("Julie Zhuo",        "site:joulee.medium.com OR \"Julie Zhuo\" product"),
+    ("John Cutler",       "\"John Cutler\" product OR site:cutlefish.substack.com"),
+    ("Marty Cagan",       "site:svpg.com OR \"Marty Cagan\""),
+    ("Pawel Huryn",       "site:huryn.substack.com OR \"Pawel Huryn\" product"),
+    ("Karo Zieminski",    "site:karo.substack.com OR \"Karo Zieminski\" product"),
+    ("Josh Miller",       "\"Josh Miller\" \"The Browser Company\" OR arc browser"),
+    ("Claire Vo",         "\"Claire Vo\" AI product"),
+    ("Amjad Masad",       "site:blog.replit.com OR \"Amjad Masad\" AI"),
+    ("Logan Kilpatrick",  "\"Logan Kilpatrick\" Google AI"),
+    ("Gergely Orosz",     "site:newsletter.pragmaticengineer.com OR \"Gergely Orosz\""),
 ]
 
 
@@ -40,7 +40,7 @@ def search_creator(name: str, query: str) -> list[dict]:
     try:
         from duckduckgo_search import DDGS
         with DDGS() as ddgs:
-            results = list(ddgs.text(query, max_results=3, timelimit="w"))
+            results = list(ddgs.text(query, max_results=3, timelimit="m"))
             return [
                 {
                     "title":   r.get("title", ""),
@@ -103,7 +103,17 @@ Quality over quantity — only include creators with something genuinely worth r
         max_tokens=3000,
         messages=[{"role": "user", "content": prompt}],
     )
-    return response.content[0].text
+    html = response.content[0].text.strip()
+
+    # Strip markdown code fences if Claude wrapped the output in them
+    if html.startswith("```html"):
+        html = html[7:]
+    elif html.startswith("```"):
+        html = html[3:]
+    if html.endswith("```"):
+        html = html[:-3]
+
+    return html.strip()
 
 
 def generate_page(digest_html: str) -> str:
