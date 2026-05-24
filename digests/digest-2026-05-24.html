@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PM Intel Digest</title>
+  <title>Vivian's PM Skills Digest — Sunday, May 24, 2026</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -14,135 +14,98 @@
       line-height: 1.6;
     }
 
-    /* ── Header ── */
     .header {
       background: #fff;
       border-bottom: 1px solid #e8e8e4;
       padding: 2.5rem 1.5rem 2rem;
       text-align: center;
     }
-    .header h1 {
-      font-size: 1.5rem;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-    }
-    .header .tagline {
-      font-size: 0.9rem;
-      color: #888;
-      margin-top: 0.3rem;
-    }
+    .header h1 { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.01em; }
+    .header .tagline { font-size: 0.9rem; color: #888; margin-top: 0.3rem; }
     .header .updated {
-      display: inline-block;
-      margin-top: 0.85rem;
-      font-size: 0.78rem;
-      background: #f0f0ec;
-      color: #666;
-      padding: 0.25rem 0.85rem;
-      border-radius: 999px;
+      display: inline-block; margin-top: 0.85rem;
+      font-size: 0.78rem; background: #f0f0ec; color: #666;
+      padding: 0.25rem 0.85rem; border-radius: 999px;
     }
 
-    /* ── Layout ── */
-    .container {
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem 3rem;
-    }
+    .container { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
 
     /* ── Creator cards ── */
     .creator {
-      background: #fff;
-      border: 1px solid #e8e8e4;
-      border-radius: 10px;
-      padding: 1.25rem 1.5rem;
-      margin-bottom: 1rem;
+      background: #fff; border: 1px solid #e8e8e4;
+      border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1rem;
     }
     .creator-name {
-      font-size: 0.72rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: #999;
-      margin-bottom: 0.5rem;
+      font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.07em; color: #999; margin-bottom: 0.5rem;
     }
-    .creator-insight {
-      font-size: 0.975rem;
-      color: #1a1a1a;
-      margin-bottom: 0.6rem;
-      line-height: 1.55;
-    }
+    .creator-insight { font-size: 0.975rem; color: #1a1a1a; margin-bottom: 0.6rem; line-height: 1.55; }
     .creator-takeaway {
-      font-size: 0.84rem;
-      color: #555;
-      background: #f7f7f4;
-      border-left: 3px solid #c4b8ff;
-      padding: 0.4rem 0.75rem;
-      border-radius: 0 4px 4px 0;
-      margin-bottom: 0.85rem;
-      line-height: 1.5;
+      font-size: 0.84rem; color: #555; background: #f7f7f4;
+      border-left: 3px solid #c4b8ff; padding: 0.4rem 0.75rem;
+      border-radius: 0 4px 4px 0; margin-bottom: 0.85rem; line-height: 1.5;
     }
-    .creator-link {
-      font-size: 0.8rem;
-      color: #7b6ef6;
-      text-decoration: none;
-      font-weight: 500;
-    }
+    .creator-link { font-size: 0.8rem; color: #7b6ef6; text-decoration: none; font-weight: 500; }
     .creator-link:hover { text-decoration: underline; }
+
+    /* ── Thought provoker cards ── */
+    .thought-provoker {
+      background: #fffdf5; border: 1px solid #e8d98a;
+      border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1rem;
+    }
+    .tp-label {
+      font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.07em; color: #a07800; margin-bottom: 0.4rem;
+    }
 
     /* ── Top pick ── */
     .top-pick {
-      background: #f0eeff;
-      border: 1px solid #c4b8ff;
-      border-radius: 10px;
-      padding: 1.25rem 1.5rem;
-      margin-top: 2rem;
+      background: #f0eeff; border: 1px solid #c4b8ff;
+      border-radius: 10px; padding: 1.25rem 1.5rem; margin-top: 2rem;
     }
     .top-pick-label {
-      font-size: 0.72rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: #7b6ef6;
-      margin-bottom: 0.5rem;
+      font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.07em; color: #7b6ef6; margin-bottom: 0.5rem;
     }
-    .top-pick-content {
-      font-size: 0.975rem;
-      color: #1a1a1a;
-      line-height: 1.55;
+    .top-pick-content { font-size: 0.975rem; color: #1a1a1a; line-height: 1.55; }
+
+    /* ── No updates fallback ── */
+    .no-updates {
+      text-align: center; padding: 3rem 1rem;
+      font-size: 0.9rem; color: #aaa;
     }
 
-    /* ── Footer ── */
     .footer {
-      text-align: center;
-      padding: 1.5rem;
-      font-size: 0.78rem;
-      color: #bbb;
+      text-align: center; padding: 1.5rem;
+      font-size: 0.78rem; color: #bbb;
       border-top: 1px solid #e8e8e4;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.5rem 1rem 1.25rem; }
+      .header h1 { font-size: 1.2rem; }
+      .header .tagline { font-size: 0.82rem; }
+      .container { padding: 1rem 0.85rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick {
+        padding: 1rem 1.1rem;
+        border-radius: 8px;
+      }
+      .creator-insight { font-size: 0.92rem; }
+      .creator-takeaway { font-size: 0.8rem; padding: 0.35rem 0.6rem; }
+      .creator-link { font-size: 0.82rem; }
     }
   </style>
 </head>
 <body>
 
   <div class="header">
-    <h1>PM Intel Digest</h1>
+    <h1>Vivian's PM Skills Digest</h1>
     <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
     <div class="updated">Updated Sunday, May 24, 2026</div>
   </div>
 
   <div class="container">
-    I appreciate the detailed instructions, but I need to be honest: the search results you've provided are empty for all 20 creators. Each entry shows `[]` with no actual content, URLs, or insights to work from.
-
-To build a useful digest for Vivian, I'd need:
-- Actual article titles or posts
-- URLs or links
-- Summary snippets of what each creator shared
-- Publication dates
-
-**Could you provide:**
-1. The actual search results with content (not empty arrays)?
-2. Or specify which creators had recent posts worth including?
-3. Or let me know if this is a template test, in which case I can show you what a filled digest would look like?
-
-Once you share the real data, I'll turn it into a clean, actionable HTML digest focused on AI-native PM insights.
+    <div class="no-updates">No new updates found this issue. Check back next time.</div>
   </div>
 
   <div class="footer">
