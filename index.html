@@ -139,6 +139,33 @@
     main { padding: 20px 16px; overflow-y: visible; }
     #digest-frame { display: none !important; }
   }
+
+  /* ── Mobile overlay (replaces iframe on small screens) ── */
+  #mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #fafaf8;
+    overflow-y: auto;
+    z-index: 200;
+    -webkit-overflow-scrolling: touch;
+  }
+  #mobile-back {
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px 16px;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    font-size: 14px;
+    font-family: inherit;
+    cursor: pointer;
+    z-index: 201;
+  }
 </style>
 </head>
 <body>
@@ -193,13 +220,40 @@ function formatDate(filename) {
   return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
 }
 
-function loadDigest(path, linkEl) {
-  if (isMobile()) {
-    window.open(path, '_blank');
-    return;
+// ── Mobile overlay ─────────────────────────────────────────────────────────
+const overlay        = document.createElement('div');
+overlay.id           = 'mobile-overlay';
+const backBtn        = document.createElement('button');
+backBtn.id           = 'mobile-back';
+backBtn.innerHTML    = '&#8592; Back to issues';
+backBtn.addEventListener('click', () => { overlay.style.display = 'none'; });
+const overlayContent = document.createElement('div');
+overlay.appendChild(backBtn);
+overlay.appendChild(overlayContent);
+document.body.appendChild(overlay);
+
+async function loadDigestMobile(path) {
+  overlayContent.innerHTML = '<p style="padding:24px 16px;color:#888;font-size:14px;">Loading…</p>';
+  overlay.style.display = 'block';
+  overlay.scrollTop = 0;
+  try {
+    const html = await (await fetch(path)).text();
+    const styles = [...html.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/gi)].map(m => m[1]).join('\n');
+    const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+    const body = bodyMatch ? bodyMatch[1] : html;
+    overlayContent.innerHTML = (styles ? `<style>${styles}</style>` : '') + body;
+  } catch(e) {
+    overlayContent.innerHTML = '<p style="padding:24px 16px;color:#c00;font-size:14px;">Failed to load digest.</p>';
   }
+}
+
+function loadDigest(path, linkEl) {
   document.querySelectorAll('.digest-list a').forEach(a => a.classList.remove('active'));
   linkEl.classList.add('active');
+  if (isMobile()) {
+    loadDigestMobile(path);
+    return;
+  }
   emptyEl.style.display = 'none';
   frameEl.style.display = 'block';
   frameEl.src = path;
