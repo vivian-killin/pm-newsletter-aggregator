@@ -130,7 +130,16 @@ def gather_thought_provokers() -> list[dict]:
     for q in THOUGHT_PROVOKER_QUERIES:
         hits = search(q, timelimit="m", max_results=2)
         candidates.extend(hits)
-    log.info("Thought provoker pool: %d candidates", len(candidates[:16]))
+    log.info("Thought provoker pool (month): %d candidates", len(candidates))
+
+    # If the month window is also dry, widen to the past year
+    if len(candidates) < 4:
+        log.info("Month pool thin — widening to past year...")
+        for q in THOUGHT_PROVOKER_QUERIES[:4]:
+            hits = search(q, timelimit="y", max_results=3)
+            candidates.extend(hits)
+        log.info("Thought provoker pool (year): %d candidates", len(candidates))
+
     return candidates[:16]
 
 
@@ -159,6 +168,19 @@ def build_digest_html(recent: dict, thought_provokers: list, shown_urls: list[st
 
     if quiet_week:
         log.info("Quiet week detected (0 recent results) — will show thought provokers only")
+        if not thought_provokers:
+            log.warning("Thought provokers also empty — returning evergreen fallback")
+            return """<div class="quiet-banner">
+  <span class="quiet-icon">💤</span>
+  <span>Quiet week — none of your superstars published recently. Check back next issue.</span>
+</div>
+<div class="thought-provoker">
+  <div class="tp-label">Worth your time regardless of when it was published</div>
+  <div class="creator-name">Marty Cagan</div>
+  <div class="creator-insight">The biggest mistake product teams make is confusing output with outcome. Shipping features is not the same as solving problems — and the best PMs obsess over the latter.</div>
+  <div class="creator-takeaway">Why it's worth your time: Cagan's core thesis is the foundation of modern product thinking.</div>
+  <a class="creator-link" href="https://www.svpg.com/product-vs-feature-teams/" target="_blank">Read →</a>
+</div>"""
 
     # Build a deduplicated shown_urls note for Claude
     shown_urls_note = ""
