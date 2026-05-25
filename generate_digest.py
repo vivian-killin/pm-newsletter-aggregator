@@ -161,26 +161,24 @@ def clean_claude_output(raw: str) -> str:
     return raw.strip()
 
 
+EVERGREEN_FALLBACK_TPS = [
+    {
+        "name": "Marty Cagan",
+        "insight": "The biggest mistake product teams make is confusing output with outcome. Shipping features is not the same as solving problems — the best PMs obsess over the latter.",
+        "takeaway": "Cagan's core thesis is the foundation of modern product thinking.",
+        "url": "https://www.svpg.com/product-vs-feature-teams/",
+    },
+    {
+        "name": "Shreyas Doshi",
+        "insight": "Most PMs optimise for output metrics (features shipped, velocity) when they should be optimising for outcome metrics (customer behaviour change, business impact). The distinction determines whether you build a great product or just a busy roadmap.",
+        "takeaway": "Reframing how you measure your own success is the highest-leverage PM habit.",
+        "url": "https://twitter.com/shreyas/status/1276956836856393728",
+    },
+]
+
+
 def build_digest_html(recent: dict, thought_provokers: list, shown_urls: list[str]) -> str:
     today = datetime.now().strftime("%B %d, %Y")
-    total_results = sum(len(v) for v in recent.values())
-    quiet_week = total_results == 0
-
-    if quiet_week:
-        log.info("Quiet week detected (0 recent results) — will show thought provokers only")
-        if not thought_provokers:
-            log.warning("Thought provokers also empty — returning evergreen fallback")
-            return """<div class="quiet-banner">
-  <span class="quiet-icon">💤</span>
-  <span>Quiet week — none of your superstars published recently. Check back next issue.</span>
-</div>
-<div class="thought-provoker">
-  <div class="tp-label">Worth your time regardless of when it was published</div>
-  <div class="creator-name">Marty Cagan</div>
-  <div class="creator-insight">The biggest mistake product teams make is confusing output with outcome. Shipping features is not the same as solving problems — and the best PMs obsess over the latter.</div>
-  <div class="creator-takeaway">Why it's worth your time: Cagan's core thesis is the foundation of modern product thinking.</div>
-  <a class="creator-link" href="https://www.svpg.com/product-vs-feature-teams/" target="_blank">Read →</a>
-</div>"""
 
     # Build a deduplicated shown_urls note for Claude
     shown_urls_note = ""
@@ -192,69 +190,41 @@ def build_digest_html(recent: dict, thought_provokers: list, shown_urls: list[st
 Pick articles whose URLs do NOT appear in the above list.
 """
 
-    if quiet_week:
-        prompt = f"""You are building a PM intelligence digest for Vivian. Today is {today}.
-
-OUTPUT RULES — READ CAREFULLY:
-- Output ONLY valid HTML. Zero markdown. Zero code fences. Zero plain text outside HTML tags.
-- Never output "Note:", "Consider:", asterisks, dashes, or any explanation.
-
-This is a QUIET WEEK — none of the tracked creators published in the last 7 days.
-Your job: output a quiet-week banner followed by exactly 2 thought provokers from the candidates below.
-
-{shown_urls_note}
-
-━━━ THOUGHT PROVOKER CANDIDATES (last month) ━━━
-{json.dumps(thought_provokers, indent=2)}
-
-━━━ STRICT FILTER — only include content clearly about ━━━
-✓ Product management skills, frameworks, or decision-making
-✓ How PMs should think about / work with AI
-✓ Building AI-powered products from a PM perspective
-✓ AI-native team structures, roadmapping, or discovery
-✓ PM career advice in the AI era
-
-✗ EXCLUDE: General AI model benchmarks or releases (no PM angle)
-✗ EXCLUDE: Pure coding tutorials
-✗ EXCLUDE: General tech news (Netflix, funding rounds, hardware)
-✗ EXCLUDE: Off-topic results (furniture, baby names, clinics, airlines)
-✗ EXCLUDE: Any URL that appears in the ALREADY SHOWN list above
-
-━━━ FORMAT — output EXACTLY this, nothing else ━━━
-
-<div class="quiet-banner">
-  <span class="quiet-icon">💤</span>
-  <span>Quiet week — none of your superstars posted in the last 7 days. Here are two reads worth your time regardless of when they were published.</span>
-</div>
-
-Then exactly 2 thought provoker cards:
-<div class="thought-provoker">
+    # If thought provokers are completely empty, use hardcoded evergreen cards
+    if not thought_provokers:
+        log.warning("Thought provoker search returned nothing — using evergreen fallback cards")
+        tp_html = ""
+        for tp in EVERGREEN_FALLBACK_TPS:
+            tp_html += f"""<div class="thought-provoker">
   <div class="tp-label">Worth your time regardless of when it was published</div>
-  <div class="creator-name">[NAME]</div>
-  <div class="creator-insight">[1-2 sentences on the idea. Lead with the idea, not the person.]</div>
-  <div class="creator-takeaway">Why it's worth your time: [one sentence]</div>
-  <a class="creator-link" href="[URL]" target="_blank">Read →</a>
+  <div class="creator-name">{tp["name"]}</div>
+  <div class="creator-insight">{tp["insight"]}</div>
+  <div class="creator-takeaway">Why it's worth your time: {tp["takeaway"]}</div>
+  <a class="creator-link" href="{tp["url"]}" target="_blank">Read →</a>
 </div>
+"""
+        return f"""<div class="quiet-banner">
+  <span class="quiet-icon">💤</span>
+  <span>Quiet week — none of your superstars posted recently. Here are two evergreen reads worth your time.</span>
+</div>
+{tp_html}"""
 
-Output nothing else."""
-
-    else:
-        prompt = f"""You are building a PM intelligence digest for Vivian. Today is {today}.
+    prompt = f"""You are building a PM intelligence digest for Vivian. Today is {today}.
 
 OUTPUT RULES — READ CAREFULLY:
 - Output ONLY valid HTML. Zero markdown. Zero code fences. Zero plain text outside HTML tags.
 - Never output "Note:", "Consider:", asterisks, dashes, or any explanation.
-- If you have nothing to output, return exactly: <div class="no-updates">No new PM updates in the last 7 days.</div>
+- The digest MUST always contain at least 1-2 thought provoker cards. Never output an empty digest.
 
 {shown_urls_note}
 
 ━━━ RECENT SEARCH RESULTS (last 7 days) ━━━
 {json.dumps(recent, indent=2)}
 
-━━━ THOUGHT PROVOKER CANDIDATES (last month) ━━━
+━━━ THOUGHT PROVOKER CANDIDATES (last month / last year) ━━━
 {json.dumps(thought_provokers, indent=2)}
 
-━━━ STRICT FILTER — only include content clearly about ━━━
+━━━ STRICT FILTER — only include in creator cards ━━━
 ✓ Product management skills, frameworks, or decision-making
 ✓ How PMs should think about / work with AI
 ✓ Building AI-powered products from a PM perspective
@@ -262,23 +232,40 @@ OUTPUT RULES — READ CAREFULLY:
 ✓ Prompting or agent workflows explained for product people
 ✓ PM career advice in the AI era
 
-✗ EXCLUDE: General AI model benchmarks or releases (no PM angle)
-✗ EXCLUDE: Pure coding tutorials
-✗ EXCLUDE: General tech news (Netflix, funding rounds, hardware)
-✗ EXCLUDE: Off-topic results (furniture, baby names, clinics, airlines)
-✗ EXCLUDE: Any URL that appears in the ALREADY SHOWN list above
+✗ EXCLUDE from creator cards: General AI model benchmarks or releases (no PM angle)
+✗ EXCLUDE from creator cards: Pure coding tutorials
+✗ EXCLUDE from creator cards: General tech news (Netflix, funding rounds, hardware)
+✗ EXCLUDE from creator cards: Off-topic results (furniture, baby names, clinics, airlines)
+✗ EXCLUDE any URL that appears in the ALREADY SHOWN list above
 
-━━━ FORMAT ━━━
+━━━ FORMAT — follow this EXACTLY ━━━
 
-For each creator with qualifying content from the last 7 days:
+STEP 1 — Decide if there is any qualifying creator content from the last 7 days.
+
+If YES (there are qualifying recent results):
+  Output creator cards (one per qualifying creator), then thought provokers, then top-pick.
+
+If NO (nothing qualifies from the last 7 days, or all recent results are off-topic):
+  Output the quiet-week banner first, then STILL output 1-2 thought provokers.
+  Do NOT output an empty digest. Do NOT output the no-updates div.
+
+STEP 2 — Output the appropriate HTML:
+
+Optional quiet-week banner (only if no recent results qualify):
+<div class="quiet-banner">
+  <span class="quiet-icon">💤</span>
+  <span>Quiet week — none of your superstars posted in the last 7 days. Here are reads worth your time regardless.</span>
+</div>
+
+Creator cards (one per qualifying creator from last 7 days):
 <div class="creator">
   <div class="creator-name">[NAME]</div>
-  <div class="creator-insight">[1-2 sentences. Lead with the idea not the person. Name the framework, number, or claim specifically.]</div>
-  <div class="creator-takeaway">AI-native PM angle: [one crisp sentence on why this matters for PMs]</div>
+  <div class="creator-insight">[1-2 sentences. Lead with the idea not the person.]</div>
+  <div class="creator-takeaway">AI-native PM angle: [one crisp sentence]</div>
   <a class="creator-link" href="[URL]" target="_blank">Read →</a>
 </div>
 
-Pick exactly 1-2 thought provokers from the candidate list (must be PM-skills relevant, URL not in ALREADY SHOWN list):
+Thought provokers (ALWAYS include 1-2, URL must not be in ALREADY SHOWN list):
 <div class="thought-provoker">
   <div class="tp-label">Worth your time regardless of when it was published</div>
   <div class="creator-name">[NAME]</div>
@@ -287,13 +274,13 @@ Pick exactly 1-2 thought provokers from the candidate list (must be PM-skills re
   <a class="creator-link" href="[URL]" target="_blank">Read →</a>
 </div>
 
-End with one top-pick (choose the most actionable item from everything above):
+Top-pick (include only when there are creator cards, skip on quiet weeks):
 <div class="top-pick">
   <div class="top-pick-label">Top pick</div>
-  <div class="top-pick-content">[2-3 sentences on why this is the most important thing to read for an AI-native PM this week]</div>
+  <div class="top-pick-content">[2-3 sentences on why this is the most important thing to read]</div>
 </div>
 
-Output nothing else. No notes. No markdown. No explanations. Only the HTML divs above."""
+Output nothing else. No notes. No markdown. No explanations."""
 
     try:
         log.info("Calling Claude Haiku for digest generation...")
@@ -315,9 +302,29 @@ Output nothing else. No notes. No markdown. No explanations. Only the HTML divs 
     tp_count = html.count('class="thought-provoker"')
     log.info("Digest contains %d creator card(s) and %d thought provoker(s)", creator_count, tp_count)
 
-    if not html or "<div" not in html:
-        log.warning("No valid HTML content generated — using fallback message")
-        html = '<div class="no-updates">No new PM updates this issue. Check back next time.</div>'
+    # Safety net: if Claude produced no thought provokers, inject evergreen ones
+    if tp_count == 0:
+        log.warning("Claude produced 0 thought provokers — injecting evergreen fallback")
+        banner = """<div class="quiet-banner">
+  <span class="quiet-icon">💤</span>
+  <span>Quiet week — nothing new from your superstars. Here are reads worth your time regardless.</span>
+</div>
+"""
+        tp_html = ""
+        for tp in EVERGREEN_FALLBACK_TPS:
+            tp_html += f"""<div class="thought-provoker">
+  <div class="tp-label">Worth your time regardless of when it was published</div>
+  <div class="creator-name">{tp["name"]}</div>
+  <div class="creator-insight">{tp["insight"]}</div>
+  <div class="creator-takeaway">Why it's worth your time: {tp["takeaway"]}</div>
+  <a class="creator-link" href="{tp["url"]}" target="_blank">Read →</a>
+</div>
+"""
+        # Replace empty/no-updates output with banner + fallback TPs
+        if not html or "<div" not in html or "no-updates" in html:
+            html = banner + tp_html
+        else:
+            html = html + tp_html
 
     return html
 
