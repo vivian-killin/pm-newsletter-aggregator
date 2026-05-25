@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """
-Vivian's PM Skills Digest Generator v2
+Vivian's PM Skills Digest Generator v3
 - Strict PM-skills focus (filters out general AI news)
-- 3-day recency window for main cards
+- 7-day recency window for main cards
 - 1-2 "thought provoker" items from older content, clearly labelled
+- Quiet week banner when no recent results — still shows thought provokers
+- shown_urls.json tracking to avoid reusing articles
 - No markdown leaking into the page
 """
 import os
@@ -54,7 +56,38 @@ THOUGHT_PROVOKER_QUERIES = [
     "site:oneusefulthing.org AI work productivity",
     '"Shreyas Doshi" product framework',
     "site:cutlefish.substack.com product management",
+    "site:aakashg.com product management",
+    "site:huryn.substack.com product AI",
+    '"Julie Zhuo" product leadership',
 ]
+
+SHOWN_URLS_PATH = os.path.join("digests", "shown_urls.json")
+
+
+def load_shown_urls() -> list[str]:
+    """Load the list of URLs already featured in previous digests."""
+    try:
+        with open(SHOWN_URLS_PATH) as f:
+            data = json.load(f)
+            if isinstance(data, list):
+                return data
+    except (FileNotFoundError, ValueError):
+        pass
+    return []
+
+
+def save_shown_urls(urls: list[str]) -> None:
+    """Persist the updated shown URLs list, keeping the last 200 entries."""
+    os.makedirs("digests", exist_ok=True)
+    # Cap at 200 to avoid the file growing forever
+    trimmed = urls[-200:]
+    with open(SHOWN_URLS_PATH, "w") as f:
+        json.dump(trimmed, f, indent=2)
+
+
+def extract_urls_from_html(html: str) -> list[str]:
+    """Pull all href URLs out of generated digest HTML."""
+    return re.findall(r'href="(https?://[^"]+)"', html)
 
 
 def search(query: str, timelimit: str = "w", max_results: int = 3) -> list[dict]:
@@ -97,8 +130,8 @@ def gather_thought_provokers() -> list[dict]:
     for q in THOUGHT_PROVOKER_QUERIES:
         hits = search(q, timelimit="m", max_results=2)
         candidates.extend(hits)
-    log.info("Thought provoker pool: %d candidates", len(candidates[:12]))
-    return candidates[:12]
+    log.info("Thought provoker pool: %d candidates", len(candidates[:16]))
+    return candidates[:16]
 
 
 def clean_claude_output(raw: str) -> str:
@@ -119,15 +152,79 @@ def clean_claude_output(raw: str) -> str:
     return raw.strip()
 
 
-def build_digest_html(recent: dict, thought_provokers: list) -> str:
+def build_digest_html(recent: dict, thought_provokers: list, shown_urls: list[str]) -> str:
     today = datetime.now().strftime("%B %d, %Y")
+    total_results = sum(len(v) for v in recent.values())
+    quiet_week = total_results == 0
 
-    prompt = f"""You are building a PM intelligence digest for Vivian. Today is {today}.
+    if quiet_week:
+        log.info("Quiet week detected (0 recent results) — will show thought provokers only")
+
+    # Build a deduplicated shown_urls note for Claude
+    shown_urls_note = ""
+    if shown_urls:
+        shown_sample = shown_urls[-50:]  # last 50 is plenty
+        shown_urls_note = f"""
+━━━ ALREADY SHOWN IN PREVIOUS ISSUES — DO NOT REUSE ━━━
+{json.dumps(shown_sample, indent=2)}
+Pick articles whose URLs do NOT appear in the above list.
+"""
+
+    if quiet_week:
+        prompt = f"""You are building a PM intelligence digest for Vivian. Today is {today}.
 
 OUTPUT RULES — READ CAREFULLY:
 - Output ONLY valid HTML. Zero markdown. Zero code fences. Zero plain text outside HTML tags.
 - Never output "Note:", "Consider:", asterisks, dashes, or any explanation.
-- If you have nothing to output, return exactly: <div class="no-updates">No new PM updates in the last 3 days.</div>
+
+This is a QUIET WEEK — none of the tracked creators published in the last 7 days.
+Your job: output a quiet-week banner followed by exactly 2 thought provokers from the candidates below.
+
+{shown_urls_note}
+
+━━━ THOUGHT PROVOKER CANDIDATES (last month) ━━━
+{json.dumps(thought_provokers, indent=2)}
+
+━━━ STRICT FILTER — only include content clearly about ━━━
+✓ Product management skills, frameworks, or decision-making
+✓ How PMs should think about / work with AI
+✓ Building AI-powered products from a PM perspective
+✓ AI-native team structures, roadmapping, or discovery
+✓ PM career advice in the AI era
+
+✗ EXCLUDE: General AI model benchmarks or releases (no PM angle)
+✗ EXCLUDE: Pure coding tutorials
+✗ EXCLUDE: General tech news (Netflix, funding rounds, hardware)
+✗ EXCLUDE: Off-topic results (furniture, baby names, clinics, airlines)
+✗ EXCLUDE: Any URL that appears in the ALREADY SHOWN list above
+
+━━━ FORMAT — output EXACTLY this, nothing else ━━━
+
+<div class="quiet-banner">
+  <span class="quiet-icon">💤</span>
+  <span>Quiet week — none of your superstars posted in the last 7 days. Here are two reads worth your time regardless of when they were published.</span>
+</div>
+
+Then exactly 2 thought provoker cards:
+<div class="thought-provoker">
+  <div class="tp-label">Worth your time regardless of when it was published</div>
+  <div class="creator-name">[NAME]</div>
+  <div class="creator-insight">[1-2 sentences on the idea. Lead with the idea, not the person.]</div>
+  <div class="creator-takeaway">Why it's worth your time: [one sentence]</div>
+  <a class="creator-link" href="[URL]" target="_blank">Read →</a>
+</div>
+
+Output nothing else."""
+
+    else:
+        prompt = f"""You are building a PM intelligence digest for Vivian. Today is {today}.
+
+OUTPUT RULES — READ CAREFULLY:
+- Output ONLY valid HTML. Zero markdown. Zero code fences. Zero plain text outside HTML tags.
+- Never output "Note:", "Consider:", asterisks, dashes, or any explanation.
+- If you have nothing to output, return exactly: <div class="no-updates">No new PM updates in the last 7 days.</div>
+
+{shown_urls_note}
 
 ━━━ RECENT SEARCH RESULTS (last 7 days) ━━━
 {json.dumps(recent, indent=2)}
@@ -147,11 +244,11 @@ OUTPUT RULES — READ CAREFULLY:
 ✗ EXCLUDE: Pure coding tutorials
 ✗ EXCLUDE: General tech news (Netflix, funding rounds, hardware)
 ✗ EXCLUDE: Off-topic results (furniture, baby names, clinics, airlines)
-✗ EXCLUDE: Any result older than 3 days unless it becomes a thought provoker
+✗ EXCLUDE: Any URL that appears in the ALREADY SHOWN list above
 
 ━━━ FORMAT ━━━
 
-For each creator with qualifying content from the last 3 days:
+For each creator with qualifying content from the last 7 days:
 <div class="creator">
   <div class="creator-name">[NAME]</div>
   <div class="creator-insight">[1-2 sentences. Lead with the idea not the person. Name the framework, number, or claim specifically.]</div>
@@ -159,9 +256,9 @@ For each creator with qualifying content from the last 3 days:
   <a class="creator-link" href="[URL]" target="_blank">Read →</a>
 </div>
 
-Pick exactly 1-2 thought provokers from the candidate list (must be PM-skills relevant):
+Pick exactly 1-2 thought provokers from the candidate list (must be PM-skills relevant, URL not in ALREADY SHOWN list):
 <div class="thought-provoker">
-  <div class="tp-label">Thought provoker — worth your time regardless of when it was published</div>
+  <div class="tp-label">Worth your time regardless of when it was published</div>
   <div class="creator-name">[NAME]</div>
   <div class="creator-insight">[1-2 sentences on the idea]</div>
   <div class="creator-takeaway">Why it's worth your time: [one sentence]</div>
@@ -175,12 +272,6 @@ End with one top-pick (choose the most actionable item from everything above):
 </div>
 
 Output nothing else. No notes. No markdown. No explanations. Only the HTML divs above."""
-
-    # If every single search came back empty, skip the Claude call entirely
-    total_results = sum(len(v) for v in recent.values())
-    if total_results == 0:
-        log.warning("All 20 searches returned empty — skipping Claude call, returning fallback")
-        return '<div class="no-updates">No new updates found this issue. Check back next time.</div>'
 
     try:
         log.info("Calling Claude Haiku for digest generation...")
@@ -196,14 +287,6 @@ Output nothing else. No notes. No markdown. No explanations. Only the HTML divs 
     html = response.content[0].text.strip()
     log.info("Claude returned %d characters", len(html))
 
-    # Belt-and-suspenders: strip code fences + stray markdown
-    if html.startswith("```html"):
-        html = html[7:]
-    elif html.startswith("```"):
-        html = html[3:]
-    if html.endswith("```"):
-        html = html[:-3]
-
     html = clean_claude_output(html)
 
     creator_count = html.count('class="creator"')
@@ -212,7 +295,7 @@ Output nothing else. No notes. No markdown. No explanations. Only the HTML divs 
 
     if not html or "<div" not in html:
         log.warning("No valid HTML content generated — using fallback message")
-        html = '<div class="no-updates">No new PM updates in the last 3 days. Check back next issue.</div>'
+        html = '<div class="no-updates">No new PM updates this issue. Check back next time.</div>'
 
     return html
 
@@ -251,6 +334,22 @@ def generate_page(digest_html: str) -> str:
     }}
 
     .container {{ max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }}
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {{
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: #f7f7f4;
+      border: 1px solid #e0ddd5;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.5;
+    }}
+    .quiet-icon {{ font-size: 1.2rem; flex-shrink: 0; margin-top: 0.05rem; }}
 
     /* ── Creator cards ── */
     .creator {{
@@ -315,6 +414,7 @@ def generate_page(digest_html: str) -> str:
       .creator-insight {{ font-size: 0.92rem; }}
       .creator-takeaway {{ font-size: 0.8rem; padding: 0.35rem 0.6rem; }}
       .creator-link {{ font-size: 0.82rem; }}
+      .quiet-banner {{ font-size: 0.85rem; padding: 0.85rem 1rem; }}
     }}
   </style>
 </head>
@@ -353,14 +453,18 @@ def update_manifest(filename: str) -> None:
 
 
 def main():
-    log.info("━━━ Vivian's PM Skills Digest Generator v2 ━━━")
+    log.info("━━━ Vivian's PM Skills Digest Generator v3 ━━━")
     start = datetime.now()
 
     try:
+        # Load previously shown URLs to avoid repetition
+        shown_urls = load_shown_urls()
+        log.info("Loaded %d previously shown URLs", len(shown_urls))
+
         recent = gather_recent()
         thought_provokers = gather_thought_provokers()
 
-        digest_html = build_digest_html(recent, thought_provokers)
+        digest_html = build_digest_html(recent, thought_provokers, shown_urls)
 
         log.info("Building HTML page...")
         page = generate_page(digest_html)
@@ -373,6 +477,13 @@ def main():
             f.write(page)
 
         update_manifest(filename)
+
+        # Track which URLs appeared in this digest so future issues avoid them
+        new_urls = extract_urls_from_html(digest_html)
+        if new_urls:
+            updated_urls = shown_urls + [u for u in new_urls if u not in shown_urls]
+            save_shown_urls(updated_urls)
+            log.info("Saved %d new URL(s) to shown_urls.json (%d total)", len(new_urls), len(updated_urls))
 
         elapsed = (datetime.now() - start).seconds
         log.info("━━━ Done in %ds — saved to %s ━━━", elapsed, output_path)
