@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Vivian's PM Skills Digest Generator v3
+Vivian's PM Skills Digest Generator v4
 - Strict PM-skills focus (filters out general AI news)
 - 7-day recency window for main cards
-- 1-2 "thought provoker" items from older content, clearly labelled
+- 1-2 "thought provoker" items from creator-owned blogs/substacks only
 - Quiet week banner when no recent results — still shows thought provokers
 - shown_urls.json tracking to avoid reusing articles
 - No markdown leaking into the page
@@ -27,7 +27,7 @@ log = logging.getLogger("digest")
 
 client = Anthropic()
 
-CREATORS = [
+THOUGHT_LEADERS = [
     ("Lenny Rachitsky",  "site:lennysnewsletter.com product management"),
     ("Ethan Mollick",    "site:oneusefulthing.org"),
     ("Simon Willison",   "site:simonwillison.net"),
@@ -37,28 +37,35 @@ CREATORS = [
     ("Aakash Gupta",     "site:aakashg.com OR \"Aakash Gupta\" product"),
     ("Harrison Chase",   "site:blog.langchain.dev"),
     ("Kristen Berman",   "site:kristenberman.substack.com"),
-    ("Shreyas Doshi",    '"Shreyas Doshi" product'),
-    ("Julie Zhuo",       '"Julie Zhuo" product management'),
-    ("John Cutler",      "site:cutlefish.substack.com OR \"John Cutler\" product"),
+    ("Shreyas Doshi",    "site:shreyasdoshi.substack.com OR site:linkedin.com/pulse \"Shreyas Doshi\""),
+    ("Julie Zhuo",       "site:joulee.medium.com OR site:juliezhuo.substack.com"),
+    ("John Cutler",      "site:cutlefish.substack.com"),
     ("Marty Cagan",      "site:svpg.com"),
     ("Pawel Huryn",      "site:huryn.substack.com"),
-    ("Karo Zieminski",   '"Karo Zieminski" product'),
-    ("Josh Miller",      '"Josh Miller" product'),
-    ("Claire Vo",        '"Claire Vo" product AI'),
-    ("Amjad Masad",      "site:blog.replit.com OR \"Amjad Masad\" product"),
-    ("Logan Kilpatrick", '"Logan Kilpatrick" AI product'),
+    ("Karo Zieminski",   "site:zieminski.substack.com OR \"Karo Zieminski\" product"),
+    ("Josh Miller",      "site:josh.substack.com OR \"Josh Miller\" browser company product"),
+    ("Claire Vo",        "site:clairevo.substack.com OR \"Claire Vo\" product AI"),
+    ("Amjad Masad",      "site:blog.replit.com"),
+    ("Logan Kilpatrick", "site:logankilpatrick.substack.com OR \"Logan Kilpatrick\" AI"),
     ("Gergely Orosz",    "site:newsletter.pragmaticengineer.com"),
+    ("Deb Liu",          "site:debliu.substack.com"),
 ]
 
+# Thought provoker queries — ONLY search creator-owned blogs, substacks, and personal sites.
+# Never generic searches that could return support docs, wikis, or unrelated websites.
 THOUGHT_PROVOKER_QUERIES = [
-    "site:svpg.com product management AI",
-    "site:lennysnewsletter.com product strategy",
-    "site:oneusefulthing.org AI work productivity",
-    '"Shreyas Doshi" product framework',
-    "site:cutlefish.substack.com product management",
-    "site:aakashg.com product management",
-    "site:huryn.substack.com product AI",
-    '"Julie Zhuo" product leadership',
+    "site:svpg.com",                              # Marty Cagan
+    "site:lennysnewsletter.com",                  # Lenny Rachitsky
+    "site:cutlefish.substack.com",                # John Cutler
+    "site:oneusefulthing.org",                    # Ethan Mollick
+    "site:huryn.substack.com",                    # Pawel Huryn
+    "site:aakashg.com",                           # Aakash Gupta
+    "site:debliu.substack.com",                   # Deb Liu
+    "site:shreyasdoshi.substack.com",             # Shreyas Doshi
+    "site:joulee.medium.com",                     # Julie Zhuo
+    "site:kristenberman.substack.com",            # Kristen Berman
+    "site:newsletter.pragmaticengineer.com",      # Gergely Orosz
+    "site:clairevo.substack.com",                 # Claire Vo
 ]
 
 SHOWN_URLS_PATH = os.path.join("digests", "shown_urls.json")
@@ -112,7 +119,7 @@ def gather_recent() -> dict:
     log.info("Searching for recent creator content (last 7 days)...")
     findings = {}
     found_count = 0
-    for name, query in CREATORS:
+    for name, query in THOUGHT_LEADERS:
         results = search(query, timelimit="w", max_results=3)
         findings[name] = results
         if results:
@@ -120,7 +127,7 @@ def gather_recent() -> dict:
             log.info("  ✓ %-22s — %d result(s)", name, len(results))
         else:
             log.info("  ✗ %-22s — no results", name)
-    log.info("Recent search complete: %d/%d creators had results", found_count, len(CREATORS))
+    log.info("Recent search complete: %d/%d creators had results", found_count, len(THOUGHT_LEADERS))
     return findings
 
 
@@ -460,7 +467,7 @@ def generate_page(digest_html: str) -> str:
   </div>
 
   <div class="footer">
-    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 20 PM &amp; AI leaders
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 21 PM &amp; AI thought leaders
   </div>
 
 </body>
