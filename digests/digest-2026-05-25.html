@@ -1,151 +1,379 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vivian's PM Skills Digest — Monday, May 25, 2026</title>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #fafaf8;
-      color: #1a1a1a;
-      line-height: 1.6;
-    }
-
-    .header {
-      background: #fff;
-      border-bottom: 1px solid #e8e8e4;
-      padding: 2.5rem 1.5rem 2rem;
-      text-align: center;
-    }
-    .header h1 { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.01em; }
-    .header .tagline { font-size: 0.9rem; color: #888; margin-top: 0.3rem; }
-    .header .updated {
-      display: inline-block; margin-top: 0.85rem;
-      font-size: 0.78rem; background: #f0f0ec; color: #666;
-      padding: 0.25rem 0.85rem; border-radius: 999px;
-    }
-
-    .container { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
-
-    /* ── Quiet week banner ── */
-    .quiet-banner {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-      background: #f7f7f4;
-      border: 1px solid #e0ddd5;
-      border-radius: 10px;
-      padding: 1rem 1.25rem;
-      margin-bottom: 1.25rem;
-      font-size: 0.9rem;
-      color: #666;
-      line-height: 1.5;
-    }
-    .quiet-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.05rem; }
-
-    /* ── Creator cards ── */
-    .creator {
-      background: #fff; border: 1px solid #e8e8e4;
-      border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1rem;
-    }
-    .creator-name {
-      font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 0.07em; color: #999; margin-bottom: 0.5rem;
-    }
-    .creator-insight { font-size: 0.975rem; color: #1a1a1a; margin-bottom: 0.6rem; line-height: 1.55; }
-    .creator-takeaway {
-      font-size: 0.84rem; color: #555; background: #f7f7f4;
-      border-left: 3px solid #c4b8ff; padding: 0.4rem 0.75rem;
-      border-radius: 0 4px 4px 0; margin-bottom: 0.85rem; line-height: 1.5;
-    }
-    .creator-link { font-size: 0.8rem; color: #7b6ef6; text-decoration: none; font-weight: 500; }
-    .creator-link:hover { text-decoration: underline; }
-
-    /* ── Thought provoker cards ── */
-    .thought-provoker {
-      background: #fffdf5; border: 1px solid #e8d98a;
-      border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1rem;
-    }
-    .tp-label {
-      font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 0.07em; color: #a07800; margin-bottom: 0.4rem;
-    }
-
-    /* ── Top pick ── */
-    .top-pick {
-      background: #f0eeff; border: 1px solid #c4b8ff;
-      border-radius: 10px; padding: 1.25rem 1.5rem; margin-top: 2rem;
-    }
-    .top-pick-label {
-      font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 0.07em; color: #7b6ef6; margin-bottom: 0.5rem;
-    }
-    .top-pick-content { font-size: 0.975rem; color: #1a1a1a; line-height: 1.55; }
-
-    /* ── No updates fallback ── */
-    .no-updates {
-      text-align: center; padding: 3rem 1rem;
-      font-size: 0.9rem; color: #aaa;
-    }
-
-    .footer {
-      text-align: center; padding: 1.5rem;
-      font-size: 0.78rem; color: #bbb;
-      border-top: 1px solid #e8e8e4;
-    }
-
-    @media (max-width: 600px) {
-      .header { padding: 1.5rem 1rem 1.25rem; }
-      .header h1 { font-size: 1.2rem; }
-      .header .tagline { font-size: 0.82rem; }
-      .container { padding: 1rem 0.85rem 2.5rem; }
-      .creator, .thought-provoker, .top-pick {
-        padding: 1rem 1.1rem;
-        border-radius: 8px;
-      }
-      .creator-insight { font-size: 0.92rem; }
-      .creator-takeaway { font-size: 0.8rem; padding: 0.35rem 0.6rem; }
-      .creator-link { font-size: 0.82rem; }
-      .quiet-banner { font-size: 0.85rem; padding: 0.85rem 1rem; }
-    }
-  </style>
+<meta charset="UTF-8">
+<title>PM Intel Digest — May 25, 2026</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 800px; margin: 40px auto; padding: 0 24px; color: #1a1a1a; line-height: 1.7; }
+  h1 { font-size: 28px; border-bottom: 3px solid #1a1a1a; padding-bottom: 12px; }
+  .meta { color: #666; font-size: 14px; margin-bottom: 16px; }
+  nav { background: #f5f5f5; padding: 16px 20px; border-radius: 8px; margin-bottom: 40px; }
+  nav a { display: inline-block; margin: 4px 8px 4px 0; color: #0066cc; font-size: 14px; text-decoration: none; }
+  nav a:hover { text-decoration: underline; }
+  .creator { border-left: 4px solid #1a1a1a; padding-left: 20px; margin-bottom: 48px; }
+  .creator h2 { font-size: 20px; margin-bottom: 2px; }
+  .creator .headline { color: #444; font-size: 15px; font-style: italic; margin-bottom: 16px; }
+  .creator p { margin: 0 0 12px 0; }
+  .creator ul { margin: 8px 0 16px 0; padding-left: 20px; }
+  .creator li { margin-bottom: 6px; }
+  .creator ol { margin: 8px 0 16px 0; padding-left: 20px; }
+  .creator ol li { margin-bottom: 8px; }
+  .tier-block { background: #f9f9f9; border: 1px solid #e0e0e0; padding: 14px 18px; border-radius: 6px; margin: 12px 0; }
+  .tier-block h4 { margin: 0 0 8px 0; font-size: 14px; color: #333; }
+  blockquote { border-left: 3px solid #ccc; margin: 12px 0; padding: 4px 16px; color: #444; font-style: italic; }
+  .takeaway { background: #fffbf0; border: 1px solid #f0d060; padding: 12px 16px; border-radius: 6px; margin-top: 16px; font-size: 14px; }
+  .takeaway strong { color: #b8860b; }
+  .deep-pull { background: #f0f4ff; border: 2px solid #3366cc; padding: 20px 24px; border-radius: 8px; margin: 40px 0; }
+  .deep-pull h2 { margin-top: 0; color: #3366cc; }
+  .sources { border-top: 2px solid #e0e0e0; margin-top: 48px; padding-top: 24px; font-size: 13px; color: #555; }
+  .sources a { color: #0066cc; }
+  .divider { border: none; border-top: 1px solid #e8e8e4; margin: 24px 0; }
+  .badge { display: inline-block; background: #1a1a1a; color: white; font-size: 11px; padding: 2px 7px; border-radius: 10px; margin-left: 8px; vertical-align: middle; }
+  .badge-hot { display: inline-block; background: #cc3300; color: white; font-size: 11px; padding: 2px 7px; border-radius: 10px; margin-left: 8px; vertical-align: middle; }
+</style>
 </head>
 <body>
 
-  <div class="header">
-    <h1>Vivian's PM Skills Digest</h1>
-    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
-    <div class="updated">Updated Monday, May 25, 2026</div>
+<h1>🧠 PM Intel Digest — Monday, May 25, 2026</h1>
+<div class="meta">20 creators tracked &nbsp;·&nbsp; 14 had new content this period &nbsp;·&nbsp; Generated May 25, 2026</div>
+<div class="meta"><strong>Top story this week:</strong> Karpathy joins Anthropic · Elena Verna's 6-Tier AI-Nativeness framework · Dan Shipper's 10 bold predictions · John Cutler on why AI won't save org fiefdoms</div>
+
+<nav>
+  <strong>Jump to:</strong>
+  <a href="#lenny">Lenny Rachitsky</a>
+  <a href="#andrej">Andrej Karpathy</a>
+  <a href="#john">John Cutler</a>
+  <a href="#gergely">Gergely Orosz</a>
+  <a href="#simon">Simon Willison</a>
+  <a href="#harrison">Harrison Chase</a>
+  <a href="#shreyas">Shreyas Doshi</a>
+  <a href="#ethan">Ethan Mollick</a>
+  <a href="#claire">Claire Vo</a>
+  <a href="#logan">Logan Kilpatrick</a>
+  <a href="#swyx">Swyx</a>
+  <a href="#amjad">Amjad Masad</a>
+  <a href="#andrew">Andrew Ng</a>
+  <a href="#karo">Karo Zieminski</a>
+  <a href="#deep-pull">🔥 Deep Pull</a>
+  <a href="#sources">Sources</a>
+</nav>
+
+<!-- LENNY -->
+<div class="creator" id="lenny">
+  <h2>📌 Lenny Rachitsky <span class="badge-hot">HOT</span></h2>
+  <div class="headline">Two must-reads: Elena Verna's 6-Tier AI-Nativeness Framework + Dan Shipper's 10 Bold Predictions</div>
+
+  <p><strong>Article 1 (May 21): "You'll Lose Your Job in 2027" — Elena Verna via Lenny's Newsletter</strong></p>
+  <p>Elena Verna's cross-post is the bluntest, most actionable career survival guide circulating right now. The premise: even if you keep your seat, your actual job — responsibilities, tools, scope, team size — is being rewritten every day. Her advice isn't to panic. It's to prepare now, before someone else decides what version of your job survives. "I technically stayed at the same company. But I do not have the same job."</p>
+
+  <p>Her action plan: first, be honest about whether you like what you do (competition gets more intense as AI levels the field, and you won't beat someone who loves the work). Second, build career optionality — start solopreneurship momentum before you need it. Third, and most actionable: become AI-native. She lays this out as a concrete 6-tier ladder:</p>
+
+  <div class="tier-block">
+    <h4>🔢 Elena Verna's 6 Tiers of AI-Nativeness</h4>
+    <ol>
+      <li><strong>Tier 1 — Writing Buddy:</strong> Use AI to improve written communication. Pro tip: write your own version first, then have AI critique it so you actually learn. Prompts: "Make this more clear" / "Rewrite this so a skeptical exec would buy in."</li>
+      <li><strong>Tier 2 — Meeting Partner:</strong> Granola in every meeting — writes todos, tracks commitments, gives manager-level feedback. Prompts: "If you were my manager, what are my strengths and areas for improvement?" / "What did I miss that I should follow up on?"</li>
+      <li><strong>Tier 3 — Thinking Partner:</strong> LLMs will "Great point!" you to death if you let them. You have to explicitly demand disagreement. Prompts: "Disagree with me. What's the strongest counter-argument?" / "What am I missing or being naive about here?" / "Give me 20 ideas, then cut to the 3 best."</li>
+      <li><strong>Tier 4 — Builder:</strong> Internal tools, prototypes, landing pages. Prompts: "Build me a working prototype of this flow" / "Turn this PRD into something I can click through."</li>
+      <li><strong>Tier 5 — Shipping to Prod:</strong> Non-technical people pushing code to production. Instant job security upgrade. Prompts: "Fix this bug" / "Change this text" / "Make the following changes to this flow."</li>
+      <li><strong>Tier 6 — Agents:</strong> Automations running on a schedule with real oversight. Prompts: "Every Monday, summarize last week's sales and post to #revenue" / "Watch competitor pricing pages and ping me on any changes." Warning: "That AI chatbot on your site is NOT an agent."</li>
+    </ol>
   </div>
 
-  <div class="container">
-    <div class="quiet-banner">
-  <span class="quiet-icon">💤</span>
-  <span>Quiet week — none of your superstars posted recently. Here are two evergreen reads worth your time.</span>
-</div>
-<div class="thought-provoker">
-  <div class="tp-label">Worth your time regardless of when it was published</div>
-  <div class="creator-name">Marty Cagan</div>
-  <div class="creator-insight">The biggest mistake product teams make is confusing output with outcome. Shipping features is not the same as solving problems — the best PMs obsess over the latter.</div>
-  <div class="creator-takeaway">Why it's worth your time: Cagan's core thesis is the foundation of modern product thinking.</div>
-  <a class="creator-link" href="https://www.svpg.com/product-vs-feature-teams/" target="_blank">Read →</a>
-</div>
-<div class="thought-provoker">
-  <div class="tp-label">Worth your time regardless of when it was published</div>
-  <div class="creator-name">Shreyas Doshi</div>
-  <div class="creator-insight">Most PMs optimise for output metrics (features shipped, velocity) when they should be optimising for outcome metrics (customer behaviour change, business impact). The distinction determines whether you build a great product or just a busy roadmap.</div>
-  <div class="creator-takeaway">Why it's worth your time: Reframing how you measure your own success is the highest-leverage PM habit.</div>
-  <a class="creator-link" href="https://twitter.com/shreyas/status/1276956836856393728" target="_blank">Read →</a>
+  <blockquote>"AI Strategy decks? Straight. To. Jail. If you don't know what matters, what good looks like, or where to focus… AI just helps you do the wrong thing faster."</blockquote>
+
+  <hr class="divider">
+
+  <p><strong>Article 2 (May 24): "The AI Paradox: More Automation, More Humans, More Work" — Dan Shipper on Lenny's Podcast</strong></p>
+  <p>Dan Shipper (CEO of Every, 30 people, 7-figure ARR) returned to Lenny's podcast with a set of contrarian takes grounded in running an actual AI-native company. Every single person at Every uses AI heavily — and yet their headcount doubled this year and SaaS spend is up. That's the paradox his episode title is named for.</p>
+
+  <p>His 10 bold predictions for what's actually true right now:</p>
+  <ol>
+    <li><strong>The future of work will happen inside Codex or Claude Code</strong> — not inside your SaaS tools. Dan now does email, research, and documents inside his agent's GUI. "The CLI era is over. GUIs are back, but they live inside your agent's UI."</li>
+    <li><strong>Every company will have one "super-agent" in Slack</strong> — not one per employee. His view flip: agents need humans who care about them. When someone gets tired of maintaining their personal agent, it dies. The model that wins is one forward-deployed engineer maintaining a company-wide agent (like Shopify's River).</li>
+    <li><strong>SaaS is not dead</strong> — he's actually bullish on SaaS stocks. When users bring their own AI (via Codex/Claude Code), users pay for tokens — not the SaaS company. This improves SaaS margins. Agents also need SaaS seats, which adds demand.</li>
+    <li><strong>PMs will thrive</strong> — "Any PM who gets really AI-native will be incredibly dangerous, because the building is done for you — what matters is figuring out what to build and if it's great."</li>
+    <li><strong>Full-stack designers are becoming superheroes</strong> — they can now ship their vision without the handoff bottleneck. Huge opportunity for designer-founders.</li>
+    <li><strong>No AI job apocalypse</strong> — but you must "ride the models." Use them for everything. Try new models when they drop. "Models make yesterday's human competence cheap" — staying at the frontier is the only moat.</li>
+    <li><strong>Automation is a lie</strong> — every automation needs a human to manage it. Every doubled in size this year despite being AI-forward. "Benchmarks measure AI on problems we've already framed and can score — there's always a higher frame."</li>
+    <li><strong>Build for humans and agents to use together</strong> — current apps are built for either humans or CLIs. The future is both simultaneously. New design requirements: approval flows, inboxes that summarize what happened, logs, easy rollback.</li>
+    <li><strong>We will read more AI-generated writing and like it</strong> — for internal docs and strategy, AI writing is often better because most humans are bad at writing strategy documents.</li>
+    <li><strong>Forward deployed engineer is the new must-have role</strong> — hands-on, loves maintaining internal agents, different from traditional software engineering. "As models get better, this role evolves but doesn't disappear."</li>
+  </ol>
+
+  <div class="takeaway"><strong>💡 PM takeaway:</strong> Elena's 6 tiers give you a concrete self-assessment tool — where are you honestly? Most PMs are at Tier 2. The Tier 3 jump (AI as thinking partner that challenges you, not validates you) is where the real leverage shift happens. Dan's framing on PMs is equally critical: your role is about to become more irreplaceable, but only if you level up to Tier 4+. Figuring out what to build matters more when building is cheap.</div>
+
+  <p>🔗 <a href="https://www.lennysnewsletter.com/p/youll-lose-your-job-in-2027">You'll Lose Your Job in 2027 — Elena Verna</a> &nbsp;·&nbsp; <a href="https://www.lennysnewsletter.com/p/the-ai-paradox-dan-shipper">The AI Paradox — Dan Shipper</a></p>
 </div>
 
-  </div>
+<!-- ANDREJ -->
+<div class="creator" id="andrej">
+  <h2>📌 Andrej Karpathy <span class="badge-hot">BREAKING</span></h2>
+  <div class="headline">The inventor of "vibe coding" defects to Anthropic</div>
 
-  <div class="footer">
-    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 21 PM &amp; AI thought leaders
-  </div>
+  <p>On May 19, Karpathy announced he's joining Anthropic — a post that drew 3 million views in an hour. His exact words: <em>"Personal update: I've joined Anthropic. I think the next few years at the frontier of LLMs will be especially formative. I am very excited to join the team here and get back to R&D. I remain deeply passionate about education and plan to resume my work on it in time."</em></p>
+
+  <p>He'll be building a team focused on Claude pretraining research — specifically, using Claude to accelerate pretraining research itself. The recursive framing is intentional: frontier AI helping build better frontier AI. Anthropic confirmed he starts this week.</p>
+
+  <p>The significance: Karpathy coined "vibe coding," built what's arguably the most-watched deep learning curriculum in history (the YouTube neural net series), and his credibility with developers and researchers is unmatched. His presence shifts Anthropic's talent gravity considerably and signals a doubling-down on fundamental research at a moment when most labs are racing toward deployment and applications.</p>
+
+  <div class="takeaway"><strong>💡 PM takeaway:</strong> Watch Anthropic's pretraining roadmap over the next 12 months. Karpathy doesn't move quietly — expect public writing and educational content about what frontier model research looks like in the agentic era. His framing of "vibe coding" already shaped an industry; his framing of agentic R&D will likely do the same.</div>
+
+  <p>🔗 <a href="https://venturebeat.com/technology/andrej-karpathy-announces-hes-joining-anthropic">Karpathy Joins Anthropic — VentureBeat</a></p>
+</div>
+
+<!-- JOHN CUTLER -->
+<div class="creator" id="john">
+  <h2>📌 John Cutler — AI Won't Save the Kingdoms We Built</h2>
+  <div class="headline">The people who built the fiefdoms are now complaining about the fiefdoms</div>
+
+  <p>Cutler published his sharpest essay in months on May 23. The setup: the same leaders who built bloated ZIRP-era org structures are now promising that AI will tear them down. He doesn't buy it — and his diagnosis of why is worth sitting with.</p>
+
+  <p>The fiefdom model was built on plausible assumptions: autonomy creates speed, business accountability creates focus, you need leaders at the head of things as orgs scale. Dunbar's number felt like a reasonable guide. The result: smaller worlds, each with a leader, each with accountability. And in the ZIRP era, product leadership grew by stacking more "products" — often bundles of work that weren't products in any meaningful end-to-end sense.</p>
+
+  <blockquote>"Anyone working in those environments felt the problem viscerally. Dependencies compounded. The end-to-end experience became harder to reason about. One team's work created a blast radius for another team. The customer did not experience the org chart as cleanly as the org chart experienced itself."</blockquote>
+
+  <p>His key argument on AI as savior: <strong>"Context transfer is not the same thing as shared understanding. AI does not clarify who decides. AI does not neutralize incentive misalignment. AI does not resolve contested ownership. AI does not create the slack needed to coordinate well."</strong></p>
+
+  <p>And his warning about the new pathology — "coordination theater" — is the freshest framing in this essay. People with a bias toward working alone now have a new quiver of avoidance tactics: set up agents, send copious docs, let agents talk to each other. The front lines are now drowning in async noise instead of org-chart politics. Same problem, new shape.</p>
+
+  <p>The real opportunity AI opens up: maybe, finally, we make the hard org choices that should have been made anyway — clearer end-to-end ownership, decision rights that match responsibility, senior leaders willing to prioritize tradeoffs. "AI can amplify a coherent operating model. It cannot substitute for one."</p>
+
+  <div class="takeaway"><strong>💡 PM takeaway:</strong> Before pitching "AI-powered cross-functional alignment" to your exec team, read this. The bottleneck in most orgs isn't information friction — it's that no one wants to own the hard tradeoffs. AI surfaces context faster, but it doesn't make the decision. Ask "who decides?" before asking "how do we share more information?"</div>
+
+  <p>🔗 <a href="https://cutlefish.substack.com/p/ai-wont-save-the-kingdoms-we-built">AI Won't Save the Kingdoms We Built — The Beautiful Mess</a></p>
+</div>
+
+<!-- GERGELY -->
+<div class="creator" id="gergely">
+  <h2>📌 Gergely Orosz — AI's Impact on Engineers in 2026: 900+ Responses, Uncomfortable Findings</h2>
+  <div class="headline">Codebase quality is declining. Management doesn't care. Yet.</div>
+
+  <p>Gergely published Part 2 of his 2026 survey on AI's impact on software engineers (May 20), based on 900+ responses from Pragmatic Engineer subscribers. The findings cut against the prevailing optimism:</p>
+
+  <ul>
+    <li><strong>Codebase quality is decreasing</strong> — and management at most companies doesn't care. Yet. This is a lagging indicator that will surface as a maintenance bill in 6-12 months.</li>
+    <li><strong>AI tools reduce tedious work, but create unrealistic expectations</strong> — when engineers move faster with AI assist, business stakeholders immediately raise the bar on scope. The velocity gains get re-absorbed into scope creep rather than creating slack.</li>
+    <li><strong>Team-level adoption is lagging individual adoption</strong> — companies are struggling to make AI tools feel productive at the team and org level, even where individuals are thriving.</li>
+    <li><strong>Engineering culture predicts AI outcomes</strong> — the survey's most important finding: the benefits of AI tools heavily depend on the engineering culture that was in place before AI. High-trust, high-autonomy, high-feedback cultures benefit most. Low-trust cultures accelerate existing dysfunction.</li>
+  </ul>
+
+  <p>His separate "Pulse" issue (May 19) also covered "forward deployed engineering heating up again" — big tech companies are hiring FDEs faster, and the role is increasingly blurring PM and engineer. He also revisited Fred Brooks' 1986 "No Silver Bullets" essay in the AI age (May 13) — finding it holds up better than expected. Complexity doesn't disappear; it shifts.</p>
+
+  <div class="takeaway"><strong>💡 PM takeaway:</strong> The quality debt signal is the one to track right now — it's not visible in velocity metrics but will surface in 6-12 months. Push your team to make quality metrics explicit before management dismisses the concern as theoretical. And if your engineering culture was low-trust before AI, AI makes it worse, not better — fix the culture first.</div>
+
+  <p>🔗 <a href="https://newsletter.pragmaticengineer.com/p/ai-impact-on-software-engineers-part-2">AI's Impact on Software Engineers 2026, Part 2 — The Pragmatic Engineer</a></p>
+</div>
+
+<!-- SIMON WILLISON -->
+<div class="creator" id="simon">
+  <h2>📌 Simon Willison — Tech Lock-in Is Dead (And Datasette Gets an Agent)</h2>
+  <div class="headline">A short post with a big implication for every architecture decision you make</div>
+
+  <p>Simon's been on a prolific May. His most thought-provoking piece was a short note (May 14) unpacking a Mitchell Hashimoto quote about Bun migrating from Zig to Rust: <em>"Programming languages used to be LOCK IN, and they're increasingly not so."</em></p>
+
+  <p>Simon had just heard a similar story at a conference: a medium-sized tech company had completed a coding-agent-driven rewrite of both their iOS and Android apps to React Native. When he asked why React Native (given that agents lower the cost of maintaining separate native apps), the answer was: they chose it partly because if it turned out to be the wrong call, <strong>they could just port back to native in the future.</strong></p>
+
+  <p>The implication: architectural lock-in used to be one of the most consequential long-term technology decisions a team made. Coding agents are eroding that moat. Rewrites that would have taken 18 months now take weeks. This changes the risk calculus for every "build vs. buy" and "which framework" decision on your roadmap.</p>
+
+  <p>Also notable: he shipped <strong>Datasette Agent 0.1a4</strong> (May 21) — a working integration of Claude as an autonomous agent inside the Datasette data platform. Part of a pattern Simon is tracking: purpose-built agents embedded inside existing tools, rather than standalone chatbots. He also published "The Last Six Months in LLMs in Five Minutes" (May 19) — his best rapid-fire summaries are a consistent resource for staying calibrated.</p>
+
+  <div class="takeaway"><strong>💡 PM takeaway:</strong> "Technology lock-in risk" deserves repricing on your risk register. When evaluating platform or framework choices, the migration cost is lower than it has ever been. This changes how you should weigh speed-to-market vs. future optionality — you can afford to be more decisive and less precious about reversibility.</div>
+
+  <p>🔗 <a href="https://simonwillison.net/2026/May/14/not-so-locked-in/">Not So Locked In Any More</a> &nbsp;·&nbsp; <a href="https://simonwillison.net/2026/May/21/datasette-agent/">Datasette Agent</a> &nbsp;·&nbsp; <a href="https://simonwillison.net/2026/May/19/5-minute-llms/">Last Six Months in LLMs</a></p>
+</div>
+
+<!-- HARRISON CHASE -->
+<div class="creator" id="harrison">
+  <h2>📌 Harrison Chase — Context Engineering Is the New AI Moat</h2>
+  <div class="headline">LangChain turns 3, and the framing shifts from building agents to operating them</div>
+
+  <p>Harrison marked LangChain's third birthday (May 5) with a reflective post and major product announcements: LangChain 1.0, LangSmith expansion, $125M in new funding, 1B+ downloads. But the more important shift is conceptual.</p>
+
+  <p>His framing of where the industry stands in 2026: the question is no longer "Can you build an agent?" It's "Can you <em>observe, evaluate, govern, and operate</em> agents reliably in production?" This is a fundamentally different problem — less about scaffolding, more about reliability engineering for systems that make autonomous decisions.</p>
+
+  <p>The Sequoia interview distilled his core thesis: <strong>context engineering is the new moat for long-horizon agents.</strong> Better models alone won't get your agent to production. What matters is how well you architect the context the agent operates in — what it can see, remember, retrieve, and decide. His new "Agent Harness/Deep Agents" tooling from Interrupt 2026 is aimed directly at this: control over orchestration, memory, and context in production deployments.</p>
+
+  <blockquote>"Models will get better. Context engineering is what separates teams that ship agents that work from teams that demo agents that work."</blockquote>
+
+  <div class="takeaway"><strong>💡 PM takeaway:</strong> If you're building AI features that involve agents, "context engineering" is the discipline your team needs to develop. This means thinking less about which model to use and more about what your agent can see, what it remembers, how it retrieves information, and how you'll know when it's degrading. The infra layer is becoming a real differentiator.</div>
+
+  <p>🔗 <a href="https://blog.langchain.com/three-years-langchain/">Three Years of LangChain</a> &nbsp;·&nbsp; <a href="https://sequoiacap.com/podcast/context-engineering-our-way-to-long-horizon-agents-langchains-harrison-chase/">Context Engineering — Sequoia</a></p>
+</div>
+
+<!-- SHREYAS -->
+<div class="creator" id="shreyas">
+  <h2>📌 Shreyas Doshi — No Company Founded After 2026 Will Reach 10K FTEs</h2>
+  <div class="headline">A structural prediction about the death of scale as a competitive moat</div>
+
+  <p>Shreyas dropped a prediction that's circulating in PM and founder circles: <em>"No company founded after 2026 will organically grow to more than 10K FTEs. The leverage of rapid iterative decision loops by teams using best-in-class AI has reached escape velocity over traditional economies of scale."</em></p>
+
+  <p>This echoes Dan Shipper's tiny teams argument and Swyx's playbook but comes from a former Stripe/Twitter/Google PM with a sharp structural lens. The argument: AI tools mean that a team of 50 with tight decision loops can outexecute a team of 500 with org-chart coordination tax. The traditional scaling playbook (hire to unlock capacity) is being replaced by a leverage playbook (amplify existing capacity). Headcount as a signal of ambition is becoming headcount as a signal of inefficiency.</p>
+
+  <div class="takeaway"><strong>💡 PM takeaway:</strong> If you're building a team or pitching for headcount, pressure-test your ask against this framework: what could AI tools make unnecessary before those hires would be fully onboarded? The PM role is increasingly about amplification, not addition.</div>
+</div>
+
+<!-- ETHAN MOLLICK -->
+<div class="creator" id="ethan">
+  <h2>📌 Ethan Mollick — The Mass Intelligence Era Is Here</h2>
+  <div class="headline">1 billion users, $0.14/million tokens, and institutions built for scarcity</div>
+
+  <p>Ethan's "Mass Intelligence" essay (the richest piece in his recent archive) documents a structural shift that changes the product strategy question: powerful AI has become a public utility. GPT-4 launched at $50 per million tokens. GPT-5 Nano — substantially more capable — is now $0.14 per million tokens. That's a 350x price drop with capability improvements. Google reported 33x energy efficiency improvement per prompt in a single year.</p>
+
+  <p>The implication isn't just cost. It's that the marginal cost of serving each additional user has collapsed, which means more business models become viable, free users can access reasoning that used to cost real money, and every assumption about "AI as a premium feature" needs to be revisited.</p>
+
+  <blockquote>"Every institution we have — schools, hospitals, courts, companies, governments — was built for a world where intelligence was scarce and expensive. Now every profession, every institution, every community has to figure out how to thrive with Mass Intelligence."</blockquote>
+
+  <p>His most recent post (April 23, "Sign of the Future: GPT-5.5") continues this thread: models are advancing faster than we're developing the interfaces and norms to use them well. The gap between what models can do and what average users are asking them to do is widening — which is both a product opportunity and a design challenge.</p>
+
+  <div class="takeaway"><strong>💡 PM takeaway:</strong> "Intelligence is now a commodity input" should be a first-principles assumption in every product strategy you write. The question isn't whether your product can use AI — it's whether you've rethought your product's core value prop for a world where users can already do the cognitive work you used to do for them. If your moat is "we analyze X faster," that moat is gone.</div>
+
+  <p>🔗 <a href="https://www.oneusefulthing.org/p/mass-intelligence">Mass Intelligence — One Useful Thing</a> &nbsp;·&nbsp; <a href="https://www.oneusefulthing.org/p/sign-of-the-future-gpt-55">Sign of the Future: GPT-5.5</a></p>
+</div>
+
+<!-- CLAIRE VO -->
+<div class="creator" id="claire">
+  <h2>📌 Claire Vo — Agent Architecture Glossary + App Design System in 48 Hours</h2>
+  <div class="headline">The vocabulary every PM building AI products needs, plus a live demo of what's now possible</div>
+
+  <p>Two notable posts from Claire this month. First, a concise agent architecture glossary (May 1) that cuts through the jargon fog — defining message, agent, sandbox, subagent, tool, hook, connector, MCP, skill, and API in plain language. If you're in product review meetings where engineers throw around agent terminology and you're half-following, this is the reference to bookmark and read once.</p>
+
+  <p>Second (May 6): Claire used Claude + Cursor with Opus 4.7 to auto-generate and iterate a full app design system from her marketing and GitHub repos in approximately 48 hours. This directly illustrates the Dan Shipper claim about full-stack designers becoming superheroes — and Claire's practical demonstration of "here's exactly how fast this goes" is more useful than most theory. No junior design team required, no handoff cycle, no wait.</p>
+
+  <p>Claire (3x CPTO, founder of ChatPRD.ai) has been consistently ahead on the "PM role is being redefined" narrative. Her earlier "RIP Product Management" piece sparked part of the debate that Elena Verna's essay is partly responding to.</p>
+
+  <div class="takeaway"><strong>💡 PM takeaway:</strong> Learn the agent architecture vocabulary — not to build agents, but because you can't make good architecture decisions in product reviews if you can't distinguish a tool from an MCP from a subagent. 30 minutes with Claire's glossary pays for itself in the next technical design meeting.</div>
+</div>
+
+<!-- LOGAN -->
+<div class="creator" id="logan">
+  <h2>📌 Logan Kilpatrick — Google I/O: Managed Agents, Gemini 3.5 Flash, and the Android AI Studio Builder</h2>
+  <div class="headline">The underreported Google I/O announcement that matters most for builders</div>
+
+  <p>Logan (Google DeepMind, Gemini / AI Studio) covered Google I/O from the inside (May 22). The announcements that matter for product builders:</p>
+
+  <ul>
+    <li><strong>Gemini 3.5 Flash:</strong> More expensive than previous Flash, but Google is deploying it as the backbone model across its products. Better capability per dollar at scale than any previous Flash model.</li>
+    <li><strong>Gemini Omni world model:</strong> Multimodal, long-context, grounded in real-world data. Designed for agentic tasks requiring persistent memory of the environment — a different architecture than chat-style models.</li>
+    <li><strong>Managed agents in the Gemini API:</strong> The most underreported announcement. Google is now offering managed agent infrastructure, abstracting away the operational complexity of running production agents. This directly addresses the #1 blocker teams report for shipping agents at scale.</li>
+    <li><strong>Antigravity ecosystem:</strong> Google's MCP/plugin equivalent, expanding quickly.</li>
+    <li><strong>Native Android app builder inside AI Studio:</strong> Build deployable Android apps without leaving AI Studio. Direct competition to Replit and Cursor.</li>
+  </ul>
+
+  <p>His broader take: <em>"2026 is very much the year of agents and AI coding, lots to happen still!"</em> And his underrated prediction on X: "AGI won't be a model — it's going to be a product that somebody creates." That's a challenge and an invitation simultaneously.</p>
+
+  <div class="takeaway"><strong>💡 PM takeaway:</strong> The managed agent infrastructure announcement is worth a roadmap revisit. If you've been delaying agentic features because of operational overhead (rate limits, memory management, observability), Google is now abstracting that away — and Amazon and Azure are close behind. The infra excuse is expiring.</div>
+</div>
+
+<!-- SWYX -->
+<div class="creator" id="swyx">
+  <h2>📌 Swyx (Shawn Wang) — The Tiny Teams Playbook</h2>
+  <div class="headline">Universal advice from 7 teams with 100 people and $200M ARR</div>
+
+  <p>Swyx published his Tiny Teams Playbook on Latent.Space — synthesizing patterns from high-efficiency, AI-native teams achieving extraordinary revenue per employee. His definition of a Tiny Team: "more ARR in millions than employees." Efficiency as the governing principle, not headcount as a signal of ambition.</p>
+
+  <p>The core playbook principles:</p>
+  <ul>
+    <li><strong>Simple, boring tech stack:</strong> Shell scripts over Kubernetes. Start from a UI wrapper over one API call to an LLM and add complexity only when forced. Modularity as a discipline, not a feature.</li>
+    <li><strong>Invest in evals early:</strong> Top-tier internal evals are a competitive moat. The teams that win know when their system degrades before customers do.</li>
+    <li><strong>Compound learning:</strong> Every problem solved should generate a reusable artifact — template, playbook, prompt — that makes the next similar problem faster. Knowledge compounds; re-solving the same problem doesn't.</li>
+    <li><strong>The AI Engineer was the single-player game. Tiny Teams is co-op multiplayer</strong> — more adaptive, more resilient, capable of far more.</li>
+  </ul>
+
+  <div class="takeaway"><strong>💡 PM takeaway:</strong> Use this as a diagnostic. If your team of 12 can't outperform what a well-equipped Tiny Team of 5 could do, you likely have a process and tooling problem, not a resource problem. The "more people = more output" equation is breaking down. Where specifically is your team's leverage low?</div>
+
+  <p>🔗 <a href="https://www.latent.space/p/tiny">The Tiny Teams Playbook — Latent.Space</a></p>
+</div>
+
+<!-- AMJAD -->
+<div class="creator" id="amjad">
+  <h2>📌 Amjad Masad — Replit: $400M Raise, Staying Independent, "Anthropic Is Undefeated"</h2>
+  <div class="headline">From $2.8M ARR in all of 2024 to tracking toward a billion-dollar run rate</div>
+
+  <p>At TechCrunch's StrictlyVC event (May 1), Amjad dropped the number that makes you read it twice: Replit went from $2.8M in revenue for all of 2024 to tracking toward a $1B annual run rate. One year. That's what happens when your product is AI-native development for a market that's exploding.</p>
+
+  <p>On acquisition rumors (given rival Cursor's rumored $60B SpaceX deal), Masad was clear: Replit intends to stay independent. "I would love for the company to remain an independent company." And on the AI provider ranking — Anthropic, Google, OpenAI — his answer, as the CEO of a platform doing real-time agent orchestration at volume: <em>"Anthropic is still undefeated on the core agentic loop."</em></p>
+
+  <p>That last line carries more weight than a marketing claim. Replit is a high-volume, production agent platform constantly evaluating models in real conditions. When the CEO says one provider dominates for multi-step, tool-using tasks in the real world, that's a practitioner signal worth noting — especially for anyone building agentic products and trying to choose infrastructure.</p>
+
+  <div class="takeaway"><strong>💡 PM takeaway:</strong> Masad's endorsement of Anthropic for the core agentic loop is a practitioner data point, not a lab benchmark. If you're evaluating AI providers for a product that involves multi-step agents with real-world tasks, this is the place to start your evaluation.</div>
+
+  <p>🔗 <a href="https://techcrunch.com/2026/05/01/replits-amjad-masad-on-the-cursor-deal-fighting-apple-and-why-hed-rather-not-sell/">Amjad Masad at StrictlyVC — TechCrunch</a></p>
+</div>
+
+<!-- ANDREW NG -->
+<div class="creator" id="andrew">
+  <h2>📌 Andrew Ng — "There Will Be No AI Jobpocalypse" (And He's Building an AI Version of Himself)</h2>
+  <div class="headline">Three weeks of The Batch, one consistent thesis: transformation, not elimination</div>
+
+  <p>Andrew's recent Batch letters have circled the job displacement question from multiple angles, landing consistently on a more optimistic frame than the Elena Verna school:</p>
+
+  <ul>
+    <li><strong>May 8:</strong> "There will be no AI jobpocalypse." His argument follows historical tech transitions: new tools create categories of work faster than they eliminate existing ones. The aggregate employment picture is different from the individual role transformation picture.</li>
+    <li><strong>May 15:</strong> Announced "AI Andrew" — an AI companion shaped by his personality. Partly an experiment in how AI can extend a person's reach (educational content at scale), partly a signal of where personalized AI tutors are heading for everyone.</li>
+    <li><strong>May 22:</strong> Commentary on Harvard limiting A grades to 20% of undergrad classes — Ng frames this as institutions trying to fight AI-assisted work with credential inflation rather than curriculum redesign. A useful frame for any company trying to resist AI adoption through policy rather than adaptation.</li>
+  </ul>
+
+  <div class="takeaway"><strong>💡 PM takeaway:</strong> Andrew's "no jobpocalypse" framing is a useful counterpoint to Elena Verna's "assume your role is expiring" argument — both can be simultaneously true. Aggregate employment may hold while individual roles transform dramatically. Plan for role transformation, not role elimination. The distinction matters for how you frame AI adoption internally.</div>
+
+  <p>🔗 <a href="https://www.deeplearning.ai/the-batch">The Batch — DeepLearning.AI</a></p>
+</div>
+
+<!-- KARO -->
+<div class="creator" id="karo">
+  <h2>📌 Karo Zieminski — Vibecoder's CLI Toolkit + Perplexity Generates Bloomberg-Level Finance Reports</h2>
+  <div class="headline">Two deeply practical guides for AI-native builders who want to move up a tier</div>
+
+  <p>Karo (Product with Attitude, 17K+ subscribers) published "The Vibecoder's CLI Toolkit" — a curated guide to CLI tools for AI-assisted development, covering Claude Code, Codex, and iFlow. This is the most practical on-ramp I've seen for PMs who want to move from Tier 2 to Tier 4 on Elena Verna's AI-nativeness ladder without a CS degree. Real tools, real workflows, no theory.</p>
+
+  <p>Separately: Karo tested Perplexity Computer for Professional Finance on Palantir — plugging into 40+ live finance tools and running 35 specialist finance workflows. Her verdict: "magnificent." She described the output as Bloomberg terminal quality, generated in 7 minutes. This points to something broader than the specific tool: domain-specific AI workflows are rapidly reaching the quality bar that professional analysts set. Not just "good for AI" — actually good by the standards of the domain.</p>
+
+  <div class="takeaway"><strong>💡 PM takeaway:</strong> The "domain-specific agent" pattern is maturing faster than most people realize. For whatever vertical your product serves, there's likely a purpose-built workflow tool now approaching professional-grade output in your users' area. Your competitive baseline is rising — check what exists in your space before building it yourself.</div>
+
+  <p>🔗 <a href="https://karozieminski.substack.com/p/vibecoding-clis-claudecode-codex-iflow">Vibecoder's CLI Toolkit</a> &nbsp;·&nbsp; <a href="https://karozieminski.substack.com/p/perplexity-computer-finance-palantir-tearsheet">Perplexity Computer Finance</a></p>
+</div>
+
+<!-- DEEP PULL -->
+<div class="deep-pull" id="deep-pull">
+  <h2>🔥 This Week's Deep Pull: Elena Verna's 6-Tier AI-Nativeness Framework</h2>
+
+  <p>The single most actionable thing from this week's research is Elena Verna's 6-tier framework for AI-nativeness, published via Lenny's Newsletter on May 21. It's the clearest mental model circulating right now for <em>where you actually are</em> on AI adoption — not where you claim to be.</p>
+
+  <p>Most PMs are at Tier 1-2 (writing buddy, meeting notes). The Tier 3 jump — using AI as a genuine <em>thinking partner</em> that challenges your logic rather than validates it — is where the real leverage shift happens. The prompt engineering required is counterintuitive: you have to explicitly demand disagreement. LLMs will agree with you by default. "Disagree with me. What's the strongest counter-argument?" is the prompt that transforms a yes-machine into a thinking partner. This is especially critical for strategy work, where the default AI behavior is actively dangerous.</p>
+
+  <p>The Tier 5-6 leap (shipping to prod, running agents) is where PMs become genuinely irreplaceable rather than endangered — because the people who can define <em>what</em> the agent should do, verify its outputs, and manage its failure modes are exactly the people with product sense and domain context. The technical threshold is lower than ever; the PM judgment layer has never been more valuable.</p>
+
+  <p>For AI-native PM thinking specifically: this framework is your new career self-assessment tool. Not "am I using AI?" but "which tier am I operating at, and what would it take to move up one tier this quarter?" One tier of growth per quarter compounds quickly.</p>
+
+  <p>🔗 <a href="https://www.lennysnewsletter.com/p/youll-lose-your-job-in-2027">Full framework: You'll Lose Your Job in 2027 — Lenny's Newsletter</a></p>
+</div>
+
+<p style="color: #888; font-size: 13px; text-align: center; margin-top: 40px;">14 of 20 creators tracked had new content in the last 7 days &nbsp;·&nbsp; Quiet this period: Marty Cagan, Julie Zhuo, Paweł Huryn, Kristen Berman, Aakash Gupta, Josh Miller</p>
+
+<div class="sources" id="sources">
+  <h3>Sources</h3>
+  <ul>
+    <li><a href="https://www.lennysnewsletter.com/p/youll-lose-your-job-in-2027">You'll Lose Your Job in 2027 — Elena Verna via Lenny's Newsletter</a></li>
+    <li><a href="https://www.lennysnewsletter.com/p/the-ai-paradox-dan-shipper">The AI Paradox — Dan Shipper via Lenny's Podcast</a></li>
+    <li><a href="https://venturebeat.com/technology/andrej-karpathy-announces-hes-joining-anthropic">Andrej Karpathy Joins Anthropic — VentureBeat</a></li>
+    <li><a href="https://fortune.com/2026/05/19/who-is-andrej-karpathy-vibe-coding-anthropic-openai-rubiks-cube/">Karpathy Background — Fortune</a></li>
+    <li><a href="https://cutlefish.substack.com/p/ai-wont-save-the-kingdoms-we-built">AI Won't Save the Kingdoms We Built — John Cutler</a></li>
+    <li><a href="https://newsletter.pragmaticengineer.com/p/ai-impact-on-software-engineers-part-2">AI's Impact on Software Engineers 2026 Part 2 — The Pragmatic Engineer</a></li>
+    <li><a href="https://simonwillison.net/2026/May/14/not-so-locked-in/">Not So Locked In Any More — Simon Willison</a></li>
+    <li><a href="https://simonwillison.net/2026/May/21/datasette-agent/">Datasette Agent — Simon Willison</a></li>
+    <li><a href="https://simonwillison.net/2026/May/19/5-minute-llms/">Last Six Months in LLMs in Five Minutes — Simon Willison</a></li>
+    <li><a href="https://blog.langchain.com/three-years-langchain/">Three Years of LangChain — Harrison Chase</a></li>
+    <li><a href="https://sequoiacap.com/podcast/context-engineering-our-way-to-long-horizon-agents-langchains-harrison-chase/">Context Engineering Long-Horizon Agents — Sequoia</a></li>
+    <li><a href="https://www.oneusefulthing.org/p/mass-intelligence">Mass Intelligence — Ethan Mollick</a></li>
+    <li><a href="https://www.oneusefulthing.org/p/sign-of-the-future-gpt-55">Sign of the Future: GPT-5.5 — Ethan Mollick</a></li>
+    <li><a href="https://www.latent.space/p/tiny">The Tiny Teams Playbook — Swyx</a></li>
+    <li><a href="https://techcrunch.com/2026/05/01/replits-amjad-masad-on-the-cursor-deal-fighting-apple-and-why-hed-rather-not-sell/">Amjad Masad at StrictlyVC — TechCrunch</a></li>
+    <li><a href="https://www.deeplearning.ai/the-batch">The Batch — Andrew Ng</a></li>
+    <li><a href="https://karozieminski.substack.com/p/vibecoding-clis-claudecode-codex-iflow">Vibecoder's CLI Toolkit — Karo Zieminski</a></li>
+    <li><a href="https://karozieminski.substack.com/p/perplexity-computer-finance-palantir-tearsheet">Perplexity Computer Finance — Karo Zieminski</a></li>
+    <li><a href="https://startup.whatfinger.com/2026/05/22/googles-biggest-ai-announcements-i-was-there/">Google I/O AI Announcements — Logan Kilpatrick coverage</a></li>
+  </ul>
+</div>
 
 </body>
 </html>
