@@ -488,8 +488,39 @@ def update_manifest(filename: str) -> None:
         json.dump(manifest, f, indent=2)
 
 
+def send_email(page_html: str, date_display: str) -> None:
+    """Send the digest as an HTML email via Gmail SMTP."""
+    import smtplib
+    from email.mime.multipart import MIMEMultipart
+    from email.mime.text import MIMEText
+
+    gmail_user = os.environ.get("GMAIL_USER", "viviankillin@gmail.com")
+    gmail_app_password = os.environ.get("GMAIL_APP_PASSWORD", "")
+
+    if not gmail_app_password:
+        log.warning("GMAIL_APP_PASSWORD not set — skipping email send")
+        return
+
+    msg = MIMEMultipart("alternative")
+    msg["Subject"] = f"🧠 Vivian's PM Skills Digest — {date_display}"
+    msg["From"]    = gmail_user
+    msg["To"]      = gmail_user
+
+    msg.attach(MIMEText(page_html, "html"))
+
+    try:
+        log.info("Sending digest email to %s...", gmail_user)
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+            server.login(gmail_user, gmail_app_password)
+            server.sendmail(gmail_user, gmail_user, msg.as_string())
+        log.info("Email sent successfully")
+    except Exception as e:
+        # Email failure shouldn't abort the whole run — the HTML is already saved
+        log.error("Email send failed: %s", e)
+
+
 def main():
-    log.info("━━━ Vivian's PM Skills Digest Generator v3 ━━━")
+    log.info("━━━ Vivian's PM Skills Digest Generator v4 ━━━")
     start = datetime.now()
 
     try:
@@ -503,6 +534,7 @@ def main():
         digest_html = build_digest_html(recent, thought_provokers, shown_urls)
 
         log.info("Building HTML page...")
+        date_display = datetime.now().strftime("%A, %B %d, %Y")
         page = generate_page(digest_html)
 
         os.makedirs("digests", exist_ok=True)
@@ -520,6 +552,9 @@ def main():
             updated_urls = shown_urls + [u for u in new_urls if u not in shown_urls]
             save_shown_urls(updated_urls)
             log.info("Saved %d new URL(s) to shown_urls.json (%d total)", len(new_urls), len(updated_urls))
+
+        # Send the same HTML as an email
+        send_email(page, date_display)
 
         elapsed = (datetime.now() - start).seconds
         log.info("━━━ Done in %ds — saved to %s ━━━", elapsed, output_path)
