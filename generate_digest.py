@@ -203,16 +203,20 @@ Pick articles whose URLs do NOT appear in the above list.
         tp_html = ""
         for tp in EVERGREEN_FALLBACK_TPS:
             tp_html += f"""<div class="thought-provoker">
-  <div class="tp-label">Worth your time regardless of when it was published</div>
-  <div class="creator-name">{tp["name"]}</div>
-  <div class="creator-insight">{tp["insight"]}</div>
-  <div class="creator-takeaway">Why it's worth your time: {tp["takeaway"]}</div>
-  <a class="creator-link" href="{tp["url"]}" target="_blank">Read →</a>
+  <div class="creator-header">
+    <h2>{tp["name"]}</h2>
+  </div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>{tp["takeaway"]}</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>{tp["insight"]}</p></div>
+  </details>
+  <div class="creator-links"><a href="{tp["url"]}" target="_blank">Read →</a></div>
 </div>
 """
         return f"""<div class="quiet-banner">
   <span class="quiet-icon">💤</span>
-  <span>Quiet week — none of your superstars posted recently. Here are two evergreen reads worth your time.</span>
+  <span>Quiet week — none of your thought leaders posted recently. Here are two evergreen reads worth your time.</span>
 </div>
 {tp_html}"""
 
@@ -247,44 +251,42 @@ OUTPUT RULES — READ CAREFULLY:
 
 ━━━ FORMAT — follow this EXACTLY ━━━
 
-STEP 1 — Decide if there is any qualifying creator content from the last 7 days.
+STEP 1 — Decide if there is qualifying creator content from the last 7 days.
 
-If YES (there are qualifying recent results):
-  Output creator cards (one per qualifying creator), then thought provokers, then top-pick.
+If NO qualifying recent content: output the quiet-week banner first, then 1-2 thought provokers. No top-pick.
+If YES: output creator cards, then thought provokers, then top-pick.
 
-If NO (nothing qualifies from the last 7 days, or all recent results are off-topic):
-  Output the quiet-week banner first, then STILL output 1-2 thought provokers.
-  Do NOT output an empty digest. Do NOT output the no-updates div.
+STEP 2 — Output the HTML using these exact class names and structure:
 
-STEP 2 — Output the appropriate HTML:
+Quiet-week banner (only when nothing recent qualifies):
+<div class="quiet-banner"><span class="quiet-icon">💤</span><span>Quiet week — none of your thought leaders posted in the last 7 days. Here are reads worth your time regardless.</span></div>
 
-Optional quiet-week banner (only if no recent results qualify):
-<div class="quiet-banner">
-  <span class="quiet-icon">💤</span>
-  <span>Quiet week — none of your superstars posted in the last 7 days. Here are reads worth your time regardless.</span>
-</div>
-
-Creator cards (one per qualifying creator from last 7 days):
+Creator card (one per qualifying creator — include a date badge using the article's publish date):
 <div class="creator">
-  <div class="creator-name">[NAME]</div>
-  <div class="creator-insight">[1-2 sentences. Lead with the idea not the person.]</div>
-  <div class="creator-takeaway">AI-native PM angle: [one crisp sentence]</div>
-  <a class="creator-link" href="[URL]" target="_blank">Read →</a>
+  <div class="creator-header"><h2>[NAME]</h2><span class="date-badge">[e.g. May 21]</span></div>
+  <div class="creator-headline">[One sentence article subtitle]</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>[2-3 sentence PM takeaway — lead with the actionable insight]</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>[2-3 paragraph summary of the article. Use &lt;ul&gt; lists for frameworks or numbered points.]</p></div>
+  </details>
+  <div class="creator-links"><a href="[URL]" target="_blank">Read →</a></div>
 </div>
 
-Thought provokers (ALWAYS include 1-2, URL must not be in ALREADY SHOWN list):
+Thought provoker card (ALWAYS include 1-2; URL must not be in ALREADY SHOWN list):
 <div class="thought-provoker">
-  <div class="tp-label">Worth your time regardless of when it was published</div>
-  <div class="creator-name">[NAME]</div>
-  <div class="creator-insight">[1-2 sentences on the idea]</div>
-  <div class="creator-takeaway">Why it's worth your time: [one sentence]</div>
-  <a class="creator-link" href="[URL]" target="_blank">Read →</a>
+  <div class="creator-header"><h2>[NAME]</h2><span class="date-badge">[date if known]</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>[1-2 sentence takeaway]</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>[1-2 paragraphs on the core idea]</p></div>
+  </details>
+  <div class="creator-links"><a href="[URL]" target="_blank">Read →</a></div>
 </div>
 
-Top-pick (include only when there are creator cards, skip on quiet weeks):
+Top-pick (only when creator cards exist — skip on quiet weeks):
 <div class="top-pick">
-  <div class="top-pick-label">Top pick</div>
-  <div class="top-pick-content">[2-3 sentences on why this is the most important thing to read]</div>
+  <div class="top-pick-label">🔥 Top pick this issue</div>
+  <div class="top-pick-content">[2-3 sentences on why this is the most important read for an AI-native PM]</div>
 </div>
 
 Output nothing else. No notes. No markdown. No explanations."""
@@ -293,7 +295,7 @@ Output nothing else. No notes. No markdown. No explanations."""
         log.info("Calling Claude Haiku for digest generation...")
         response = client.messages.create(
             model="claude-haiku-4-5-20251001",
-            max_tokens=3000,
+            max_tokens=4000,
             messages=[{"role": "user", "content": prompt}],
         )
     except Exception as e:
@@ -312,22 +314,19 @@ Output nothing else. No notes. No markdown. No explanations."""
     # Safety net: if Claude produced no thought provokers, inject evergreen ones
     if tp_count == 0:
         log.warning("Claude produced 0 thought provokers — injecting evergreen fallback")
-        banner = """<div class="quiet-banner">
-  <span class="quiet-icon">💤</span>
-  <span>Quiet week — nothing new from your superstars. Here are reads worth your time regardless.</span>
-</div>
-"""
+        banner = """<div class="quiet-banner"><span class="quiet-icon">💤</span><span>Quiet week — nothing new from your thought leaders. Here are reads worth your time regardless.</span></div>\n"""
         tp_html = ""
         for tp in EVERGREEN_FALLBACK_TPS:
             tp_html += f"""<div class="thought-provoker">
-  <div class="tp-label">Worth your time regardless of when it was published</div>
-  <div class="creator-name">{tp["name"]}</div>
-  <div class="creator-insight">{tp["insight"]}</div>
-  <div class="creator-takeaway">Why it's worth your time: {tp["takeaway"]}</div>
-  <a class="creator-link" href="{tp["url"]}" target="_blank">Read →</a>
+  <div class="creator-header"><h2>{tp["name"]}</h2></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>{tp["takeaway"]}</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>{tp["insight"]}</p></div>
+  </details>
+  <div class="creator-links"><a href="{tp["url"]}" target="_blank">Read →</a></div>
 </div>
 """
-        # Replace empty/no-updates output with banner + fallback TPs
         if not html or "<div" not in html or "no-updates" in html:
             html = banner + tp_html
         else:
@@ -352,7 +351,7 @@ def generate_page(digest_html: str) -> str:
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: #fafaf8;
       color: #1a1a1a;
-      line-height: 1.6;
+      line-height: 1.65;
     }}
 
     .header {{
@@ -361,7 +360,7 @@ def generate_page(digest_html: str) -> str:
       padding: 2.5rem 1.5rem 2rem;
       text-align: center;
     }}
-    .header h1 {{ font-size: 1.5rem; font-weight: 600; letter-spacing: -0.01em; }}
+    .header h1 {{ font-size: 1.4rem; font-weight: 700; letter-spacing: -0.3px; }}
     .header .tagline {{ font-size: 0.9rem; color: #888; margin-top: 0.3rem; }}
     .header .updated {{
       display: inline-block; margin-top: 0.85rem;
@@ -369,7 +368,7 @@ def generate_page(digest_html: str) -> str:
       padding: 0.25rem 0.85rem; border-radius: 999px;
     }}
 
-    .container {{ max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }}
+    .container {{ max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }}
 
     /* ── Quiet week banner ── */
     .quiet-banner {{
@@ -385,71 +384,102 @@ def generate_page(digest_html: str) -> str:
       color: #666;
       line-height: 1.5;
     }}
-    .quiet-icon {{ font-size: 1.2rem; flex-shrink: 0; margin-top: 0.05rem; }}
+    .quiet-icon {{ font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }}
 
-    /* ── Creator cards ── */
-    .creator {{
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {{
       background: #fff; border: 1px solid #e8e8e4;
-      border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1rem;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 0.9rem;
     }}
-    .creator-name {{
-      font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 0.07em; color: #999; margin-bottom: 0.5rem;
-    }}
-    .creator-insight {{ font-size: 0.975rem; color: #1a1a1a; margin-bottom: 0.6rem; line-height: 1.55; }}
-    .creator-takeaway {{
-      font-size: 0.84rem; color: #555; background: #f7f7f4;
-      border-left: 3px solid #c4b8ff; padding: 0.4rem 0.75rem;
-      border-radius: 0 4px 4px 0; margin-bottom: 0.85rem; line-height: 1.5;
-    }}
-    .creator-link {{ font-size: 0.8rem; color: #7b6ef6; text-decoration: none; font-weight: 500; }}
-    .creator-link:hover {{ text-decoration: underline; }}
+    .thought-provoker {{ background: #fffdf5; border-color: #e8d98a; }}
 
-    /* ── Thought provoker cards ── */
-    .thought-provoker {{
-      background: #fffdf5; border: 1px solid #e8d98a;
-      border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1rem;
+    .creator-header {{
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.35rem;
     }}
-    .tp-label {{
-      font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 0.07em; color: #a07800; margin-bottom: 0.4rem;
+    .creator-header h2 {{ font-size: 1rem; font-weight: 700; line-height: 1.3; }}
+    .date-badge {{
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 500;
+      color: #888; background: #f0f0ec;
+      padding: 2px 8px; border-radius: 999px; white-space: nowrap;
     }}
+    .badge-hot {{
+      display: inline-block; background: #cc3300; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 1px 6px;
+      border-radius: 999px; margin-left: 5px; vertical-align: middle;
+    }}
+    .creator-headline {{
+      font-size: 0.8rem; color: #777; font-style: italic; margin-bottom: 0.75rem;
+    }}
+
+    /* ── TL;DR block ── */
+    .tldr {{
+      background: #f0eeff; border-left: 3px solid #7b6ef6;
+      border-radius: 0 6px 6px 0; padding: 0.5rem 0.85rem;
+      font-size: 0.855rem; color: #2a2a2a; line-height: 1.55;
+      margin-bottom: 0.6rem;
+    }}
+    .tldr-label {{
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; display: block; margin-bottom: 3px;
+    }}
+    .thought-provoker .tldr {{ background: #fffbea; border-color: #c9a800; }}
+    .thought-provoker .tldr-label {{ color: #a07800; }}
+
+    /* ── Collapsible body ── */
+    details {{ margin-top: 2px; }}
+    summary {{
+      cursor: pointer; font-size: 0.75rem; font-weight: 600; color: #7b6ef6;
+      list-style: none; display: inline-flex; align-items: center; gap: 3px;
+      user-select: none;
+    }}
+    summary::-webkit-details-marker {{ display: none; }}
+    summary::before {{ content: '↓ '; font-size: 0.7rem; }}
+    details[open] summary::before {{ content: '↑ '; }}
+    details[open] summary {{ margin-bottom: 0.75rem; }}
+
+    .detail-body p {{ font-size: 0.875rem; margin-bottom: 0.7rem; }}
+    .detail-body ul, .detail-body ol {{
+      font-size: 0.875rem; padding-left: 1.2rem; margin-bottom: 0.7rem;
+    }}
+    .detail-body li {{ margin-bottom: 0.4rem; }}
+    .detail-body blockquote {{
+      border-left: 3px solid #ddd; padding: 0.3rem 0.85rem;
+      color: #555; font-style: italic; font-size: 0.855rem; margin: 0.5rem 0;
+    }}
+
+    .creator-links {{ margin-top: 0.6rem; font-size: 0.8rem; }}
+    .creator-links a {{ color: #7b6ef6; text-decoration: none; font-weight: 500; }}
+    .creator-links a:hover {{ text-decoration: underline; }}
+    .creator-links span {{ color: #ccc; margin: 0 5px; }}
 
     /* ── Top pick ── */
     .top-pick {{
       background: #f0eeff; border: 1px solid #c4b8ff;
-      border-radius: 10px; padding: 1.25rem 1.5rem; margin-top: 2rem;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-top: 1.5rem;
     }}
     .top-pick-label {{
-      font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 0.07em; color: #7b6ef6; margin-bottom: 0.5rem;
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; margin-bottom: 0.5rem;
     }}
-    .top-pick-content {{ font-size: 0.975rem; color: #1a1a1a; line-height: 1.55; }}
+    .top-pick-content {{ font-size: 0.925rem; color: #1a1a1a; line-height: 1.55; }}
 
     /* ── No updates fallback ── */
     .no-updates {{
-      text-align: center; padding: 3rem 1rem;
-      font-size: 0.9rem; color: #aaa;
+      text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #aaa;
     }}
 
     .footer {{
       text-align: center; padding: 1.5rem;
-      font-size: 0.78rem; color: #bbb;
-      border-top: 1px solid #e8e8e4;
+      font-size: 0.78rem; color: #bbb; border-top: 1px solid #e8e8e4;
     }}
 
     @media (max-width: 600px) {{
       .header {{ padding: 1.5rem 1rem 1.25rem; }}
-      .header h1 {{ font-size: 1.2rem; }}
-      .header .tagline {{ font-size: 0.82rem; }}
+      .header h1 {{ font-size: 1.1rem; }}
       .container {{ padding: 1rem 0.85rem 2.5rem; }}
-      .creator, .thought-provoker, .top-pick {{
-        padding: 1rem 1.1rem;
-        border-radius: 8px;
-      }}
-      .creator-insight {{ font-size: 0.92rem; }}
-      .creator-takeaway {{ font-size: 0.8rem; padding: 0.35rem 0.6rem; }}
-      .creator-link {{ font-size: 0.82rem; }}
+      .creator, .thought-provoker, .top-pick {{ padding: 1rem 1rem; border-radius: 10px; }}
+      .creator-header {{ flex-direction: column; gap: 4px; }}
       .quiet-banner {{ font-size: 0.85rem; padding: 0.85rem 1rem; }}
     }}
   </style>
