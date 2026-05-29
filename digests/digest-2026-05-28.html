@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Thursday, May 28, 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fafaf8;
+      color: #1a1a1a;
+      line-height: 1.65;
+    }
+
+    .header {
+      background: #fff;
+      border-bottom: 1px solid #e8e8e4;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.3px; }
+    .header .tagline { font-size: 0.9rem; color: #888; margin-top: 0.3rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.85rem;
+      font-size: 0.78rem; background: #f0f0ec; color: #666;
+      padding: 0.25rem 0.85rem; border-radius: 999px;
+    }
+
+    .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: #f7f7f4;
+      border: 1px solid #e0ddd5;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.5;
+    }
+    .quiet-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fff; border: 1px solid #e8e8e4;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 0.9rem;
+    }
+    .thought-provoker { background: #fffdf5; border-color: #e8d98a; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.35rem;
+    }
+    .creator-header h2 { font-size: 1rem; font-weight: 700; line-height: 1.3; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 500;
+      color: #888; background: #f0f0ec;
+      padding: 2px 8px; border-radius: 999px; white-space: nowrap;
+    }
+    .badge-hot {
+      display: inline-block; background: #cc3300; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 1px 6px;
+      border-radius: 999px; margin-left: 5px; vertical-align: middle;
+    }
+    .creator-headline {
+      font-size: 0.8rem; color: #777; font-style: italic; margin-bottom: 0.75rem;
+    }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f0eeff; border-left: 3px solid #7b6ef6;
+      border-radius: 0 6px 6px 0; padding: 0.5rem 0.85rem;
+      font-size: 0.855rem; color: #2a2a2a; line-height: 1.55;
+      margin-bottom: 0.6rem;
+    }
+    .tldr-label {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; display: block; margin-bottom: 3px;
+    }
+    .thought-provoker .tldr { background: #fffbea; border-color: #c9a800; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 2px; }
+    summary {
+      cursor: pointer; font-size: 0.75rem; font-weight: 600; color: #7b6ef6;
+      list-style: none; display: inline-flex; align-items: center; gap: 3px;
+      user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; font-size: 0.7rem; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.75rem; }
+
+    .detail-body p { font-size: 0.875rem; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol {
+      font-size: 0.875rem; padding-left: 1.2rem; margin-bottom: 0.7rem;
+    }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #ddd; padding: 0.3rem 0.85rem;
+      color: #555; font-style: italic; font-size: 0.855rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.6rem; font-size: 0.8rem; }
+    .creator-links a { color: #7b6ef6; text-decoration: none; font-weight: 500; }
+    .creator-links a:hover { text-decoration: underline; }
+    .creator-links span { color: #ccc; margin: 0 5px; }
+
+    /* ── Top pick ── */
+    .top-pick {
+      background: #f0eeff; border: 1px solid #c4b8ff;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-top: 1.5rem;
+    }
+    .top-pick-label {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; margin-bottom: 0.5rem;
+    }
+    .top-pick-content { font-size: 0.925rem; color: #1a1a1a; line-height: 1.55; }
+
+    /* ── No updates fallback ── */
+    .no-updates {
+      text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #aaa;
+    }
+
+    .footer {
+      text-align: center; padding: 1.5rem;
+      font-size: 0.78rem; color: #bbb; border-top: 1px solid #e8e8e4;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.5rem 1rem 1.25rem; }
+      .header h1 { font-size: 1.1rem; }
+      .container { padding: 1rem 0.85rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1rem 1rem; border-radius: 10px; }
+      .creator-header { flex-direction: column; gap: 4px; }
+      .quiet-banner { font-size: 0.85rem; padding: 0.85rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Thursday, May 28, 2026</div>
+  </div>
+
+  <div class="container">
+    <div class="quiet-banner">
+  <span class="quiet-icon">💤</span>
+  <span>Quiet week — none of your thought leaders posted recently. Here are two evergreen reads worth your time.</span>
+</div>
+<div class="thought-provoker">
+  <div class="creator-header">
+    <h2>Marty Cagan</h2>
+  </div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>Cagan's core thesis is the foundation of modern product thinking.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>The biggest mistake product teams make is confusing output with outcome. Shipping features is not the same as solving problems — the best PMs obsess over the latter.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.svpg.com/product-vs-feature-teams/" target="_blank">Read →</a></div>
+</div>
+<div class="thought-provoker">
+  <div class="creator-header">
+    <h2>Shreyas Doshi</h2>
+  </div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>Reframing how you measure your own success is the highest-leverage PM habit.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Most PMs optimise for output metrics (features shipped, velocity) when they should be optimising for outcome metrics (customer behaviour change, business impact). The distinction determines whether you build a great product or just a busy roadmap.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://twitter.com/shreyas/status/1276956836856393728" target="_blank">Read →</a></div>
+</div>
+
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 21 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
