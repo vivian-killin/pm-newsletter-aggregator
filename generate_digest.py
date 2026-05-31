@@ -274,7 +274,11 @@ Pick articles whose URLs do NOT appear in the above list.
 </div>
 {tp_html}"""
 
+    total_leaders = len(THOUGHT_LEADERS)
+    leaders_with_content = sum(1 for v in recent.values() if v)
+
     prompt = f"""You are building a PM intelligence digest for Vivian. Today is {today}.
+{total_leaders} thought leaders are tracked. {leaders_with_content} had new content in the last 7 days.
 
 OUTPUT RULES — READ CAREFULLY:
 - Output ONLY valid HTML. Zero markdown. Zero code fences. Zero plain text outside HTML tags.
@@ -283,10 +287,10 @@ OUTPUT RULES — READ CAREFULLY:
 
 {shown_urls_note}
 
-━━━ RECENT SEARCH RESULTS (last 7 days) ━━━
+━━━ RECENT RSS RESULTS (last 7 days) ━━━
 {json.dumps(recent, indent=2)}
 
-━━━ THOUGHT PROVOKER CANDIDATES (last month / last year) ━━━
+━━━ THOUGHT PROVOKER CANDIDATES (last 90–365 days) ━━━
 {json.dumps(thought_provokers, indent=2)}
 
 ━━━ STRICT FILTER — only include in creator cards ━━━
@@ -303,31 +307,41 @@ OUTPUT RULES — READ CAREFULLY:
 ✗ EXCLUDE from creator cards: Off-topic results (furniture, baby names, clinics, airlines)
 ✗ EXCLUDE any URL that appears in the ALREADY SHOWN list above
 
-━━━ FORMAT — follow this EXACTLY ━━━
+━━━ FORMAT — output in THIS EXACT ORDER ━━━
 
 STEP 1 — Decide if there is qualifying creator content from the last 7 days.
+If NO qualifying recent content: output quiet-week banner, then 1-2 thought provokers. Stop.
+If YES: follow steps 2-6 in order.
 
-If NO qualifying recent content: output the quiet-week banner first, then 1-2 thought provokers. No top-pick.
-If YES: output creator cards, then thought provokers, then top-pick.
+STEP 2 — Top pick FIRST (only when qualifying creator content exists):
+<div class="top-pick">
+  <div class="top-pick-label">🔥 Top pick this issue</div>
+  <div class="top-pick-content">[2-3 sentences: what it is, why it's the most important read for an AI-native PM this week. Name the author and the specific insight.]</div>
+</div>
 
-STEP 2 — Output the HTML using these exact class names and structure:
+STEP 3 — Meta stats line:
+<div class="digest-meta">[N] thought leaders tracked &nbsp;·&nbsp; [N] had updates this issue</div>
 
-Quiet-week banner (only when nothing recent qualifies):
-<div class="quiet-banner"><span class="quiet-icon">💤</span><span>Quiet week — none of your thought leaders posted in the last 7 days. Here are reads worth your time regardless.</span></div>
+STEP 4 — Jump nav (one pill per qualifying creator, plus a Thought Provokers pill at the end):
+<nav class="digest-nav">
+  <a href="#[slug]">[Creator Name]</a>
+  <a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+</nav>
+Use the creator's lowercased first name or surname as the slug (e.g. "lenny", "cutler", "mollick").
 
-Creator card (one per qualifying creator — include a date badge using the article's publish date):
-<div class="creator">
+STEP 5 — Creator cards (one per qualifying creator, id must match the nav slug):
+<div class="creator" id="[slug]">
   <div class="creator-header"><h2>[NAME]</h2><span class="date-badge">[e.g. May 21]</span></div>
-  <div class="creator-headline">[One sentence article subtitle]</div>
+  <div class="creator-headline">[One-sentence article subtitle]</div>
   <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>[2-3 sentence PM takeaway — lead with the actionable insight]</div>
   <details><summary>Read more</summary>
-  <div class="detail-body"><p>[2-3 paragraph summary of the article. Use &lt;ul&gt; lists for frameworks or numbered points.]</p></div>
+  <div class="detail-body"><p>[2-3 paragraph summary. Use &lt;ul&gt; for frameworks or numbered points.]</p></div>
   </details>
   <div class="creator-links"><a href="[URL]" target="_blank">Read →</a></div>
 </div>
 
-Thought provoker card (ALWAYS include 1-2; URL must not be in ALREADY SHOWN list):
-<div class="thought-provoker">
+STEP 6 — Thought provoker cards (ALWAYS 1-2; id="thought-provokers" on the first one):
+<div class="thought-provoker" id="thought-provokers">
   <div class="creator-header"><h2>[NAME]</h2><span class="date-badge">[date if known]</span></div>
   <div class="creator-headline">Worth your time regardless of when it was published</div>
   <div class="tldr"><span class="tldr-label">Why it's worth your time</span>[1-2 sentence takeaway]</div>
@@ -336,12 +350,10 @@ Thought provoker card (ALWAYS include 1-2; URL must not be in ALREADY SHOWN list
   </details>
   <div class="creator-links"><a href="[URL]" target="_blank">Read →</a></div>
 </div>
+(Additional thought provoker cards use class="thought-provoker" without the id.)
 
-Top-pick (only when creator cards exist — skip on quiet weeks):
-<div class="top-pick">
-  <div class="top-pick-label">🔥 Top pick this issue</div>
-  <div class="top-pick-content">[2-3 sentences on why this is the most important read for an AI-native PM]</div>
-</div>
+Quiet-week banner (only when nothing recent qualifies — replaces steps 2-4):
+<div class="quiet-banner"><span class="quiet-icon">💤</span><span>Quiet week — none of your thought leaders posted in the last 7 days. Here are reads worth your time regardless.</span></div>
 
 Output nothing else. No notes. No markdown. No explanations."""
 
@@ -440,6 +452,27 @@ def generate_page(digest_html: str) -> str:
     }}
     .quiet-icon {{ font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }}
 
+    /* ── Digest meta line ── */
+    .digest-meta {{
+      font-size: 0.8rem; color: #888; margin-bottom: 1rem;
+    }}
+
+    /* ── Jump nav ── */
+    .digest-nav {{
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-bottom: 1.5rem;
+    }}
+    .digest-nav a {{
+      display: inline-block; padding: 4px 11px;
+      font-size: 0.75rem; font-weight: 500; color: #444;
+      background: #fff; border: 1px solid #ddd;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.12s, border-color 0.12s;
+    }}
+    .digest-nav a:hover {{ background: #1a1a1a; color: #fff; border-color: #1a1a1a; }}
+    .digest-nav a.tp-nav {{ background: #fffdf5; border-color: #e8d98a; color: #a07800; }}
+    .digest-nav a.tp-nav:hover {{ background: #a07800; color: #fff; border-color: #a07800; }}
+
     /* ── Creator + thought-provoker cards ── */
     .creator, .thought-provoker {{
       background: #fff; border: 1px solid #e8e8e4;
@@ -507,10 +540,10 @@ def generate_page(digest_html: str) -> str:
     .creator-links a:hover {{ text-decoration: underline; }}
     .creator-links span {{ color: #ccc; margin: 0 5px; }}
 
-    /* ── Top pick ── */
+    /* ── Top pick (appears at top of digest) ── */
     .top-pick {{
       background: #f0eeff; border: 1px solid #c4b8ff;
-      border-radius: 12px; padding: 1.25rem 1.4rem; margin-top: 1.5rem;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 1.25rem;
     }}
     .top-pick-label {{
       font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
