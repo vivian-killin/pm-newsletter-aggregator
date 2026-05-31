@@ -13,7 +13,7 @@ import re
 import json
 import logging
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 from anthropic import Anthropic
 
 # ── Logging setup ──────────────────────────────────────────────────────────────
@@ -27,46 +27,33 @@ log = logging.getLogger("digest")
 
 client = Anthropic()
 
+# RSS feed for each thought leader. None = no feed, falls back to search.
 THOUGHT_LEADERS = [
-    ("Lenny Rachitsky",  "site:lennysnewsletter.com product management"),
-    ("Ethan Mollick",    "site:oneusefulthing.org"),
-    ("Simon Willison",   "site:simonwillison.net"),
-    ("Andrej Karpathy",  '"Andrej Karpathy" AI product'),
-    ("Swyx",             "site:latent.space"),
-    ("Andrew Ng",        "site:deeplearning.ai/the-batch"),
-    ("Aakash Gupta",     "site:aakashg.com OR \"Aakash Gupta\" product"),
-    ("Harrison Chase",   "site:blog.langchain.dev"),
-    ("Kristen Berman",   "site:kristenberman.substack.com"),
-    ("Shreyas Doshi",    "site:shreyasdoshi.substack.com OR site:linkedin.com/pulse \"Shreyas Doshi\""),
-    ("Julie Zhuo",       "site:joulee.medium.com OR site:juliezhuo.substack.com"),
-    ("John Cutler",      "site:cutlefish.substack.com"),
-    ("Marty Cagan",      "site:svpg.com"),
-    ("Pawel Huryn",      "site:huryn.substack.com"),
-    ("Karo Zieminski",   "site:zieminski.substack.com OR \"Karo Zieminski\" product"),
-    ("Josh Miller",      "site:josh.substack.com OR \"Josh Miller\" browser company product"),
-    ("Claire Vo",        "site:clairevo.substack.com OR \"Claire Vo\" product AI"),
-    ("Amjad Masad",      "site:blog.replit.com"),
-    ("Logan Kilpatrick", "site:logankilpatrick.substack.com OR \"Logan Kilpatrick\" AI"),
-    ("Gergely Orosz",    "site:newsletter.pragmaticengineer.com"),
-    ("Deb Liu",          "site:debliu.substack.com"),
+    ("Lenny Rachitsky",   "https://www.lennysnewsletter.com/feed"),
+    ("Ethan Mollick",     "https://www.oneusefulthing.org/feed"),
+    ("Simon Willison",    "https://simonwillison.net/atom/everything/"),
+    ("Andrej Karpathy",   None),   # No RSS — DuckDuckGo fallback
+    ("Swyx",              "https://www.latent.space/feed"),
+    ("Andrew Ng",         "https://www.deeplearning.ai/the-batch/feed/"),
+    ("Aakash Gupta",      "https://aakashg.substack.com/feed"),
+    ("Harrison Chase",    "https://blog.langchain.dev/rss/"),
+    ("Kristen Berman",    "https://kristenberman.substack.com/feed"),
+    ("Shreyas Doshi",     "https://shreyasdoshi.substack.com/feed"),
+    ("Julie Zhuo",        "https://joulee.medium.com/feed"),
+    ("John Cutler",       "https://cutlefish.substack.com/feed"),
+    ("Marty Cagan",       "https://www.svpg.com/feed/"),
+    ("Pawel Huryn",       "https://huryn.substack.com/feed"),
+    ("Karo Zieminski",    "https://karozieminski.substack.com/feed"),
+    ("Josh Miller",       "https://josh.substack.com/feed"),
+    ("Claire Vo",         "https://clairevo.substack.com/feed"),
+    ("Amjad Masad",       "https://blog.replit.com/rss.xml"),
+    ("Logan Kilpatrick",  "https://logankilpatrick.substack.com/feed"),
+    ("Gergely Orosz",     "https://newsletter.pragmaticengineer.com/feed"),
+    ("Deb Liu",           "https://debliu.substack.com/feed"),
 ]
 
-# Thought provoker queries — ONLY search creator-owned blogs, substacks, and personal sites.
-# Never generic searches that could return support docs, wikis, or unrelated websites.
-THOUGHT_PROVOKER_QUERIES = [
-    "site:svpg.com",                              # Marty Cagan
-    "site:lennysnewsletter.com",                  # Lenny Rachitsky
-    "site:cutlefish.substack.com",                # John Cutler
-    "site:oneusefulthing.org",                    # Ethan Mollick
-    "site:huryn.substack.com",                    # Pawel Huryn
-    "site:aakashg.com",                           # Aakash Gupta
-    "site:debliu.substack.com",                   # Deb Liu
-    "site:shreyasdoshi.substack.com",             # Shreyas Doshi
-    "site:joulee.medium.com",                     # Julie Zhuo
-    "site:kristenberman.substack.com",            # Kristen Berman
-    "site:newsletter.pragmaticengineer.com",      # Gergely Orosz
-    "site:clairevo.substack.com",                 # Claire Vo
-]
+# Subset used for thought provoker candidates — same RSS feeds, wider time window
+TP_FEEDS = [feed for _, feed in THOUGHT_LEADERS if feed is not None]
 
 SHOWN_URLS_PATH = os.path.join("digests", "shown_urls.json")
 
@@ -97,57 +84,124 @@ def extract_urls_from_html(html: str) -> list[str]:
     return re.findall(r'href="(https?://[^"]+)"', html)
 
 
-def search(query: str, timelimit: str = "w", max_results: int = 3) -> list[dict]:
+def _strip_html(text: str) -> str:
+    """Remove HTML tags and normalise whitespace."""
+    return re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', '', text or '')).strip()
+
+
+def fetch_rss(name: str, url: str, max_age_days: int = 7, max_items: int = 3) -> list[dict]:
+    """Return recent items from an RSS/Atom feed, filtered to max_age_days."""
+    try:
+        import feedparser
+        from datetime import timezone
+        feed = feedparser.parse(url)
+        cutoff = datetime.now() - timedelta(days=max_age_days)
+        results = []
+        for entry in feed.entries:
+            # Parse publish date
+            pub = None
+            for attr in ("published_parsed", "updated_parsed"):
+                val = getattr(entry, attr, None)
+                if val:
+                    try:
+                        pub = datetime(*val[:6])
+                    except Exception:
+                        pass
+                    break
+
+            if pub and pub < cutoff:
+                continue  # too old
+
+            snippet = _strip_html(
+                getattr(entry, "summary", None) or
+                getattr(entry, "description", None) or ""
+            )[:400]
+
+            results.append({
+                "title":   entry.get("title", ""),
+                "snippet": snippet,
+                "url":     entry.get("link", ""),
+                "date":    pub.strftime("%B %d, %Y") if pub else "",
+            })
+
+            if len(results) >= max_items:
+                break
+
+        return results
+    except Exception as e:
+        log.warning("RSS fetch failed for %s (%s): %s", name, url, e)
+        return []
+
+
+def search_fallback(query: str, max_results: int = 3) -> list[dict]:
+    """DuckDuckGo search — used only for creators without an RSS feed."""
     try:
         from duckduckgo_search import DDGS
         with DDGS() as ddgs:
-            results = list(ddgs.text(query, max_results=max_results, timelimit=timelimit))
+            results = list(ddgs.text(query, max_results=max_results, timelimit="w"))
             return [
                 {
                     "title":   r.get("title", ""),
                     "snippet": r.get("body", "")[:400],
                     "url":     r.get("href", ""),
+                    "date":    "",
                 }
                 for r in results
             ]
     except Exception as e:
-        log.warning("Search failed for query '%s…': %s", query[:50], e)
+        log.warning("Search fallback failed for query '%s…': %s", query[:50], e)
         return []
 
 
 def gather_recent() -> dict:
-    log.info("Searching for recent creator content (last 7 days)...")
+    log.info("Fetching recent creator content via RSS (last 7 days)...")
     findings = {}
     found_count = 0
-    for name, query in THOUGHT_LEADERS:
-        results = search(query, timelimit="w", max_results=3)
+    for name, feed_url in THOUGHT_LEADERS:
+        if feed_url:
+            results = fetch_rss(name, feed_url, max_age_days=7, max_items=3)
+        else:
+            # Fallback to search for creators with no RSS
+            results = search_fallback(f'"{name}" AI product', max_results=3)
         findings[name] = results
         if results:
             found_count += 1
-            log.info("  ✓ %-22s — %d result(s)", name, len(results))
+            log.info("  ✓ %-22s — %d item(s)", name, len(results))
         else:
-            log.info("  ✗ %-22s — no results", name)
-    log.info("Recent search complete: %d/%d creators had results", found_count, len(THOUGHT_LEADERS))
+            log.info("  ✗ %-22s — nothing recent", name)
+    log.info("Gather complete: %d/%d thought leaders had recent content", found_count, len(THOUGHT_LEADERS))
     return findings
 
 
 def gather_thought_provokers() -> list[dict]:
-    log.info("Finding thought provoker candidates (last month)...")
+    log.info("Gathering thought provoker candidates via RSS (last 90 days)...")
     candidates = []
-    for q in THOUGHT_PROVOKER_QUERIES:
-        hits = search(q, timelimit="m", max_results=2)
-        candidates.extend(hits)
-    log.info("Thought provoker pool (month): %d candidates", len(candidates))
+    seen_urls: set[str] = set()
+    for name, feed_url in THOUGHT_LEADERS:
+        if not feed_url:
+            continue
+        items = fetch_rss(name, feed_url, max_age_days=90, max_items=2)
+        for item in items:
+            if item["url"] not in seen_urls:
+                seen_urls.add(item["url"])
+                candidates.append(item)
 
-    # If the month window is also dry, widen to the past year
-    if len(candidates) < 4:
-        log.info("Month pool thin — widening to past year...")
-        for q in THOUGHT_PROVOKER_QUERIES[:4]:
-            hits = search(q, timelimit="y", max_results=3)
-            candidates.extend(hits)
-        log.info("Thought provoker pool (year): %d candidates", len(candidates))
+    log.info("Thought provoker pool (90 days): %d candidates", len(candidates))
 
-    return candidates[:16]
+    # If still thin, widen to 365 days
+    if len(candidates) < 6:
+        log.info("Pool thin — widening to 365 days...")
+        for name, feed_url in THOUGHT_LEADERS:
+            if not feed_url:
+                continue
+            items = fetch_rss(name, feed_url, max_age_days=365, max_items=3)
+            for item in items:
+                if item["url"] not in seen_urls:
+                    seen_urls.add(item["url"])
+                    candidates.append(item)
+        log.info("Thought provoker pool (365 days): %d candidates", len(candidates))
+
+    return candidates[:20]
 
 
 def clean_claude_output(raw: str) -> str:
