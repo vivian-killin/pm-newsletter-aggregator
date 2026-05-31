@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Sunday, May 31, 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fafaf8;
+      color: #1a1a1a;
+      line-height: 1.65;
+    }
+
+    .header {
+      background: #fff;
+      border-bottom: 1px solid #e8e8e4;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.3px; }
+    .header .tagline { font-size: 0.9rem; color: #888; margin-top: 0.3rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.85rem;
+      font-size: 0.78rem; background: #f0f0ec; color: #666;
+      padding: 0.25rem 0.85rem; border-radius: 999px;
+    }
+
+    .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: #f7f7f4;
+      border: 1px solid #e0ddd5;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.5;
+    }
+    .quiet-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fff; border: 1px solid #e8e8e4;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 0.9rem;
+    }
+    .thought-provoker { background: #fffdf5; border-color: #e8d98a; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.35rem;
+    }
+    .creator-header h2 { font-size: 1rem; font-weight: 700; line-height: 1.3; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 500;
+      color: #888; background: #f0f0ec;
+      padding: 2px 8px; border-radius: 999px; white-space: nowrap;
+    }
+    .badge-hot {
+      display: inline-block; background: #cc3300; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 1px 6px;
+      border-radius: 999px; margin-left: 5px; vertical-align: middle;
+    }
+    .creator-headline {
+      font-size: 0.8rem; color: #777; font-style: italic; margin-bottom: 0.75rem;
+    }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f0eeff; border-left: 3px solid #7b6ef6;
+      border-radius: 0 6px 6px 0; padding: 0.5rem 0.85rem;
+      font-size: 0.855rem; color: #2a2a2a; line-height: 1.55;
+      margin-bottom: 0.6rem;
+    }
+    .tldr-label {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; display: block; margin-bottom: 3px;
+    }
+    .thought-provoker .tldr { background: #fffbea; border-color: #c9a800; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 2px; }
+    summary {
+      cursor: pointer; font-size: 0.75rem; font-weight: 600; color: #7b6ef6;
+      list-style: none; display: inline-flex; align-items: center; gap: 3px;
+      user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; font-size: 0.7rem; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.75rem; }
+
+    .detail-body p { font-size: 0.875rem; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol {
+      font-size: 0.875rem; padding-left: 1.2rem; margin-bottom: 0.7rem;
+    }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #ddd; padding: 0.3rem 0.85rem;
+      color: #555; font-style: italic; font-size: 0.855rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.6rem; font-size: 0.8rem; }
+    .creator-links a { color: #7b6ef6; text-decoration: none; font-weight: 500; }
+    .creator-links a:hover { text-decoration: underline; }
+    .creator-links span { color: #ccc; margin: 0 5px; }
+
+    /* ── Top pick ── */
+    .top-pick {
+      background: #f0eeff; border: 1px solid #c4b8ff;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-top: 1.5rem;
+    }
+    .top-pick-label {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; margin-bottom: 0.5rem;
+    }
+    .top-pick-content { font-size: 0.925rem; color: #1a1a1a; line-height: 1.55; }
+
+    /* ── No updates fallback ── */
+    .no-updates {
+      text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #aaa;
+    }
+
+    .footer {
+      text-align: center; padding: 1.5rem;
+      font-size: 0.78rem; color: #bbb; border-top: 1px solid #e8e8e4;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.5rem 1rem 1.25rem; }
+      .header h1 { font-size: 1.1rem; }
+      .container { padding: 1rem 0.85rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1rem 1rem; border-radius: 10px; }
+      .creator-header { flex-direction: column; gap: 4px; }
+      .quiet-banner { font-size: 0.85rem; padding: 0.85rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Sunday, May 31, 2026</div>
+  </div>
+
+  <div class="container">
+    <!DOCTYPE html>
+<html>
+<head>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: #333; }
+.quiet-banner { background: #f5f5f5; border-left: 4px solid #999; padding: 16px; margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+.quiet-icon { font-size: 24px; }
+.creator, .thought-provoker { border: 1px solid #e0e0e0; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+.creator-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.creator-header h2 { margin: 0; font-size: 18px; font-weight: 600; }
+.date-badge { background: #f0f0f0; padding: 4px 8px; border-radius: 4px; font-size: 12px; color: #666; }
+.creator-headline { font-size: 14px; color: #666; margin-bottom: 12px; font-weight: 500; }
+.tldr { background: #f9f9f9; padding: 12px; border-radius: 6px; margin-bottom: 12px; }
+.tldr-label { font-weight: 600; display: block; margin-bottom: 6px; font-size: 13px; }
+details { margin: 12px 0; }
+summary { cursor: pointer; color: #0066cc; font-weight: 500; font-size: 14px; }
+.detail-body { padding: 12px 0; font-size: 14px; line-height: 1.6; }
+.detail-body p { margin: 8px 0; }
+.detail-body ul { margin: 8px 0; padding-left: 20px; }
+.detail-body li { margin: 4px 0; }
+.creator-links { margin-top: 12px; }
+.creator-links a { color: #0066cc; text-decoration: none; font-weight: 500; font-size: 14px; }
+.creator-links a:hover { text-decoration: underline; }
+.top-pick { background: #fff3cd; border-left: 4px solid #ffc107; padding: 16px; margin-top: 24px; }
+.top-pick-label { font-weight: 600; margin-bottom: 8px; }
+.top-pick-content { font-size: 14px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<div class="creator">
+  <div class="creator-header"><h2>Gergely Orosz</h2><span class="date-badge">May 28</span></div>
+  <div class="creator-headline">Top-down and bottom-up efforts to rationalize AI token spend, interesting AI coding stats from Cursor, GCP suspends $2M/month customer without warning, and more</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Engineering teams are actively cutting back on AI spend—a shift that signals the hype cycle is maturing. As a PM, this is your signal to move from "try everything" to disciplined ROI measurement on AI tooling, measuring actual productivity gains against token costs rather than assuming AI pays for itself.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Gergely reports on a meaningful trend: engineering departments are implementing both top-down budgets and bottom-up scrutiny on AI token consumption. This isn't skepticism—it's maturation. Teams using Cursor and other coding tools are now measuring actual productivity impact, and some are finding that the promised 10x productivity gains don't materialize for their workflows.</p><p>The practical implication for PMs: AI features are moving from "free upside" status to cost-center scrutiny. You need to model the unit economics of AI-powered features, understand which user cohorts actually benefit, and be prepared to defend AI spend with concrete metrics rather than promise. The window for "explore everything" is closing.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://newsletter.pragmaticengineer.com/p/the-pulse-a-trend-of-trying-to-cut" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator">
+  <div class="creator-header"><h2>Lenny Rachitsky</h2><span class="date-badge">May 31</span></div>
+  <div class="creator-headline">Benedict Evans on why AI is a 1997 internet moment, what everyone gets wrong about job loss, and where the real value may accrue</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Stop thinking about AI as a replacement layer and start thinking about it as infrastructure. Evans argues the real value accrues to platforms that own the relationship with users, not to the model providers—a critical reframe for PMs deciding where to embed AI in their products.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Benedict Evans makes the case that we're at an inflection point similar to 1997 internet—everyone agrees something big is happening, but almost no one can predict the shape of value. The common mistake: assuming AI replaces human work and therefore destroys demand. Evans points out that automation has historically created new work, new industries, and new customer needs, not just eliminated labor.</p><p>For product leaders, the key insight is architectural: who owns the customer relationship determines who captures value. The companies building distribution on top of AI models (think ChatGPT, Cursor, Claude Code) are winning market share faster than the model companies themselves. This suggests your PM strategy should prioritize unique user experience and workflow integration over optimizing for raw model quality.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.lennysnewsletter.com/p/a-rational-conversation-on-where" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker">
+  <div class="creator-header"><h2>Ethan Mollick</h2><span class="date-badge">May 26</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>As AI-generated content floods every platform, the ability to stay "human" in your product is becoming a competitive moat. Mollick surfaces the homogenization problem: when everyone uses the same AI tools, outputs converge. Your product's differentiation may depend on deliberately preserving human voice, judgment, and friction.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Mollick observes that AI-generated content is creating a visual and tonal sameness across social platforms. Everyone's using the same models with similar prompts, producing similar outputs. This convergence is a feature for efficiency but a bug for distinctiveness. The implication for product teams: leaning entirely into AI optimization could make your product indistinguishable from competitors using the same stack.</p><p>The strategic question: where should you intentionally preserve or amplify human judgment, voice, and decision-making to stay memorable? This might mean slower onboarding flows, less automated content, or more human curation—tradeoffs that feel "inefficient" in the moment but could become your defensible identity.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.oneusefulthing.org/p/choosing-to-stay-human" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker">
+  <div class="creator-header"><h2>Simon Willison</h2><span class="date-badge">May 31</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>David Wilson's observation—"I didn't mean to build most of these things"—exposes a real PM blind spot: AI's ease of prototyping is creating a graveyard of unfinished products. The low cost of building is decoupling from the discipline of shipping and sustaining. Understand this dynamic to avoid building features your users won't actually adopt.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Willison highlights a phenomenon where AI tooling makes it trivially easy to spin up a new project—a quick Claude conversation becomes a full prototype in an hour. But ease of creation isn't the same as clarity of purpose. Wilson created 16+ projects, most of which solved a momentary problem but added no lasting value. The projects felt useful during ideation but became abandoned once the session ended.</p><p>For PMs: this is a cautionary tale about the false economy of cheap prototyping. Without discipline around problem validation, user feedback loops, and shipping timelines, low-friction AI development can actually increase sunk costs in unmaintained code. The real question isn't "can we build this quickly?" but "will users commit to this?" Make sure your AI-powered feature discovery process includes hard stops for validation before engineering resources are committed.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://simonwillison.net/2026/May/31/the-solution-might-be-cancelling-my-ai-subscription/#atom-everything" target="_blank">Read →</a></div>
+</div>
+
+<div class="top-pick">
+  <div class="top-pick-label">🔥 Top pick this issue</div>
+  <div class="top-pick-content">Gergely Orosz's report on AI spend rationalization is the most immediately actionable for your roadmap decisions. The trend toward token-cost scrutiny means your next AI feature needs defensible unit economics, not just user delight. This shifts the PM conversation from "what can we build with AI?" to "what should we build that AI makes economically viable for our model?" That's the maturity boundary crossing right now.</div>
+</div>
+
+</body>
+</html>
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 21 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
