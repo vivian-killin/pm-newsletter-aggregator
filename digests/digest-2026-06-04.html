@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Thursday, June 04, 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fafaf8;
+      color: #1a1a1a;
+      line-height: 1.65;
+    }
+
+    .header {
+      background: #fff;
+      border-bottom: 1px solid #e8e8e4;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.3px; }
+    .header .tagline { font-size: 0.9rem; color: #888; margin-top: 0.3rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.85rem;
+      font-size: 0.78rem; background: #f0f0ec; color: #666;
+      padding: 0.25rem 0.85rem; border-radius: 999px;
+    }
+
+    .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: #f7f7f4;
+      border: 1px solid #e0ddd5;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.5;
+    }
+    .quiet-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta {
+      font-size: 0.8rem; color: #888; margin-bottom: 1rem;
+    }
+
+    /* ── Jump nav ── */
+    .digest-nav {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-bottom: 1.5rem;
+    }
+    .digest-nav a {
+      display: inline-block; padding: 4px 11px;
+      font-size: 0.75rem; font-weight: 500; color: #444;
+      background: #fff; border: 1px solid #ddd;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.12s, border-color 0.12s;
+    }
+    .digest-nav a:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .digest-nav a.tp-nav { background: #fffdf5; border-color: #e8d98a; color: #a07800; }
+    .digest-nav a.tp-nav:hover { background: #a07800; color: #fff; border-color: #a07800; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fff; border: 1px solid #e8e8e4;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 0.9rem;
+    }
+    .thought-provoker { background: #fffdf5; border-color: #e8d98a; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.35rem;
+    }
+    .creator-header h2 { font-size: 1rem; font-weight: 700; line-height: 1.3; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 500;
+      color: #888; background: #f0f0ec;
+      padding: 2px 8px; border-radius: 999px; white-space: nowrap;
+    }
+    .badge-hot {
+      display: inline-block; background: #cc3300; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 1px 6px;
+      border-radius: 999px; margin-left: 5px; vertical-align: middle;
+    }
+    .creator-headline {
+      font-size: 0.8rem; color: #777; font-style: italic; margin-bottom: 0.75rem;
+    }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f0eeff; border-left: 3px solid #7b6ef6;
+      border-radius: 0 6px 6px 0; padding: 0.5rem 0.85rem;
+      font-size: 0.855rem; color: #2a2a2a; line-height: 1.55;
+      margin-bottom: 0.6rem;
+    }
+    .tldr-label {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; display: block; margin-bottom: 3px;
+    }
+    .thought-provoker .tldr { background: #fffbea; border-color: #c9a800; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 2px; }
+    summary {
+      cursor: pointer; font-size: 0.75rem; font-weight: 600; color: #7b6ef6;
+      list-style: none; display: inline-flex; align-items: center; gap: 3px;
+      user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; font-size: 0.7rem; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.75rem; }
+
+    .detail-body p { font-size: 0.875rem; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol {
+      font-size: 0.875rem; padding-left: 1.2rem; margin-bottom: 0.7rem;
+    }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #ddd; padding: 0.3rem 0.85rem;
+      color: #555; font-style: italic; font-size: 0.855rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.6rem; font-size: 0.8rem; }
+    .creator-links a { color: #7b6ef6; text-decoration: none; font-weight: 500; }
+    .creator-links a:hover { text-decoration: underline; }
+    .creator-links span { color: #ccc; margin: 0 5px; }
+
+    /* ── Top pick (appears at top of digest) ── */
+    .top-pick {
+      background: #f0eeff; border: 1px solid #c4b8ff;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 1.25rem;
+    }
+    .top-pick-label {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; margin-bottom: 0.5rem;
+    }
+    .top-pick-content { font-size: 0.925rem; color: #1a1a1a; line-height: 1.55; }
+
+    /* ── No updates fallback ── */
+    .no-updates {
+      text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #aaa;
+    }
+
+    .footer {
+      text-align: center; padding: 1.5rem;
+      font-size: 0.78rem; color: #bbb; border-top: 1px solid #e8e8e4;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.5rem 1rem 1.25rem; }
+      .header h1 { font-size: 1.1rem; }
+      .container { padding: 1rem 0.85rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1rem 1rem; border-radius: 10px; }
+      .creator-header { flex-direction: column; gap: 4px; }
+      .quiet-banner { font-size: 0.85rem; padding: 0.85rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Thursday, June 04, 2026</div>
+  </div>
+
+  <div class="container">
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PM Intelligence Digest — June 04, 2026</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: #1a1a1a; background: #f9f9f9; padding: 24px; max-width: 680px; margin: 0 auto; }
+    .digest-meta { font-size: 13px; color: #666; margin: 20px 0; font-weight: 500; }
+    .digest-nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0; }
+    .digest-nav a { display: inline-block; padding: 8px 14px; background: #f0f0f0; border-radius: 6px; text-decoration: none; font-size: 14px; color: #1a1a1a; transition: background 0.2s; }
+    .digest-nav a:hover { background: #e0e0e0; }
+    .digest-nav .tp-nav { background: #fff3cd; }
+    .digest-nav .tp-nav:hover { background: #ffe8a1; }
+    .top-pick { border-left: 4px solid #ff6b35; padding: 20px; background: #fff5f0; border-radius: 4px; margin-bottom: 28px; }
+    .top-pick-label { font-size: 12px; font-weight: 700; color: #ff6b35; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+    .top-pick-content { font-size: 15px; color: #1a1a1a; line-height: 1.7; }
+    .creator { margin-bottom: 32px; padding: 20px; background: white; border-radius: 8px; border: 1px solid #e0e0e0; }
+    .creator-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+    .creator-header h2 { margin: 0; font-size: 18px; font-weight: 700; }
+    .date-badge { font-size: 12px; color: #999; font-weight: 400; }
+    .creator-headline { font-size: 14px; color: #666; margin-bottom: 16px; line-height: 1.6; }
+    .tldr { background: #f9f9f9; padding: 14px; border-radius: 4px; margin-bottom: 16px; font-size: 14px; }
+    .tldr-label { font-weight: 700; color: #1a1a1a; display: block; margin-bottom: 8px; }
+    .tldr { color: #333; }
+    details { cursor: pointer; }
+    summary { font-size: 14px; color: #0066cc; font-weight: 500; cursor: pointer; user-select: none; }
+    summary:hover { text-decoration: underline; }
+    .detail-body { margin-top: 12px; font-size: 14px; color: #555; line-height: 1.7; }
+    .detail-body p { margin: 0 0 12px 0; }
+    .detail-body ul { margin: 12px 0; padding-left: 24px; }
+    .detail-body li { margin-bottom: 6px; }
+    .creator-links { margin-top: 16px; }
+    .creator-links a { display: inline-block; padding: 8px 16px; background: #0066cc; color: white; text-decoration: none; border-radius: 4px; font-size: 14px; font-weight: 500; transition: background 0.2s; }
+    .creator-links a:hover { background: #0052a3; }
+    .thought-provoker { margin-bottom: 32px; padding: 20px; background: white; border-radius: 8px; border: 2px solid #ffd700; }
+    .quiet-banner { display: flex; align-items: center; gap: 16px; padding: 24px; background: #f0f0f0; border-radius: 8px; margin-bottom: 28px; font-size: 15px; color: #666; }
+    .quiet-icon { font-size: 24px; }
+  </style>
+</head>
+<body>
+
+<div class="top-pick">
+  <div class="top-pick-label">🔥 Top pick this issue</div>
+  <div class="top-pick-content">Gergely Orosz surfaces a critical tension for AI-native PMs: developers are shipping twice as much code in half the time, but without the quality guardrails. The insight is that slowing down with AI agents—being intentional about what you ask them to build—is paradoxically the fastest way to ship reliably.</div>
+</div>
+
+<div class="digest-meta">21 thought leaders tracked · 6 had updates this issue</div>
+
+<nav class="digest-nav">
+  <a href="#gergely">Gergely Orosz</a>
+  <a href="#lenny">Lenny Rachitsky</a>
+  <a href="#ethan">Ethan Mollick</a>
+  <a href="#simon">Simon Willison</a>
+  <a href="#swyx">Swyx</a>
+  <a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+</nav>
+
+<div class="creator" id="gergely">
+  <div class="creator-header"><h2>Gergely Orosz</h2><span class="date-badge">June 02</span></div>
+  <div class="creator-headline">Devs are generating twice as much code (or more) than just 6 months ago, which is a problem for quality, reliability, and tech debt.</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Set velocity expectations differently for AI-accelerated teams. The paradox: developers who pause to think critically about what they're asking agents to build produce better outcomes than those who accept every suggestion. This means your roadmap velocity metrics need recalibration—more output doesn't equal more shipped value.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Orosz documents a real phenomenon: AI coding agents have fundamentally shifted how quickly code moves from idea to commit. The challenge isn't speed—it's intentionality. Teams that treat AI agents as thoughtless accelerators pile up tech debt faster than they can ship features. Teams that use agents as thinking partners (asking the right questions before accepting suggestions) maintain quality while moving faster than before.</p><p>For PMs, this means rethinking how you measure progress. Commits, lines of code, or even feature count aren't good proxies anymore. Instead, focus on: Are we shipping fewer bugs? Are we reducing time-to-stability? Are we maintaining architectural coherence? The teams winning with AI agents are the ones who've internalized that a slower, more deliberate approach to code generation produces faster overall product delivery.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://newsletter.pragmaticengineer.com/p/ideas-slow-down-to-speed-up-when" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="lenny">
+  <div class="creator-header"><h2>Lenny Rachitsky</h2><span class="date-badge">June 03</span></div>
+  <div class="creator-headline">Testing Google's Gemini Omni avatar feature live—I scan a QR code, clone my face, and ship a hype reel</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>AI face-cloning is now consumer-grade accessible. For product teams, this accelerates the timeline for avatar-first features (customer support, creator tools, social) but also intensifies the policy surface area. Ask: Where does your product sit in the authenticity spectrum? Is your UX honest about what users are interacting with?</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Rachitsky walks through the friction-free experience of Gemini Omni: scan, clone, ship. The ease is striking—there's almost no barrier to cloning a realistic video persona. This has immediate product implications for any team working in creator tools, customer support, or social platforms where presence matters.</p><p>The PM takeaway isn't about whether to use this technology, but about getting ahead of the trust question. Users will start encountering cloned or synthetic personas at scale, and products that are transparent about that friction (vs. those that hide it) will build stronger trust. Consider whether your roadmap includes explicit mechanisms for users to signal authenticity, verify identity, or opt out of interacting with synthetic personas.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.lennysnewsletter.com/p/gemini-omni-clone-yourself-with-ai" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="ethan">
+  <div class="creator-header"><h2>Ethan Mollick</h2><span class="date-badge">June 04</span></div>
+  <div class="creator-headline">Also: how pitch a book to an AI!</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Mollick argues the era of co-intelligence (human + AI working in tandem) is ending; we're entering co-existence where AIs solve whole problem classes independently. Products that still frame AI as an "assistant" are already behind. Start designing for scenarios where users need the human OR the AI, not both.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>This is a conceptual shift worth internalizing. Co-intelligence assumed humans would remain in control, overseeing AI suggestions. Co-existence acknowledges that for many tasks, the AI is simply the better choice—full stop. No human review needed. Mollick's framing has immediate implications for how you think about AI feature design.</p><p>Instead of "AI assists your workflow," ask: "For which parts of my user's journey does the AI become the primary actor?" Then design the handoff points (where humans take back control) intentionally and sparingly. This changes your product spec, UX patterns, and even success metrics. Products designed for co-existence will look very different from products built on co-intelligence assumptions.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.oneusefulthing.org/p/co-existence-and-the-end-of-co-intelligence" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="simon">
+  <div class="creator-header"><h2>Simon Willison</h2><span class="date-badge">June 04</span></div>
+  <div class="creator-headline">After this story was published Google's spokesperson asked to publish a slightly different version of that statement.</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Google's internal statement dropped "it's critical that we maintain humans in the loop"—a narrative shift that reflects how quickly AI risk conversations are being normalized inside large orgs. Pay attention to what gets edited out of official statements; it signals what your industry will stop saying publicly in 6 months.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Willison flags a telling detail: Google's public stance on AI safety softened mid-week. The original statement emphasized human oversight; the revised version removed that language entirely. This isn't a bug—it's a signal of how tech companies are repositioning themselves on the safety/capabilities tradeoff as AI becomes more central to core business.</p><p>For PMs at any company building AI features, this is a pressure test: Are you building products with the assumption that humans will oversee AI decisions? If so, be prepared to defend that choice or be ready to pivot. The industry narrative is moving toward "AI handles this, period" rather than "AI assists, human decides." Your product strategy should either align with or deliberately counter that momentum.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://simonwillison.net/2026/Jun/4/a-slightly-different-version/#atom-everything" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="swyx">
+  <div class="creator-header"><h2>Swyx</h2><span class="date-badge">June 04</span></div>
+  <div class="creator-headline">We talk with the VendingBench authors on evaling Claudes from Haiku to Mythos, and how they build leading, and lasting, frontier evals from scratch.</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Frontier evals are shifting from benchmarks to real-world problem solving. For PMs choosing between models for production, this means moving past "which model scores higher on academic tests" toward "which model solves my specific user problems reliably." VendingBench's approach—building evals from actual product scenarios—is the template your team should follow.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Swyx and the Andon Labs team discuss how to evaluate LLMs in ways that actually predict production performance. The key insight: traditional benchmarks (MMLU, GSM8K) don't correlate well with whether a model will perform well on your actual product. VendingBench instead tests models on real vending machine customer service scenarios—messy, contextual, failure-prone situations.</p><p>This matters for your roadmap because it means you should invest in building internal evals tied to your product's actual workflows. Rather than adopting the latest model because it's #1 on some leaderboard, you'll want to run it against a suite of scenarios your users actually encounter. This requires a small upfront investment but pays dividends when choosing between models or deciding when to upgrade.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.latent.space/p/andon" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker" id="thought-provokers">
+  <div class="creator-header"><h2>Ethan Mollick</h2><span class="date-badge">May 26</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>Mollick surfaces a troubling pattern: social feeds are filling with AI-generated content that looks suspiciously uniform. This is the canary in the coal mine for product design—once AI can generate "good enough" at scale, human authenticity becomes the premium. Your product needs a deliberate stance on synthetic vs. authentic content, or your users will feel the degradation.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>The argument is simple but powerful: as AI-generated content becomes easier and cheaper, the default trajectory is for feeds to fill with it. Users notice. Engagement drops. The product becomes less valuable. This isn't inevitable—it's a design choice. Platforms that explicitly curate for human-authored content, that surface signals of authenticity, or that let users filter synthetic content will win the trust battle. Those that remain agnostic or actively promote AI content will watch their communities thin out.</p><p>
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 21 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
