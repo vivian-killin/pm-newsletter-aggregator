@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Monday, June 08, 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fafaf8;
+      color: #1a1a1a;
+      line-height: 1.65;
+    }
+
+    .header {
+      background: #fff;
+      border-bottom: 1px solid #e8e8e4;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.3px; }
+    .header .tagline { font-size: 0.9rem; color: #888; margin-top: 0.3rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.85rem;
+      font-size: 0.78rem; background: #f0f0ec; color: #666;
+      padding: 0.25rem 0.85rem; border-radius: 999px;
+    }
+
+    .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: #f7f7f4;
+      border: 1px solid #e0ddd5;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.5;
+    }
+    .quiet-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta {
+      font-size: 0.8rem; color: #888; margin-bottom: 1rem;
+    }
+
+    /* ── Jump nav ── */
+    .digest-nav {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-bottom: 1.5rem;
+    }
+    .digest-nav a {
+      display: inline-block; padding: 4px 11px;
+      font-size: 0.75rem; font-weight: 500; color: #444;
+      background: #fff; border: 1px solid #ddd;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.12s, border-color 0.12s;
+    }
+    .digest-nav a:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .digest-nav a.tp-nav { background: #fffdf5; border-color: #e8d98a; color: #a07800; }
+    .digest-nav a.tp-nav:hover { background: #a07800; color: #fff; border-color: #a07800; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fff; border: 1px solid #e8e8e4;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 0.9rem;
+    }
+    .thought-provoker { background: #fffdf5; border-color: #e8d98a; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.35rem;
+    }
+    .creator-header h2 { font-size: 1rem; font-weight: 700; line-height: 1.3; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 500;
+      color: #888; background: #f0f0ec;
+      padding: 2px 8px; border-radius: 999px; white-space: nowrap;
+    }
+    .badge-hot {
+      display: inline-block; background: #cc3300; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 1px 6px;
+      border-radius: 999px; margin-left: 5px; vertical-align: middle;
+    }
+    .creator-headline {
+      font-size: 0.8rem; color: #777; font-style: italic; margin-bottom: 0.75rem;
+    }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f0eeff; border-left: 3px solid #7b6ef6;
+      border-radius: 0 6px 6px 0; padding: 0.5rem 0.85rem;
+      font-size: 0.855rem; color: #2a2a2a; line-height: 1.55;
+      margin-bottom: 0.6rem;
+    }
+    .tldr-label {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; display: block; margin-bottom: 3px;
+    }
+    .thought-provoker .tldr { background: #fffbea; border-color: #c9a800; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 2px; }
+    summary {
+      cursor: pointer; font-size: 0.75rem; font-weight: 600; color: #7b6ef6;
+      list-style: none; display: inline-flex; align-items: center; gap: 3px;
+      user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; font-size: 0.7rem; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.75rem; }
+
+    .detail-body p { font-size: 0.875rem; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol {
+      font-size: 0.875rem; padding-left: 1.2rem; margin-bottom: 0.7rem;
+    }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #ddd; padding: 0.3rem 0.85rem;
+      color: #555; font-style: italic; font-size: 0.855rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.6rem; font-size: 0.8rem; }
+    .creator-links a { color: #7b6ef6; text-decoration: none; font-weight: 500; }
+    .creator-links a:hover { text-decoration: underline; }
+    .creator-links span { color: #ccc; margin: 0 5px; }
+
+    /* ── Top pick (appears at top of digest) ── */
+    .top-pick {
+      background: #f0eeff; border: 1px solid #c4b8ff;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 1.25rem;
+    }
+    .top-pick-label {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; margin-bottom: 0.5rem;
+    }
+    .top-pick-content { font-size: 0.925rem; color: #1a1a1a; line-height: 1.55; }
+
+    /* ── No updates fallback ── */
+    .no-updates {
+      text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #aaa;
+    }
+
+    .footer {
+      text-align: center; padding: 1.5rem;
+      font-size: 0.78rem; color: #bbb; border-top: 1px solid #e8e8e4;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.5rem 1rem 1.25rem; }
+      .header h1 { font-size: 1.1rem; }
+      .container { padding: 1rem 0.85rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1rem 1rem; border-radius: 10px; }
+      .creator-header { flex-direction: column; gap: 4px; }
+      .quiet-banner { font-size: 0.85rem; padding: 0.85rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Monday, June 08, 2026</div>
+  </div>
+
+  <div class="container">
+    <!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PM Intelligence Digest — June 08, 2026</title>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 720px; margin: 0 auto; padding: 20px; background: #fafafa; }
+.digest-header { border-bottom: 2px solid #e0e0e0; padding-bottom: 20px; margin-bottom: 30px; }
+.digest-header h1 { margin: 0; font-size: 28px; font-weight: 700; }
+.digest-header p { margin: 8px 0 0 0; color: #666; font-size: 14px; }
+.top-pick { background: linear-gradient(135deg, #fff5e6 0%, #ffe8cc 100%); border-left: 4px solid #ff9800; padding: 20px; margin-bottom: 30px; border-radius: 4px; }
+.top-pick-label { font-weight: 700; color: #e65100; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+.top-pick-content { color: #1a1a1a; font-size: 15px; line-height: 1.6; }
+.digest-meta { font-size: 13px; color: #666; margin-bottom: 20px; letter-spacing: 0.5px; }
+.digest-nav { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 40px; }
+.digest-nav a { padding: 8px 14px; background: #fff; border: 1px solid #ddd; border-radius: 20px; font-size: 13px; font-weight: 600; text-decoration: none; color: #0066cc; transition: all 0.2s; }
+.digest-nav a:hover { background: #0066cc; color: #fff; border-color: #0066cc; }
+.digest-nav .tp-nav { color: #ff6b35; }
+.digest-nav .tp-nav:hover { background: #ff6b35; }
+.creator, .thought-provoker { background: #fff; border: 1px solid #e0e0e0; border-radius: 6px; padding: 24px; margin-bottom: 20px; }
+.creator-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.creator-header h2 { margin: 0; font-size: 18px; font-weight: 700; color: #1a1a1a; }
+.date-badge { font-size: 12px; background: #f0f0f0; color: #666; padding: 4px 10px; border-radius: 12px; font-weight: 600; }
+.creator-headline { font-size: 14px; color: #666; margin-bottom: 16px; font-weight: 500; }
+.tldr { background: #f9f9f9; border-left: 3px solid #0066cc; padding: 14px; margin-bottom: 16px; border-radius: 2px; }
+.tldr-label { font-weight: 700; color: #0066cc; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 6px; }
+.tldr { font-size: 14px; line-height: 1.6; color: #1a1a1a; }
+details { margin-bottom: 16px; }
+details summary { cursor: pointer; font-size: 13px; color: #0066cc; font-weight: 600; user-select: none; }
+details summary:hover { text-decoration: underline; }
+.detail-body { margin-top: 12px; font-size: 14px; line-height: 1.7; color: #333; }
+.detail-body p { margin: 0 0 12px 0; }
+.detail-body ul { margin: 12px 0; padding-left: 20px; }
+.detail-body li { margin-bottom: 6px; }
+.creator-links { margin-top: 16px; }
+.creator-links a { display: inline-block; font-size: 13px; font-weight: 700; color: #0066cc; text-decoration: none; }
+.creator-links a:hover { text-decoration: underline; }
+.thought-provoker { border-left: 4px solid #ff6b35; }
+.quiet-banner { background: #e8f4f8; border-left: 4px solid #0099cc; padding: 20px; border-radius: 4px; font-size: 14px; color: #0066cc; display: flex; align-items: center; gap: 12px; margin-bottom: 40px; }
+.quiet-icon { font-size: 24px; }
+</style>
+</head>
+<body>
+
+<div class="digest-header">
+<h1>PM Intelligence Digest</h1>
+<p>June 08, 2026</p>
+</div>
+
+<div class="top-pick">
+<div class="top-pick-label">🔥 Top pick this issue</div>
+<div class="top-pick-content">Tony Fadell, the father of the iPod and iPhone, explores how PMs and designers should build taste, judgment, and creativity in an AI-era world. Fadell argues that opinion still matters more than you think—and that screens remain essential to meaningful human interaction, a critical perspective as AI shapes product strategy.</div>
+</div>
+
+<div class="digest-meta">21 thought leaders tracked &nbsp;·&nbsp; 4 had updates this issue</div>
+
+<nav class="digest-nav">
+<a href="#lenny">Lenny Rachitsky</a>
+<a href="#simon">Simon Willison</a>
+<a href="#swyx">Swyx</a>
+<a href="#gergely">Gergely Orosz</a>
+<a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+</nav>
+
+<div class="creator" id="lenny">
+<div class="creator-header"><h2>Lenny Rachitsky</h2><span class="date-badge">Jun 07–08</span></div>
+<div class="creator-headline">Building taste and shipping products that last in the AI era</div>
+<div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Judgment and taste—not just data—drive exceptional products. Fadell's "three generations rule" (building for today, tomorrow, and a decade out) is a framework for navigating AI-powered feature abundance and avoiding short-term optimization traps.</div>
+<details><summary>Read more</summary>
+<div class="detail-body"><p>Tony Fadell's career at Apple and Nest teaches a hard lesson: the best products aren't built by chasing metrics or letting AI generate every possible feature. Instead, Fadell emphasizes the role of human judgment in deciding what matters. He argues that PMs need to develop taste—the ability to see what users will love before they know they want it.</p><p>His "three generations rule" applies to product decisions: build for today (ship working features), tomorrow (next cycle iteration), and a decade out (architectural resilience). In an age where AI can generate a thousand feature ideas in minutes, this framework becomes a decision-making guard rail. The implication for AI-native product teams: more velocity doesn't mean better products without intentional, opinionated choices about what to say no to.</p></div>
+</details>
+<div class="creator-links"><a href="https://www.lennysnewsletter.com/p/father-of-the-ipod-and-iphone-on" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="simon">
+<div class="creator-header"><h2>Simon Willison</h2><span class="date-badge">Jun 06–07</span></div>
+<div class="creator-headline">Sandboxing and agentic text editing—building safe, editable AI workflows</div>
+<div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>For AI agents that edit content (SQL, Markdown, SVG), design matters as much as capability. Willison's datasette-agent-edit plugin shows how to build trust in agentic workflows by giving users visibility and control over edits—a critical UX pattern for PM teams building AI-powered editing tools.</div>
+<details><summary>Read more</summary>
+<div class="detail-body"><p>Simon Willison is expanding the Datasette Agent ecosystem with tools for safe, sandboxed code execution and agentic editing of text. His micropython-wasm release offers a way to run Python in a sandboxed WASM environment—useful for platforms that need to let users execute code without risk. The datasette-agent-edit plugin addresses a subtler challenge: how do you let an AI agent edit existing documents (SQL queries, Markdown files, SVG graphics) while maintaining user trust?</p><p>The design pattern he cites from Claude's text editor is instructive: agents need view, edit, and approval tools built into the interaction model, not bolted on after. For PMs building agentic features, this is a reminder that capability alone (agent can edit) isn't enough—you need workflow design that keeps humans in the loop and transparent about what the agent changed.</p></div>
+</details>
+<div class="creator-links"><a href="https://simonwillison.net/2026/Jun/7/datasette-agent-edit/#atom-everything" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="swyx">
+<div class="creator-header"><h2>Swyx</h2><span class="date-badge">Jun 05</span></div>
+<div class="creator-headline">Why your broken RL environments are actively harming your models</div>
+<div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>For teams building AI agents via reinforcement learning, the quality of training environments is non-negotiable. A poorly designed reward signal or broken simulation doesn't just slow progress—it actively teaches models to behave badly. This shifts the PM focus from "how many environments can we test?" to "how do we validate environment quality?"</div>
+<details><summary>Read more</summary>
+<div class="detail-body"><p>Swyx cuts through a common blind spot in AI-native product development: the assumption that more training trajectories always equal better models. In reality, low-quality RL environments—with broken reward signals, unrealistic physics, or poorly designed task specifications—actively degrade model performance. The problem is subtle because the model will still train; it just learns to exploit quirks in the broken environment rather than solving the real problem.</p><p>The PM implication is straightforward but often overlooked: discovery and validation of your training environment matters as much as discovery of user problems. Before scaling your agent training pipeline, do a quality audit of your reward design, simulation accuracy, and environment specifications. Bad environments are expensive feedback loops.</p></div>
+</details>
+<div class="creator-links"><a href="https://www.latent.space/p/bad-envs" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="gergely">
+<div class="creator-header"><h2>Gergely Orosz</h2><span class="date-badge">Jun 03</span></div>
+<div class="creator-headline">Kelsey Hightower on open source, Kubernetes, and technology that serves people</div>
+<div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Kelsey Hightower's path from self-taught technician to Google Distinguished Engineer offers a rare inside view of how to ship infrastructure that stays relevant for decades. His philosophy: technology should serve the people who use it, not the other way around—a contrarian stance in an age of AI-first hype.</div>
+<details><summary>Read more</summary>
+<div class="detail-body"><p>Gergely interviews Kelsey Hightower, the engineer behind foundational Kubernetes work, who shares lessons on building technology that lasts. Hightower's approach emphasizes simplicity, open-source transparency, and solving real pain points rather than chasing trends. He reflects on the transition from hands-on engineering to leadership and how great engineers think about the broader impact of the systems they build.</p><p>For PMs in the AI era, Hightower's philosophy is instructive: all the model optimization in the world doesn't matter if the end-to-end system doesn't serve users. He's skeptical of AI-first roadmaps that prioritize capability over usability and advocates for building tools that engineers and users actually want to maintain and extend.</p></div>
+</details>
+<div class="creator-links"><a href="https://newsletter.pragmaticengineer.com/p/kubernetes-and-retiring-at-the-top" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker" id="thought-provokers">
+<div class="creator-header"><h2>Lenny Rachitsky</h2><span class="date-badge">Jun 08</span></div>
+<div class="creator-headline">Worth your time regardless of when it was published</div>
+<div class="tldr"><span class="tldr-label">Why it's worth your time</span>Nicole Ruiz demonstrates a concrete, tactical use of Claude for long-term consumer decisions: finding quality brands, automating returns, and reclaiming time for what matters. It's a vivid example of how AI can reshape personal utility—and hints at the product opportunities in trust, curation, and friction removal.</div>
+<details><summary>Read more</summary>
+<div class="detail-body"><p>Shopping with Claude isn't a tech demo—it's a case study in how AI reshapes everyday decision-making. Ruiz uses Claude not to replace her judgment but to amplify it: ask better questions about durability, get vendor history, automate the tedious parts (managing returns, tracking warranties), and spend less time administrating and more time with family. This workflow won't work for everyone, but it reveals what an AI-powered consumer assistant could become: a filter for quality, a relationship manager with brands, and a time auditor.</p><p>For PMs building AI-powered products, the key insight is that the magic isn't in the AI—it's in understanding where humans waste time on decisions they don't care about, and where they need an assistant to think deeper. Ruiz's use case shows that niche, highly specific problems often make the best starting points for AI-native products.</p></div>
+</details>
+<div class="creator-links"><a href="https://www.lennysnewsletter.com/p/shopping-with-claude" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker">
+<div class="creator-header"><h2>Swyx</h2><span class="date-badge">Jun 05</span></div>
+<div class="creator-headline">Worth your time regardless of when it was published</div>
+<div class="tldr"><span class="tldr-label">Why it's worth your time</span>Swyx's piece on reinforcement learning quality is essential for any PM working on agentic AI products. It challenges the assumption that more training data solves everything and forces teams to confront whether their reward signals are actually training the behaviors they want.</div>
+<details><summary>Read more</summary>
+<div class="detail-body"><p>
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 21 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
