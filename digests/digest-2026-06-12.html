@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Friday, June 12, 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fafaf8;
+      color: #1a1a1a;
+      line-height: 1.65;
+    }
+
+    .header {
+      background: #fff;
+      border-bottom: 1px solid #e8e8e4;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.3px; }
+    .header .tagline { font-size: 0.9rem; color: #888; margin-top: 0.3rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.85rem;
+      font-size: 0.78rem; background: #f0f0ec; color: #666;
+      padding: 0.25rem 0.85rem; border-radius: 999px;
+    }
+
+    .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: #f7f7f4;
+      border: 1px solid #e0ddd5;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.5;
+    }
+    .quiet-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta {
+      font-size: 0.8rem; color: #888; margin-bottom: 1rem;
+    }
+
+    /* ── Jump nav ── */
+    .digest-nav {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-bottom: 1.5rem;
+    }
+    .digest-nav a {
+      display: inline-block; padding: 4px 11px;
+      font-size: 0.75rem; font-weight: 500; color: #444;
+      background: #fff; border: 1px solid #ddd;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.12s, border-color 0.12s;
+    }
+    .digest-nav a:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .digest-nav a.tp-nav { background: #fffdf5; border-color: #e8d98a; color: #a07800; }
+    .digest-nav a.tp-nav:hover { background: #a07800; color: #fff; border-color: #a07800; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fff; border: 1px solid #e8e8e4;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 0.9rem;
+    }
+    .thought-provoker { background: #fffdf5; border-color: #e8d98a; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.35rem;
+    }
+    .creator-header h2 { font-size: 1rem; font-weight: 700; line-height: 1.3; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 500;
+      color: #888; background: #f0f0ec;
+      padding: 2px 8px; border-radius: 999px; white-space: nowrap;
+    }
+    .badge-hot {
+      display: inline-block; background: #cc3300; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 1px 6px;
+      border-radius: 999px; margin-left: 5px; vertical-align: middle;
+    }
+    .creator-headline {
+      font-size: 0.8rem; color: #777; font-style: italic; margin-bottom: 0.75rem;
+    }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f0eeff; border-left: 3px solid #7b6ef6;
+      border-radius: 0 6px 6px 0; padding: 0.5rem 0.85rem;
+      font-size: 0.855rem; color: #2a2a2a; line-height: 1.55;
+      margin-bottom: 0.6rem;
+    }
+    .tldr-label {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; display: block; margin-bottom: 3px;
+    }
+    .thought-provoker .tldr { background: #fffbea; border-color: #c9a800; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 2px; }
+    summary {
+      cursor: pointer; font-size: 0.75rem; font-weight: 600; color: #7b6ef6;
+      list-style: none; display: inline-flex; align-items: center; gap: 3px;
+      user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; font-size: 0.7rem; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.75rem; }
+
+    .detail-body p { font-size: 0.875rem; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol {
+      font-size: 0.875rem; padding-left: 1.2rem; margin-bottom: 0.7rem;
+    }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #ddd; padding: 0.3rem 0.85rem;
+      color: #555; font-style: italic; font-size: 0.855rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.6rem; font-size: 0.8rem; }
+    .creator-links a { color: #7b6ef6; text-decoration: none; font-weight: 500; }
+    .creator-links a:hover { text-decoration: underline; }
+    .creator-links span { color: #ccc; margin: 0 5px; }
+
+    /* ── Top pick (appears at top of digest) ── */
+    .top-pick {
+      background: #f0eeff; border: 1px solid #c4b8ff;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 1.25rem;
+    }
+    .top-pick-label {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; margin-bottom: 0.5rem;
+    }
+    .top-pick-content { font-size: 0.925rem; color: #1a1a1a; line-height: 1.55; }
+
+    /* ── No updates fallback ── */
+    .no-updates {
+      text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #aaa;
+    }
+
+    .footer {
+      text-align: center; padding: 1.5rem;
+      font-size: 0.78rem; color: #bbb; border-top: 1px solid #e8e8e4;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.5rem 1rem 1.25rem; }
+      .header h1 { font-size: 1.1rem; }
+      .container { padding: 1rem 0.85rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1rem 1rem; border-radius: 10px; }
+      .creator-header { flex-direction: column; gap: 4px; }
+      .quiet-banner { font-size: 0.85rem; padding: 0.85rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Friday, June 12, 2026</div>
+  </div>
+
+  <div class="container">
+    <!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>PM Intelligence Digest</title>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 700px; margin: 0 auto; padding: 20px; background: #fafafa; }
+.top-pick { background: #fff3cd; border-left: 4px solid #ffc107; padding: 16px; margin-bottom: 24px; border-radius: 4px; }
+.top-pick-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #856404; margin-bottom: 8px; }
+.top-pick-content { font-size: 15px; color: #333; }
+.digest-meta { font-size: 13px; color: #666; margin-bottom: 20px; }
+.digest-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+.digest-nav a { display: inline-block; padding: 8px 12px; background: #e8e8e8; border-radius: 16px; text-decoration: none; font-size: 13px; font-weight: 500; color: #333; transition: background 0.2s; }
+.digest-nav a:hover { background: #d8d8d8; }
+.digest-nav .tp-nav { background: #f0e6ff; color: #5a3a8a; }
+.digest-nav .tp-nav:hover { background: #e8d9ff; }
+.creator, .thought-provoker { background: white; border: 1px solid #e0e0e0; border-radius: 6px; padding: 20px; margin-bottom: 16px; }
+.creator-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.creator-header h2 { margin: 0; font-size: 18px; font-weight: 700; }
+.date-badge { font-size: 12px; color: #999; font-weight: 500; }
+.creator-headline { font-size: 14px; color: #666; margin-bottom: 12px; font-style: italic; }
+.tldr { background: #f5f5f5; padding: 12px; border-radius: 4px; margin-bottom: 12px; }
+.tldr-label { font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: #333; display: block; margin-bottom: 6px; }
+.tldr { font-size: 14px; color: #333; }
+details { margin-bottom: 12px; }
+summary { cursor: pointer; font-size: 14px; color: #0066cc; text-decoration: underline; }
+summary:hover { color: #0052a3; }
+.detail-body { margin-top: 10px; font-size: 14px; color: #555; line-height: 1.7; }
+.detail-body p { margin: 0 0 10px 0; }
+.detail-body ul { margin: 8px 0; padding-left: 20px; }
+.detail-body li { margin-bottom: 6px; }
+.creator-links { margin-top: 12px; }
+.creator-links a { display: inline-block; padding: 8px 14px; background: #0066cc; color: white; text-decoration: none; border-radius: 4px; font-size: 13px; font-weight: 600; }
+.creator-links a:hover { background: #0052a3; }
+.quiet-banner { display: flex; gap: 12px; align-items: center; background: #f0f0f0; padding: 16px; border-radius: 6px; margin-bottom: 24px; font-size: 14px; color: #666; }
+.quiet-icon { font-size: 20px; }
+.thought-provoker { border-left: 3px solid #9c27b0; }
+</style>
+</head>
+<body>
+
+<div class="top-pick">
+  <div class="top-pick-label">🔥 Top pick this issue</div>
+  <div class="top-pick-content">Lenny Rachitsky's hands-on review of Claude Fable 5 cuts through the hype with a critical assessment of what Anthropic's new Mythos-class model does well and where it falls short. For AI-native PMs, this matters: understanding the real capabilities and limitations of frontier models is essential for roadmapping AI features that actually solve problems rather than chase novelty.</div>
+</div>
+
+<div class="digest-meta">21 thought leaders tracked &nbsp;·&nbsp; 6 had updates this issue</div>
+
+<nav class="digest-nav">
+  <a href="#lenny">Lenny Rachitsky</a>
+  <a href="#mollick">Ethan Mollick</a>
+  <a href="#willison">Simon Willison</a>
+  <a href="#swyx">Swyx</a>
+  <a href="#zhuo">Julie Zhuo</a>
+  <a href="#orosz">Gergely Orosz</a>
+  <a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+</nav>
+
+<div class="creator" id="lenny">
+  <div class="creator-header"><h2>Lenny Rachitsky</h2><span class="date-badge">Jun 9</span></div>
+  <div class="creator-headline">Early access review of Claude Fable 5: capabilities and critical gaps</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Evaluate frontier models on real use cases, not benchmarks. Fable 5 excels at some tasks but has notable limitations—understanding where new models genuinely shine (and where they fail) prevents building features on fragile foundations.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Lenny gained early access to Claude Fable 5 and stress-tested it against Anthropic's marketing claims. The core finding: Fable is significantly more capable in certain domains but has glaring gaps in others. What Anthropic gets right includes improved reasoning, multimodal handling, and autonomy. What goes very wrong includes reliability issues on specific task types and a tendency to hallucinate under pressure.</p><p>For PMs, the lesson is methodological: don't rely on press releases or benchmark scores. Run targeted experiments on your actual product use cases before committing roadmap capacity to an AI feature. The best PMs treating Fable as a real tool (not a category shift) and stress-testing it in production scenarios before launch.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.lennysnewsletter.com/p/claude-fable-5-review-what-the-new" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="mollick">
+  <div class="creator-header"><h2>Ethan Mollick</h2><span class="date-badge">Jun 9</span></div>
+  <div class="creator-headline">First impressions working hands-on with Claude Fable's new capabilities</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Fable represents a meaningful capability jump that changes what's possible in AI-assisted workflows. PMs should experiment with it directly to identify new product opportunities rather than waiting for competitor moves.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Mollick's assessment focuses on the qualitative experience of working with Fable. He frames it as "another big jump" in AI capability, noting tangible improvements in autonomy and reasoning. His approach emphasizes firsthand experimentation as the only way to understand what's actually possible.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.oneusefulthing.org/p/what-it-feels-like-to-work-with-mythos" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="willison">
+  <div class="creator-header"><h2>Simon Willison</h2><span class="date-badge">Jun 11</span></div>
+  <div class="creator-headline">Claude Fable operates with relentless proactivity—and what that means for product design</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Fable's defining trait is relentless proactivity: it deploys any available trick to reach its goal, often before the user explicitly asks. This has major implications for how you design human-AI interactions—more autonomy isn't always better if users lose visibility into what the model is doing.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Willison's key observation: Fable is "relentlessly proactive." It will spot problems, generate solutions, and execute them autonomously. He illustrates this with a live example fixing a UI glitch in Datasette—Fable identified and corrected the issue without being asked. This is powerful but also raises UX questions.</p><p>For AI-native PMs, this creates a design tension: increased autonomy is appealing, but it can also reduce user agency. The best products will need explicit guardrails around when and how models take proactive action. Willison's deeper point is that this trait changes how you think about error recovery, undo, and explainability in AI features.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://simonwillison.net/2026/Jun/11/fable-is-relentlessly-proactive/#atom-everything" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="swyx">
+  <div class="creator-header"><h2>Swyx</h2><span class="date-badge">Jun 12</span></div>
+  <div class="creator-headline">Three emerging patterns in AI infrastructure and model design</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Three concepts shifting the landscape: Loopcraft (stacking loop patterns for agent design), the Model Labs vs Agent Labs split (different team structures for different problems), and untrainability (what you can't solve through training). Understanding these frameworks helps PMs think structurally about AI roadmaps rather than feature-by-feature.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Swyx's coverage highlights key architectural thinking from Karpathy and others. Loopcraft emphasizes composable loop patterns (perception-action-reflection cycles) as a design primitive. The Model Labs vs Agent Labs distinction matters: some problems are solved through better models; others need smarter agentic workflows. Untrainability surfaces constraints that no amount of fine-tuning will solve.</p><p>For PMs, this is strategic. Before committing to training or fine-tuning a model, ask: is this a model problem or an agent problem? The answer changes your roadmap, hiring, and partnership decisions. These frameworks also help avoid the trap of throwing compute at problems that need architectural fixes.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.latent.space/p/ainews-loopcraft-the-art-of-stacking" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="zhuo">
+  <div class="creator-header"><h2>Julie Zhuo</h2><span class="date-badge">Jun 9</span></div>
+  <div class="creator-headline">Lessons on sales excellence from Meta's longtime Chief Revenue Officer</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>David Fischer's decade running Meta's revenue machine offers PM-relevant insights: relationship depth, understanding customer economics, and long-term thinking outweigh tactical urgency. As AI disrupts go-to-market, these fundamentals become more valuable, not less.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Zhuo interviews Fischer on what separates excellent salespeople from the rest. The lessons span relationship building, economic reasoning, and organizational scaling. While sales-focused, the principles apply to how PMs should think about customer value and business model sustainability in an AI-native world.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://joulee.medium.com/the-art-and-excellence-of-sales-29d82d0bb90f?source=rss-b8a4e5ae7490------2" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="orosz">
+  <div class="creator-header"><h2>Gergely Orosz</h2><span class="date-badge">Jun 11</span></div>
+  <div class="creator-headline">Anthropic's Fable restrictions are shifting competitive dynamics, plus trends in model routing</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Fable's usage restrictions are creating an unexpected opening for competitors—users will route around limitations if alternatives exist. This signals a broader trend: model choice is becoming a product feature, not a one-time decision. Build flexibility into your AI architecture now.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Orosz covers the market reaction to Fable's controversial usage policies. The core insight: overly restrictive models are being abandoned by users, not accepted. This is creating demand for smarter model routing (choosing the right model for each task) and multi-model stacks. He also flags emerging patterns in enterprise reliability (Coinbase's failover gaps, for example) that will matter as AI becomes core infrastructure.</p><p>For PMs, the implication is clear: single-model dependencies are a liability. Design for model flexibility and smart routing from day one. The cost of switching models mid-product is high; the cost of being locked into a model with unacceptable constraints is higher.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://newsletter.pragmaticengineer.com/p/did-anthropics-new-model-just-boost" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker" id="thought-provokers">
+  <div class="creator-header"><h2>Lenny Rachitsky</h2><span class="date-badge">Jun 9</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>A curated list of 36 essential books for builders, leaders, and people—grounded in the conviction that foundational thinking (history, psychology, business theory) matters more in an AI era, not less. Useful for personal growth and team reading lists.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>As AI accelerates, the temptation is to chase the new. Lenny's list is an antidote: it anchors on timeless books that build judgment, not just knowledge. Titles span strategy, decision-making, organizational design, and human behavior. The implicit thesis: AI amplifies the impact of good decision-making frameworks and leadership.</p></div>
+  </details>
+  <div class="creator-links">
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 21 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
