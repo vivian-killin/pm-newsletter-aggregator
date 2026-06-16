@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Tuesday, June 16, 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fafaf8;
+      color: #1a1a1a;
+      line-height: 1.65;
+    }
+
+    .header {
+      background: #fff;
+      border-bottom: 1px solid #e8e8e4;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.3px; }
+    .header .tagline { font-size: 0.9rem; color: #888; margin-top: 0.3rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.85rem;
+      font-size: 0.78rem; background: #f0f0ec; color: #666;
+      padding: 0.25rem 0.85rem; border-radius: 999px;
+    }
+
+    .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: #f7f7f4;
+      border: 1px solid #e0ddd5;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.5;
+    }
+    .quiet-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta {
+      font-size: 0.8rem; color: #888; margin-bottom: 1rem;
+    }
+
+    /* ── Jump nav ── */
+    .digest-nav {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-bottom: 1.5rem;
+    }
+    .digest-nav a {
+      display: inline-block; padding: 4px 11px;
+      font-size: 0.75rem; font-weight: 500; color: #444;
+      background: #fff; border: 1px solid #ddd;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.12s, border-color 0.12s;
+    }
+    .digest-nav a:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .digest-nav a.tp-nav { background: #fffdf5; border-color: #e8d98a; color: #a07800; }
+    .digest-nav a.tp-nav:hover { background: #a07800; color: #fff; border-color: #a07800; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fff; border: 1px solid #e8e8e4;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 0.9rem;
+    }
+    .thought-provoker { background: #fffdf5; border-color: #e8d98a; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.35rem;
+    }
+    .creator-header h2 { font-size: 1rem; font-weight: 700; line-height: 1.3; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 500;
+      color: #888; background: #f0f0ec;
+      padding: 2px 8px; border-radius: 999px; white-space: nowrap;
+    }
+    .badge-hot {
+      display: inline-block; background: #cc3300; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 1px 6px;
+      border-radius: 999px; margin-left: 5px; vertical-align: middle;
+    }
+    .creator-headline {
+      font-size: 0.8rem; color: #777; font-style: italic; margin-bottom: 0.75rem;
+    }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f0eeff; border-left: 3px solid #7b6ef6;
+      border-radius: 0 6px 6px 0; padding: 0.5rem 0.85rem;
+      font-size: 0.855rem; color: #2a2a2a; line-height: 1.55;
+      margin-bottom: 0.6rem;
+    }
+    .tldr-label {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; display: block; margin-bottom: 3px;
+    }
+    .thought-provoker .tldr { background: #fffbea; border-color: #c9a800; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 2px; }
+    summary {
+      cursor: pointer; font-size: 0.75rem; font-weight: 600; color: #7b6ef6;
+      list-style: none; display: inline-flex; align-items: center; gap: 3px;
+      user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; font-size: 0.7rem; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.75rem; }
+
+    .detail-body p { font-size: 0.875rem; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol {
+      font-size: 0.875rem; padding-left: 1.2rem; margin-bottom: 0.7rem;
+    }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #ddd; padding: 0.3rem 0.85rem;
+      color: #555; font-style: italic; font-size: 0.855rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.6rem; font-size: 0.8rem; }
+    .creator-links a { color: #7b6ef6; text-decoration: none; font-weight: 500; }
+    .creator-links a:hover { text-decoration: underline; }
+    .creator-links span { color: #ccc; margin: 0 5px; }
+
+    /* ── Top pick (appears at top of digest) ── */
+    .top-pick {
+      background: #f0eeff; border: 1px solid #c4b8ff;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 1.25rem;
+    }
+    .top-pick-label {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; margin-bottom: 0.5rem;
+    }
+    .top-pick-content { font-size: 0.925rem; color: #1a1a1a; line-height: 1.55; }
+
+    /* ── No updates fallback ── */
+    .no-updates {
+      text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #aaa;
+    }
+
+    .footer {
+      text-align: center; padding: 1.5rem;
+      font-size: 0.78rem; color: #bbb; border-top: 1px solid #e8e8e4;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.5rem 1rem 1.25rem; }
+      .header h1 { font-size: 1.1rem; }
+      .container { padding: 1rem 0.85rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1rem 1rem; border-radius: 10px; }
+      .creator-header { flex-direction: column; gap: 4px; }
+      .quiet-banner { font-size: 0.85rem; padding: 0.85rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Tuesday, June 16, 2026</div>
+  </div>
+
+  <div class="container">
+    <!DOCTYPE html>
+<html>
+<head>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: #1a1a1a; background: #f9f9f9; padding: 20px; }
+.digest-container { max-width: 680px; margin: 0 auto; }
+.top-pick { background: linear-gradient(135deg, #fff5e6 0%, #ffe6cc 100%); border-left: 4px solid #ff9500; padding: 20px; margin-bottom: 24px; border-radius: 8px; }
+.top-pick-label { font-weight: 700; color: #ff6b00; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+.top-pick-content { font-size: 15px; line-height: 1.7; color: #333; }
+.digest-meta { font-size: 13px; color: #666; margin: 20px 0; text-align: center; }
+.digest-nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0; justify-content: center; }
+.digest-nav a { display: inline-block; background: #f0f0f0; padding: 8px 14px; border-radius: 20px; text-decoration: none; font-size: 13px; font-weight: 500; color: #333; transition: all 0.2s; }
+.digest-nav a:hover { background: #e0e0e0; }
+.tp-nav { background: #e8f4f8 !important; color: #0066cc !important; }
+.tp-nav:hover { background: #d0e8f0 !important; }
+.creator, .thought-provoker { background: white; border-radius: 8px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+.creator-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+.creator-header h2 { margin: 0; font-size: 18px; font-weight: 700; color: #1a1a1a; }
+.date-badge { background: #f0f0f0; color: #666; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; white-space: nowrap; }
+.creator-headline { font-size: 14px; color: #666; margin-bottom: 16px; font-style: italic; }
+.tldr { background: #f9f9f9; padding: 14px; border-radius: 6px; margin-bottom: 16px; border-left: 3px solid #0066cc; }
+.tldr-label { font-weight: 700; color: #0066cc; font-size: 12px; text-transform: uppercase; display: block; margin-bottom: 6px; letter-spacing: 0.5px; }
+.tldr { font-size: 14px; line-height: 1.6; color: #333; }
+details { margin: 0; }
+summary { cursor: pointer; font-weight: 600; color: #0066cc; font-size: 14px; padding: 8px 0; outline: none; }
+summary:hover { text-decoration: underline; }
+.detail-body { padding-top: 12px; font-size: 14px; line-height: 1.7; color: #333; }
+.detail-body p { margin: 0 0 12px 0; }
+.detail-body ul { margin: 12px 0; padding-left: 20px; }
+.detail-body li { margin: 6px 0; }
+.creator-links { margin-top: 16px; }
+.creator-links a { display: inline-block; background: #0066cc; color: white; padding: 10px 16px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; transition: background 0.2s; }
+.creator-links a:hover { background: #0052a3; }
+.quiet-banner { background: #f0f0f0; border-left: 4px solid #999; padding: 20px; border-radius: 8px; text-align: center; font-size: 15px; color: #666; margin-bottom: 24px; }
+.quiet-icon { font-size: 20px; margin-right: 12px; }
+.thought-provoker { border-top: 3px solid #e0e0e0; }
+</style>
+</head>
+<body>
+<div class="digest-container">
+
+<div class="top-pick">
+  <div class="top-pick-label">🔥 Top pick this issue</div>
+  <div class="top-pick-content">Ankur Goyal (Braintrust) explains how to encode taste into AI systems that scale: "Evals are the modern version of a PRD." This is essential reading for any PM building with agents—learn how to define quality standards, automate feedback loops, and treat evaluation frameworks as specification documents that guide AI behavior at scale.</div>
+</div>
+
+<div class="digest-meta">21 thought leaders tracked &nbsp;·&nbsp; 6 had updates this issue</div>
+
+<nav class="digest-nav">
+  <a href="#lenny">Lenny Rachitsky</a>
+  <a href="#mollick">Ethan Mollick</a>
+  <a href="#swyx">Swyx</a>
+  <a href="#julie">Julie Zhuo</a>
+  <a href="#gergely">Gergely Orosz</a>
+  <a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+</nav>
+
+<div class="creator" id="lenny">
+  <div class="creator-header"><h2>Lenny Rachitsky</h2><span class="date-badge">Jun 15</span></div>
+  <div class="creator-headline">How Braintrust uses AI agents, evals, and CI to ship better software</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Treat evaluations as PRDs for AI systems. Define measurable quality criteria upfront, automate the feedback loop, and use evals in CI to maintain taste and consistency as agents evolve. This shifts PM work from writing features to encoding values.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Ankur Goyal unpacks how Braintrust uses evals—automated test harnesses for AI behavior—as a modern replacement for traditional product requirements documents. Instead of describing what users want, you describe what good looks like: correct outputs, coherent reasoning, tone, safety constraints. Evals become the source of truth for agent quality.</p><p>The framework has three layers: first, define the taste you want encoded (accuracy, style, safety). Second, automate continuous evaluation so every change is tested. Third, treat evals as CI gates—no merge without proof the agent still performs well. This approach scales taste across teams and prevents regression as models are swapped or prompts are tuned.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.lennysnewsletter.com/p/how-braintrust-uses-ai-agents-evals" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="mollick">
+  <div class="creator-header"><h2>Ethan Mollick</h2><span class="date-badge">Jun 9</span></div>
+  <div class="creator-headline">Claude Fable represents another big jump in AI</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Fable's capabilities signal a dramatic capability jump in agentic reasoning and code understanding. PMs should start stress-testing how Fable's strengths (proactive thought, code generation, autonomy) change product strategy—both for feature design and for workflows that were previously human-only.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Mollick explores what it feels like to interact with Claude Fable, Anthropic's latest reasoning-focused model. The key difference from prior generations is Fable's relentless proactivity: it doesn't just answer queries, it anticipates next steps, suggests improvements, and takes initiative on complex reasoning tasks. The model shows marked improvement in code understanding, debugging, and multi-step problem solving.</p><p>For product teams, this is a signal to reconsider workflows that were previously thought to require human judgment. Fable's improvement in agency and reasoning means you can hand off broader task categories to AI systems and expect better results with less guardrailing.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.oneusefulthing.org/p/what-it-feels-like-to-work-with-mythos" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="swyx">
+  <div class="creator-header"><h2>Swyx</h2><span class="date-badge">Jun 16</span></div>
+  <div class="creator-headline">Satya on Loopcraft: Building Frontier Ecosystems</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Loopcraft is a new design paradigm for frontier AI systems: building agentic loops that compound over time—humans define the loop, AI executes repeatedly, humans refine. This is how PMs should think about building AI products: not as one-shot tools, but as self-improving feedback systems that learn from repeated execution.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Swyx reports on Satya Nadella's essay on loopcraft: the art of building systems that leverage repeated AI execution and human feedback to compound value. The core idea is that frontier AI models are powerful at executing narrow, well-defined loops—if you define the loop clearly, AI can execute it at scale, and humans can then refine the loop based on results.</p><p>This reframes product strategy: instead of thinking "what can AI do for me once," think "what loops can AI execute repeatedly that humans can incrementally improve?" Apply this to customer support (refine the support loop with each ticket), code generation (refine the generation loop with each deployment), or content creation (refine the writing loop with each publication).</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.latent.space/p/ainews-satya-on-loopcraft-building" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="julie">
+  <div class="creator-header"><h2>Julie Zhuo</h2><span class="date-badge">Jun 13</span></div>
+  <div class="creator-headline">To All the Folks Who Are About to Be Rich</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>As equity becomes liquid for tech workers at successful AI companies, Julie advises on mindset shifts: from identity tied to achievement to identity tied to values. Relevant for PMs planning post-exit impact and rethinking what matters after the sprint.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Julie Zhuo writes to the wave of tech workers about to experience liquidity events from IPOs and acquisitions in the AI boom. She reframes wealth not as a finish line, but as a tool to live according to your values. The risk is that sudden wealth reshapes your identity in unhealthy ways—money becomes your scorecard, or success becomes hollow because the grind ends.</p><p>For PMs, the lesson is to clarify values and purpose independent of the company's growth trajectory. What problems do you want to solve? What skills matter to you? What kind of work feels meaningful? These questions become urgent when the external validation of "shipped a unicorn" arrives.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://joulee.medium.com/to-all-the-folks-who-are-about-to-be-rich-4811352952c4" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="gergely">
+  <div class="creator-header"><h2>Gergely Orosz</h2><span class="date-badge">Jun 9</span></div>
+  <div class="creator-headline">State of the software engineering job market in 2026, part 2</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>AI labs are now more attractive than Big Tech for engineering talent; management layers are flattening faster; frontend and mobile roles are declining. For PMs hiring or building org structures, this signals where talent is moving and what skills will compound in value.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Gergely's analysis of the 2026 job market reveals structural shifts in tech employment. AI-focused labs are pulling top talent faster than established Big Tech companies. Management structures are flattening—fewer rungs, broader spans of control—which changes how PMs coordinate with engineering. Traditional mobile and frontend roles are declining as web and AI infrastructure become the leverage points.</p><p>The implication for product teams: if you're building in AI, your hiring advantage is real, but if you're a traditional company, you need to clarify your AI story to compete. Role stratification matters: generalists are becoming more valuable than specialists in narrow tech stacks.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://newsletter.pragmaticengineer.com/p/the-job-market-in-2026-part-2" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker" id="thought-provokers">
+  <div class="creator-header"><h2>Simon Willison</h2><span class="date-badge">Jun 16</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>The "jailbreak" that triggered Fable's export restrictions was researchers asking the model to fix deliberately insecure code. This reframes a critical question for PMs: is restricting AI's ability to reason about security a feature or a liability? Understanding the policy mechanics helps you anticipate how government action reshapes the competitive landscape.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Willison investigates the White House's concern about Fable and finds that the trigger wasn't a sophisticated attack, but a straightforward cybersecurity task: patch this buggy code. Anthropic restricted Fable under export controls because the model performed too well at vulnerability analysis. This collides two forces: governments want AI-powered security tools, but they don't want adversaries using the same models. The result: a capability becomes a liability.</p><p>For PMs in frontier AI, this is a signal that government policy will increasingly shape product strategy. Features that seem obviously useful (AI debugger, security auditor, code analyzer) may trigger export controls or regulatory action. Building in public, anticipating policy friction, and diversifying your user base geographically becomes part of product risk.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://simonwillison.net/2026/Jun/16/fable-5-export-controls/#atom-everything" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker">
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 21 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
