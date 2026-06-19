@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Friday, June 19, 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fafaf8;
+      color: #1a1a1a;
+      line-height: 1.65;
+    }
+
+    .header {
+      background: #fff;
+      border-bottom: 1px solid #e8e8e4;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.3px; }
+    .header .tagline { font-size: 0.9rem; color: #888; margin-top: 0.3rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.85rem;
+      font-size: 0.78rem; background: #f0f0ec; color: #666;
+      padding: 0.25rem 0.85rem; border-radius: 999px;
+    }
+
+    .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: #f7f7f4;
+      border: 1px solid #e0ddd5;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.5;
+    }
+    .quiet-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta {
+      font-size: 0.8rem; color: #888; margin-bottom: 1rem;
+    }
+
+    /* ── Jump nav ── */
+    .digest-nav {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-bottom: 1.5rem;
+    }
+    .digest-nav a {
+      display: inline-block; padding: 4px 11px;
+      font-size: 0.75rem; font-weight: 500; color: #444;
+      background: #fff; border: 1px solid #ddd;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.12s, border-color 0.12s;
+    }
+    .digest-nav a:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .digest-nav a.tp-nav { background: #fffdf5; border-color: #e8d98a; color: #a07800; }
+    .digest-nav a.tp-nav:hover { background: #a07800; color: #fff; border-color: #a07800; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fff; border: 1px solid #e8e8e4;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 0.9rem;
+    }
+    .thought-provoker { background: #fffdf5; border-color: #e8d98a; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.35rem;
+    }
+    .creator-header h2 { font-size: 1rem; font-weight: 700; line-height: 1.3; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 500;
+      color: #888; background: #f0f0ec;
+      padding: 2px 8px; border-radius: 999px; white-space: nowrap;
+    }
+    .badge-hot {
+      display: inline-block; background: #cc3300; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 1px 6px;
+      border-radius: 999px; margin-left: 5px; vertical-align: middle;
+    }
+    .creator-headline {
+      font-size: 0.8rem; color: #777; font-style: italic; margin-bottom: 0.75rem;
+    }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f0eeff; border-left: 3px solid #7b6ef6;
+      border-radius: 0 6px 6px 0; padding: 0.5rem 0.85rem;
+      font-size: 0.855rem; color: #2a2a2a; line-height: 1.55;
+      margin-bottom: 0.6rem;
+    }
+    .tldr-label {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; display: block; margin-bottom: 3px;
+    }
+    .thought-provoker .tldr { background: #fffbea; border-color: #c9a800; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 2px; }
+    summary {
+      cursor: pointer; font-size: 0.75rem; font-weight: 600; color: #7b6ef6;
+      list-style: none; display: inline-flex; align-items: center; gap: 3px;
+      user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; font-size: 0.7rem; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.75rem; }
+
+    .detail-body p { font-size: 0.875rem; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol {
+      font-size: 0.875rem; padding-left: 1.2rem; margin-bottom: 0.7rem;
+    }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #ddd; padding: 0.3rem 0.85rem;
+      color: #555; font-style: italic; font-size: 0.855rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.6rem; font-size: 0.8rem; }
+    .creator-links a { color: #7b6ef6; text-decoration: none; font-weight: 500; }
+    .creator-links a:hover { text-decoration: underline; }
+    .creator-links span { color: #ccc; margin: 0 5px; }
+
+    /* ── Top pick (appears at top of digest) ── */
+    .top-pick {
+      background: #f0eeff; border: 1px solid #c4b8ff;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 1.25rem;
+    }
+    .top-pick-label {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; margin-bottom: 0.5rem;
+    }
+    .top-pick-content { font-size: 0.925rem; color: #1a1a1a; line-height: 1.55; }
+
+    /* ── No updates fallback ── */
+    .no-updates {
+      text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #aaa;
+    }
+
+    .footer {
+      text-align: center; padding: 1.5rem;
+      font-size: 0.78rem; color: #bbb; border-top: 1px solid #e8e8e4;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.5rem 1rem 1.25rem; }
+      .header h1 { font-size: 1.1rem; }
+      .container { padding: 1rem 0.85rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1rem 1rem; border-radius: 10px; }
+      .creator-header { flex-direction: column; gap: 4px; }
+      .quiet-banner { font-size: 0.85rem; padding: 0.85rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Friday, June 19, 2026</div>
+  </div>
+
+  <div class="container">
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PM Intelligence Digest — June 19, 2026</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: #1a1a1a; background: #f9f9f9; margin: 0; padding: 20px; }
+    .container { max-width: 680px; margin: 0 auto; background: white; border-radius: 12px; padding: 32px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    .top-pick { background: linear-gradient(135deg, #fff5e6 0%, #fffaf0 100%); border-left: 4px solid #ff9800; padding: 20px; border-radius: 8px; margin-bottom: 28px; }
+    .top-pick-label { font-weight: 700; font-size: 13px; text-transform: uppercase; color: #e65100; letter-spacing: 0.5px; margin-bottom: 10px; }
+    .top-pick-content { font-size: 15px; color: #333; line-height: 1.7; }
+    .digest-meta { font-size: 12px; color: #666; text-align: center; margin: 24px 0; letter-spacing: 0.3px; }
+    .digest-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; justify-content: center; }
+    .digest-nav a { display: inline-block; padding: 6px 14px; background: #f0f0f0; border-radius: 20px; text-decoration: none; color: #333; font-size: 13px; font-weight: 500; transition: all 0.2s; }
+    .digest-nav a:hover { background: #e0e0e0; color: #000; }
+    .digest-nav .tp-nav { background: #e8f5e9; color: #1b5e20; }
+    .digest-nav .tp-nav:hover { background: #c8e6c9; }
+    .creator { margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid #eee; }
+    .creator:last-child { border-bottom: none; }
+    .creator-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+    .creator-header h2 { font-size: 18px; font-weight: 700; margin: 0; color: #1a1a1a; }
+    .date-badge { font-size: 12px; color: #999; font-weight: 500; }
+    .creator-headline { font-size: 14px; color: #666; margin-bottom: 14px; font-style: italic; }
+    .tldr { background: #f5f5f5; padding: 14px; border-radius: 6px; margin-bottom: 14px; }
+    .tldr-label { font-weight: 700; font-size: 12px; color: #333; text-transform: uppercase; letter-spacing: 0.4px; display: block; margin-bottom: 6px; }
+    .tldr { font-size: 14px; color: #333; line-height: 1.6; }
+    details { margin-bottom: 12px; }
+    summary { cursor: pointer; font-weight: 500; font-size: 13px; color: #0066cc; outline: none; }
+    summary:hover { text-decoration: underline; }
+    .detail-body { margin-top: 12px; font-size: 14px; color: #555; line-height: 1.7; }
+    .detail-body p { margin: 0 0 12px 0; }
+    .detail-body ul { margin: 12px 0; padding-left: 20px; }
+    .detail-body li { margin: 6px 0; }
+    .creator-links { margin-top: 12px; }
+    .creator-links a { display: inline-block; padding: 8px 16px; background: #0066cc; color: white; text-decoration: none; border-radius: 6px; font-size: 13px; font-weight: 600; transition: background 0.2s; }
+    .creator-links a:hover { background: #0052a3; }
+    .thought-provoker { margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid #eee; background: #fafafa; padding: 20px; border-radius: 8px; border-left: 4px solid #9c27b0; }
+    .thought-provoker:last-child { border-bottom: none; margin-bottom: 0; }
+    .quiet-banner { background: #f0f4ff; border-left: 4px solid #5e35b1; padding: 18px 20px; border-radius: 8px; margin-bottom: 28px; display: flex; align-items: center; gap: 12px; font-size: 15px; color: #1a1a1a; }
+    .quiet-icon { font-size: 20px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="top-pick">
+      <div class="top-pick-label">🔥 Top pick this issue</div>
+      <div class="top-pick-content"><strong>Lenny Rachitsky</strong> shows PMs exactly how to design AI agent loops in production—from heartbeats and crons to goal-driven subagents—with live builds in Claude Code that run autonomously without manual babysitting. This is essential scaffolding for shipping AI-native products at scale.</div>
+    </div>
+
+    <div class="digest-meta">21 thought leaders tracked &nbsp;·&nbsp; 5 had updates this issue</div>
+
+    <nav class="digest-nav">
+      <a href="#lenny">Lenny Rachitsky</a>
+      <a href="#simon">Simon Willison</a>
+      <a href="#swyx">Swyx</a>
+      <a href="#gergely">Gergely Orosz</a>
+      <a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+    </nav>
+
+    <div class="creator" id="lenny">
+      <div class="creator-header"><h2>Lenny Rachitsky</h2><span class="date-badge">June 17</span></div>
+      <div class="creator-headline">Design AI agent loops: schedules, goals, and subagents with live builds that run autonomously.</div>
+      <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Stop treating agents as one-shot tools. Lenny breaks down four loop types—heartbeats, crons, goals, and subagents—that turn agents into self-managing systems. Use this framework to design loops that earn ownership of tasks without human re-triggering, and encode your product's decision logic into runnable agent flows.</div>
+      <details><summary>Read more</summary>
+      <div class="detail-body"><p>The video covers every loop type with clear explanations and two live Claude Code and Codex builds that demonstrate autonomous PR management in action. Heartbeat loops run on fixed intervals; cron loops are scheduler-driven; goal loops self-trigger when milestones are hit; subagent loops delegate work to smaller, specialized agents.</p><p>The insight for PMs: once you move beyond prompt-and-wait workflows, you shift from "agent as assistant" to "agent as stakeholder." Your roadmap needs to model not just what agents should do, but the cadence and conditions under which they act. This changes how you scope work, define success, and integrate agents into CI/CD and product workflows.</p></div>
+      </details>
+      <div class="creator-links"><a href="https://www.lennysnewsletter.com/p/how-to-design-ai-agent-loops-schedules" target="_blank">Read →</a></div>
+    </div>
+
+    <div class="creator" id="simon">
+      <div class="creator-header"><h2>Simon Willison</h2><span class="date-badge">June 18</span></div>
+      <div class="creator-headline">Datasette Apps: sandboxed HTML+JavaScript applications hosted inside Datasette for building custom interfaces.</div>
+      <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Datasette Apps let you build interactive, custom UIs without leaving your data layer—powerful for data-heavy products where UI tooling has historically been the bottleneck. If your product roadmap includes reporting, dashboards, or multi-user data tools, this plugin model shows how to let customers build on top of your platform without creating a new deployment surface.</div>
+      <details><summary>Read more</summary>
+      <div class="detail-body"><p>Datasette Apps are self-contained HTML+JavaScript applications that run inside a tightly constrained iframe sandbox. They can query the Datasette API, manipulate data, and present custom interfaces—all without needing a separate backend or new infrastructure. The sandbox keeps them safe and isolated.</p><p>This architecture has PM implications: it's a case study in turning a data platform into a platform-for-platforms. Combined with the ACL 0.6a0 release (also this week), which expands resource-sharing to general permissions, you're looking at a pattern for building multi-tenant, extensible data products that don't require you to own every UI layer your users need.</p></div>
+      </details>
+      <div class="creator-links"><a href="https://simonwillison.net/2026/Jun/18/datasette-apps/#atom-everything" target="_blank">Read →</a></div>
+    </div>
+
+    <div class="creator" id="swyx">
+      <div class="creator-header"><h2>Swyx</h2><span class="date-badge">June 19</span></div>
+      <div class="creator-headline">Open models finally become a real frontier story as GLM-5.2 passes the vibe check against proprietary alternatives.</div>
+      <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>If you've been betting your roadmap on closed-model APIs, GLM-5.2's release (753B parameters, open weights, MIT license) signals a shift: the cost and autonomy math for open models is now viable. For PMs building AI-native products, this means revisiting your model strategy—custom fine-tuning, on-prem deployment, and vendor independence are no longer distant dreams.</div>
+      <details><summary>Read more</summary>
+      <div class="detail-body"><p>Z.ai released GLM-5.2 on June 16 with 40 active parameters and MIT-licensed open weights. Swyx's framing: "the open models story finally becomes a real frontier story." The benchmark and vibe-check data suggest it's competitive with or exceeding GPT-class performance on many tasks.</p><p>For PMs: this doesn't mean you need to switch immediately, but it means your lock-in assumptions are weakening. If your product's differentiation depends on proprietary model access, you have a window to build moats elsewhere—on the product workflow, on data pipelines, on domain-specific fine-tuning, or on integration depth. The era of treating LLM capability as a scarce, vendor-locked resource is ending.</p></div>
+      </details>
+      <div class="creator-links"><a href="https://www.latent.space/p/ainews-glm-gpt-glm-52-passes-vibe" target="_blank">Read →</a></div>
+    </div>
+
+    <div class="creator" id="gergely">
+      <div class="creator-header"><h2>Gergely Orosz</h2><span class="date-badge">June 18</span></div>
+      <div class="creator-headline">US ban on Anthropic's Fable model and its implications for AI product strategy and regulatory risk.</div>
+      <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>The US banning Fable signals that AI regulation is no longer theoretical—it affects your product roadmap now. If you're shipping AI products, especially in regulated verticals or with international users, you need to model regulatory friction into your release cycles and feature planning. This isn't just a legal issue; it's a product-market fit risk.</div>
+      <details><summary>Read more</summary>
+      <div class="detail-body"><p>Gergely's Pulse piece covers the ban alongside Meta's engineering org implosion, the SpaceX IPO, and the acquisition of Cursor by SpaceX. The Fable ban is the headline that matters for AI PMs: if a model can be banned mid-distribution, your assumption that "deploy once, scale everywhere" is fragile.</p><p>This connects to the broader Meta story he covers—engineering teams are being reorganized around AI, but the regulatory and policy surface is expanding faster than most product orgs are accounting for. For PMs, the takeaway is: add a regulatory review gate to your feature roadmap, especially if you're targeting healthcare, finance, or government sectors. The cost of a feature ban is now priced into your shipping calculus.</p></div>
+      </details>
+      <div class="creator-links"><a href="https://newsletter.pragmaticengineer.com/p/the-pulse-big-implications-of-us" target="_blank">Read →</a></div>
+    </div>
+
+    <div class="thought-provoker" id="thought-provokers">
+      <div class="creator-header"><h2>Lenny Rachitsky</h2><span class="date-badge">June 17</span></div>
+      <div class="creator-headline">Worth your time regardless of when it was published</div>
+      <div class="tldr"><span class="tldr-label">Why it's worth your time</span>Evals are the modern PRD: Ankur Goyal from Braintrust explains how to encode taste and product standards into systems that scale. If you're shipping AI products, this is how you operationalize "quality" without growing QA linearly.</div>
+      <details><summary>Read more</summary>
+      <div class="detail-body"><p>Braintrust uses AI agents, evals, and CI to ship software with fewer humans in the loop. The insight: instead of writing specs for humans to follow, you write evals that your agents optimize against. This flips the PM workflow—your roadmap becomes a set of measurable properties that agents must preserve, rather than a list of features engineers must build.</p><p>For AI-native PMs, this is the template for scaling without drowning in complexity. Your job shifts from "tell people what to build" to "define what good looks like, measure it, let agents iterate."</p></div>
+      </details>
+      <div class="creator-links"><a href="https://www.lennysnewsletter.com/p/how-braintrust-uses-ai-agents-evals" target="_blank">Read →</a></div>
+    </div>
+
+    <div class="thought-provoker">
+      <div class="creator-header"><h2>Marty Cagan</h2><span class="date-badge">April 16</span></div>
+      <div class="creator-headline">Worth your time regardless of when it was published</div>
+      <div class="tldr"><span class="tldr-label">Why it's worth your time</span>
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 21 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
