@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Monday, June 22, 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fafaf8;
+      color: #1a1a1a;
+      line-height: 1.65;
+    }
+
+    .header {
+      background: #fff;
+      border-bottom: 1px solid #e8e8e4;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.3px; }
+    .header .tagline { font-size: 0.9rem; color: #888; margin-top: 0.3rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.85rem;
+      font-size: 0.78rem; background: #f0f0ec; color: #666;
+      padding: 0.25rem 0.85rem; border-radius: 999px;
+    }
+
+    .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: #f7f7f4;
+      border: 1px solid #e0ddd5;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.5;
+    }
+    .quiet-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta {
+      font-size: 0.8rem; color: #888; margin-bottom: 1rem;
+    }
+
+    /* ── Jump nav ── */
+    .digest-nav {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-bottom: 1.5rem;
+    }
+    .digest-nav a {
+      display: inline-block; padding: 4px 11px;
+      font-size: 0.75rem; font-weight: 500; color: #444;
+      background: #fff; border: 1px solid #ddd;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.12s, border-color 0.12s;
+    }
+    .digest-nav a:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .digest-nav a.tp-nav { background: #fffdf5; border-color: #e8d98a; color: #a07800; }
+    .digest-nav a.tp-nav:hover { background: #a07800; color: #fff; border-color: #a07800; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fff; border: 1px solid #e8e8e4;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 0.9rem;
+    }
+    .thought-provoker { background: #fffdf5; border-color: #e8d98a; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.35rem;
+    }
+    .creator-header h2 { font-size: 1rem; font-weight: 700; line-height: 1.3; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 500;
+      color: #888; background: #f0f0ec;
+      padding: 2px 8px; border-radius: 999px; white-space: nowrap;
+    }
+    .badge-hot {
+      display: inline-block; background: #cc3300; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 1px 6px;
+      border-radius: 999px; margin-left: 5px; vertical-align: middle;
+    }
+    .creator-headline {
+      font-size: 0.8rem; color: #777; font-style: italic; margin-bottom: 0.75rem;
+    }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f0eeff; border-left: 3px solid #7b6ef6;
+      border-radius: 0 6px 6px 0; padding: 0.5rem 0.85rem;
+      font-size: 0.855rem; color: #2a2a2a; line-height: 1.55;
+      margin-bottom: 0.6rem;
+    }
+    .tldr-label {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; display: block; margin-bottom: 3px;
+    }
+    .thought-provoker .tldr { background: #fffbea; border-color: #c9a800; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 2px; }
+    summary {
+      cursor: pointer; font-size: 0.75rem; font-weight: 600; color: #7b6ef6;
+      list-style: none; display: inline-flex; align-items: center; gap: 3px;
+      user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; font-size: 0.7rem; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.75rem; }
+
+    .detail-body p { font-size: 0.875rem; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol {
+      font-size: 0.875rem; padding-left: 1.2rem; margin-bottom: 0.7rem;
+    }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #ddd; padding: 0.3rem 0.85rem;
+      color: #555; font-style: italic; font-size: 0.855rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.6rem; font-size: 0.8rem; }
+    .creator-links a { color: #7b6ef6; text-decoration: none; font-weight: 500; }
+    .creator-links a:hover { text-decoration: underline; }
+    .creator-links span { color: #ccc; margin: 0 5px; }
+
+    /* ── Top pick (appears at top of digest) ── */
+    .top-pick {
+      background: #f0eeff; border: 1px solid #c4b8ff;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 1.25rem;
+    }
+    .top-pick-label {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; margin-bottom: 0.5rem;
+    }
+    .top-pick-content { font-size: 0.925rem; color: #1a1a1a; line-height: 1.55; }
+
+    /* ── No updates fallback ── */
+    .no-updates {
+      text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #aaa;
+    }
+
+    .footer {
+      text-align: center; padding: 1.5rem;
+      font-size: 0.78rem; color: #bbb; border-top: 1px solid #e8e8e4;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.5rem 1rem 1.25rem; }
+      .header h1 { font-size: 1.1rem; }
+      .container { padding: 1rem 0.85rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1rem 1rem; border-radius: 10px; }
+      .creator-header { flex-direction: column; gap: 4px; }
+      .quiet-banner { font-size: 0.85rem; padding: 0.85rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Monday, June 22, 2026</div>
+  </div>
+
+  <div class="container">
+    <!DOCTYPE html>
+<html>
+<head>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: #1a1a1a; background: #f9f9f9; padding: 20px; }
+.digest-container { max-width: 700px; margin: 0 auto; background: white; border-radius: 8px; padding: 32px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.top-pick { background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%); color: white; padding: 24px; border-radius: 8px; margin-bottom: 28px; }
+.top-pick-label { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; opacity: 0.95; }
+.top-pick-content { font-size: 16px; line-height: 1.7; font-weight: 500; }
+.digest-meta { font-size: 13px; color: #666; margin-bottom: 24px; font-weight: 500; }
+.digest-nav { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 32px; }
+.digest-nav a { display: inline-block; padding: 8px 14px; background: #f0f0f0; border-radius: 20px; text-decoration: none; color: #333; font-size: 14px; font-weight: 500; transition: all 0.2s; }
+.digest-nav a:hover { background: #e0e0e0; color: #000; }
+.tp-nav { background: #e8f5ff !important; color: #0066cc !important; }
+.tp-nav:hover { background: #d0ebff !important; }
+.creator { margin-bottom: 32px; padding: 24px; background: #fafafa; border-radius: 8px; border-left: 4px solid #0066cc; }
+.thought-provoker { margin-bottom: 32px; padding: 24px; background: #faf8f3; border-radius: 8px; border-left: 4px solid #ff6b35; }
+.creator-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+.creator-header h2 { margin: 0; font-size: 18px; font-weight: 700; color: #1a1a1a; }
+.date-badge { font-size: 12px; background: #e8f5ff; color: #0066cc; padding: 4px 8px; border-radius: 4px; font-weight: 600; }
+.thought-provoker .date-badge { background: #ffe8d6; color: #d4580a; }
+.creator-headline { font-size: 14px; color: #666; margin-bottom: 16px; font-weight: 500; }
+.tldr { background: white; padding: 14px; border-radius: 6px; margin-bottom: 16px; border-left: 3px solid #0066cc; }
+.thought-provoker .tldr { border-left-color: #ff6b35; }
+.tldr-label { font-size: 12px; font-weight: 700; color: #0066cc; text-transform: uppercase; letter-spacing: 0.3px; }
+.thought-provoker .tldr-label { color: #d4580a; }
+.tldr p { margin: 8px 0 0 0; font-size: 14px; line-height: 1.6; color: #1a1a1a; }
+details { cursor: pointer; }
+summary { font-size: 14px; color: #0066cc; font-weight: 600; padding: 8px 0; cursor: pointer; user-select: none; }
+.thought-provoker summary { color: #d4580a; }
+summary:hover { text-decoration: underline; }
+details[open] summary { margin-bottom: 12px; }
+.detail-body { font-size: 14px; line-height: 1.7; color: #333; }
+.detail-body p { margin: 0 0 12px 0; }
+.detail-body ul { margin: 12px 0; padding-left: 20px; }
+.detail-body li { margin: 6px 0; }
+.creator-links { margin-top: 16px; }
+.creator-links a { display: inline-block; padding: 8px 16px; background: #0066cc; color: white; text-decoration: none; border-radius: 4px; font-size: 14px; font-weight: 600; transition: all 0.2s; }
+.thought-provoker .creator-links a { background: #ff6b35; }
+.creator-links a:hover { opacity: 0.9; }
+.quiet-banner { display: flex; align-items: center; gap: 12px; padding: 20px; background: #f0f0f0; border-radius: 8px; margin-bottom: 28px; font-size: 14px; color: #666; font-weight: 500; }
+.quiet-icon { font-size: 24px; }
+</style>
+</head>
+<body>
+<div class="digest-container">
+
+<div class="top-pick">
+  <div class="top-pick-label">🔥 Top pick this issue</div>
+  <div class="top-pick-content">How Claude Mythos found a 15-year-old bug in Mozilla Firefox—uncovering the real story behind AI agents in production. Lenny Rachitsky unpacks how 423 security fixes in a month reveal that the model itself is only half the story; the goal-loop harness and workflow design matter just as much. Essential viewing for PMs building agent-powered products.</div>
+</div>
+
+<div class="digest-meta">21 thought leaders tracked &nbsp;·&nbsp; 4 had updates this issue</div>
+
+<nav class="digest-nav">
+  <a href="#lenny">Lenny Rachitsky</a>
+  <a href="#simon">Simon Willison</a>
+  <a href="#swyx">Swyx</a>
+  <a href="#gergely">Gergely Orosz</a>
+  <a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+</nav>
+
+<div class="creator" id="lenny">
+  <div class="creator-header"><h2>Lenny Rachitsky</h2><span class="date-badge">June 22</span></div>
+  <div class="creator-headline">How Claude Mythos found a 15-year-old bug in Mozilla Firefox and what it teaches us about AI agent design</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span><p>The real leverage in AI agents isn't the model alone—it's the goal-loop harness and orchestration layer. Brian Grinstead's work at Mozilla shows that workflow design, feedback loops, and task decomposition are what turn raw model capability into production results. As a PM, invest in understanding and shaping the agent loop, not just the LLM.</p></div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Brian Grinstead from Mozilla discusses how Claude Mythos, paired with the right harness architecture, was able to identify and help fix 423 security vulnerabilities in a single month—including a critical 15-year-old bug that human engineers had missed.</p><p>The key insight: the model was only half the battle. The goal-loop harness—how the agent breaks down the problem, iterates, receives feedback, and focuses its attention—was equally critical to the outcome. This has direct implications for how PMs should think about building agent-powered products: the quality of your agentic workflow often matters more than the quality of your base model.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.lennysnewsletter.com/p/how-claude-mythos-found-a-15-year" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="simon">
+  <div class="creator-header"><h2>Simon Willison</h2><span class="date-badge">June 22</span></div>
+  <div class="creator-headline">Porting a small image inpainting model to run client-side in the browser using Claude Code</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span><p>Claude Code is reshaping what's possible in AI-powered product development. What used to require weeks of ML engineering—porting a model to run in-browser—is now a hands-on collaboration between engineer and AI agent. For PMs, this signals that the bottleneck in shipping AI features is shifting from capability to workflow design and iteration speed.</p></div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Simon took a PyTorch-based image inpainting model (Moebius 0.2B) that normally requires NVIDIA CUDA and worked with Claude Code to port it to run client-side in the browser. The process demonstrates how Claude Code handles multi-step technical problems iteratively, debugging and refining until the model works in a web environment.</p><p>The meta-lesson: shipping AI features is becoming less about deep specialized knowledge and more about effective agent-human collaboration. For PMs shipping AI products, this means your teams can now iterate faster on AI-native features without hiring specialist ML engineers for every port or optimization.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://simonwillison.net/2026/Jun/22/porting-moebius/#atom-everything" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="swyx">
+  <div class="creator-header"><h2>Swyx</h2><span class="date-badge">June 22</span></div>
+  <div class="creator-headline">Red-teaming and AI security in the post-Mythos era with OpenAI boardmember Zico Kolter</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span><p>AI security is not cybersecurity with a coat of paint. Zico Kolter and Gray Swan's approach shows that effective red-teaming and safety for agentic systems requires new thinking—adversarial robustness, interpretability constraints, and behavioral guardrails that traditional infosec didn't need to consider. For PMs shipping agents to users, this is table-stakes.</p></div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Zico Kolter, an OpenAI boardmember and AI safety expert, joins Swyx to discuss why the security model for agentic AI systems fundamentally differs from traditional cybersecurity. Gray Swan's approach to red-teaming focuses on understanding how agents might fail, misbehave, or be manipulated—not just how external attackers might breach infrastructure.</p><p>The conversation highlights that as agents become more autonomous and goal-directed, the safety surface expands. PMs need to bake in red-teaming and adversarial testing into the product roadmap early, not as an afterthought.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.latent.space/p/gray-swan" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="gergely">
+  <div class="creator-header"><h2>Gergely Orosz</h2><span class="date-badge">June 17</span></div>
+  <div class="creator-headline">CI/CD practices in 2026: How AI is reshaping software delivery and DevOps workflows</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span><p>CI/CD is being reimagined in the age of AI agents. Robert Erez discusses how progressive delivery, GitOps, and automated deployment are converging with AI to reduce human toil in the release pipeline. For PMs, this means your engineering team's velocity and quality bar can shift—agents are now part of your deployment story, not just your feature-building story.</p></div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Robert Erez of Octopus Deploy walks through how modern CI/CD is evolving to handle AI-driven testing, progressive rollouts, and automated feedback loops. Kubernetes, GitOps, and agent-assisted code review are converging to create delivery pipelines that require less manual gate-keeping and more intelligent routing.</p><p>The implication for PMs: if your eng team is still doing manual release coordination and testing, you're leaving velocity on the table. The tools exist to automate these workflows, freeing your engineers to focus on building and discovering new features rather than managing releases.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://newsletter.pragmaticengineer.com/p/cicd-with-robert-erez" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker" id="thought-provokers">
+  <div class="creator-header"><h2>Lenny Rachitsky</h2><span class="date-badge">June 22</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span><p>A deep dive into how to architect AI agent loops and workflows in production. Lenny's podcast series on "How I AI" captures real practitioners building agentic systems, not theoretical frameworks. These episodes are your playbook for shipping agents that actually work.</p></div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>The "How I AI" series brings together engineers and product leaders who are actively shipping AI agent systems. The focus is on practical architecture: how do you structure loops, what feedback mechanisms matter, how do you scale testing and iteration?</p><p>For PMs navigating the shift from feature-driven to agentic product development, these conversations are essential. They show you what good looks like in real products, not research papers.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.lennysnewsletter.com/p/how-i-ai-how-to-write-ai-agent-loops" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker">
+  <div class="creator-header"><h2>Marty Cagan</h2><span class="date-badge">April 16, 2026</span></div>
+  <div class="creator-headline">Build to Learn vs Build to Earn — reframing product development in the age of AI</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span><p>Marty's framework separates discovery (build to learn) from delivery (build to earn). In an AI-native world where the cost of building has plummeted, this distinction becomes critical for PM thinking. Most teams are still in "build to earn" mode; the winners will be those disciplined about discovery.</p></div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Marty argues that the traditional project/roadmap model conflates building to discover what works with building to deliver what you've already validated. As AI tools lower the cost of building, the real bottleneck shifts: you can build anything, so the question becomes, how do you know what to build?</p><p>
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 21 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
