@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Thursday, June 25, 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fafaf8;
+      color: #1a1a1a;
+      line-height: 1.65;
+    }
+
+    .header {
+      background: #fff;
+      border-bottom: 1px solid #e8e8e4;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.3px; }
+    .header .tagline { font-size: 0.9rem; color: #888; margin-top: 0.3rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.85rem;
+      font-size: 0.78rem; background: #f0f0ec; color: #666;
+      padding: 0.25rem 0.85rem; border-radius: 999px;
+    }
+
+    .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: #f7f7f4;
+      border: 1px solid #e0ddd5;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.5;
+    }
+    .quiet-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta {
+      font-size: 0.8rem; color: #888; margin-bottom: 1rem;
+    }
+
+    /* ── Jump nav ── */
+    .digest-nav {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-bottom: 1.5rem;
+    }
+    .digest-nav a {
+      display: inline-block; padding: 4px 11px;
+      font-size: 0.75rem; font-weight: 500; color: #444;
+      background: #fff; border: 1px solid #ddd;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.12s, border-color 0.12s;
+    }
+    .digest-nav a:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .digest-nav a.tp-nav { background: #fffdf5; border-color: #e8d98a; color: #a07800; }
+    .digest-nav a.tp-nav:hover { background: #a07800; color: #fff; border-color: #a07800; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fff; border: 1px solid #e8e8e4;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 0.9rem;
+    }
+    .thought-provoker { background: #fffdf5; border-color: #e8d98a; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.35rem;
+    }
+    .creator-header h2 { font-size: 1rem; font-weight: 700; line-height: 1.3; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 500;
+      color: #888; background: #f0f0ec;
+      padding: 2px 8px; border-radius: 999px; white-space: nowrap;
+    }
+    .badge-hot {
+      display: inline-block; background: #cc3300; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 1px 6px;
+      border-radius: 999px; margin-left: 5px; vertical-align: middle;
+    }
+    .creator-headline {
+      font-size: 0.8rem; color: #777; font-style: italic; margin-bottom: 0.75rem;
+    }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f0eeff; border-left: 3px solid #7b6ef6;
+      border-radius: 0 6px 6px 0; padding: 0.5rem 0.85rem;
+      font-size: 0.855rem; color: #2a2a2a; line-height: 1.55;
+      margin-bottom: 0.6rem;
+    }
+    .tldr-label {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; display: block; margin-bottom: 3px;
+    }
+    .thought-provoker .tldr { background: #fffbea; border-color: #c9a800; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 2px; }
+    summary {
+      cursor: pointer; font-size: 0.75rem; font-weight: 600; color: #7b6ef6;
+      list-style: none; display: inline-flex; align-items: center; gap: 3px;
+      user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; font-size: 0.7rem; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.75rem; }
+
+    .detail-body p { font-size: 0.875rem; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol {
+      font-size: 0.875rem; padding-left: 1.2rem; margin-bottom: 0.7rem;
+    }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #ddd; padding: 0.3rem 0.85rem;
+      color: #555; font-style: italic; font-size: 0.855rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.6rem; font-size: 0.8rem; }
+    .creator-links a { color: #7b6ef6; text-decoration: none; font-weight: 500; }
+    .creator-links a:hover { text-decoration: underline; }
+    .creator-links span { color: #ccc; margin: 0 5px; }
+
+    /* ── Top pick (appears at top of digest) ── */
+    .top-pick {
+      background: #f0eeff; border: 1px solid #c4b8ff;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 1.25rem;
+    }
+    .top-pick-label {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; margin-bottom: 0.5rem;
+    }
+    .top-pick-content { font-size: 0.925rem; color: #1a1a1a; line-height: 1.55; }
+
+    /* ── No updates fallback ── */
+    .no-updates {
+      text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #aaa;
+    }
+
+    .footer {
+      text-align: center; padding: 1.5rem;
+      font-size: 0.78rem; color: #bbb; border-top: 1px solid #e8e8e4;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.5rem 1rem 1.25rem; }
+      .header h1 { font-size: 1.1rem; }
+      .container { padding: 1rem 0.85rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1rem 1rem; border-radius: 10px; }
+      .creator-header { flex-direction: column; gap: 4px; }
+      .quiet-banner { font-size: 0.85rem; padding: 0.85rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Thursday, June 25, 2026</div>
+  </div>
+
+  <div class="container">
+    <!DOCTYPE html>
+<html>
+<head>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 680px; margin: 0 auto; padding: 20px; }
+.top-pick { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 24px; border-radius: 12px; margin-bottom: 32px; }
+.top-pick-label { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; opacity: 0.9; }
+.top-pick-content { font-size: 16px; line-height: 1.5; }
+.digest-meta { font-size: 13px; color: #666; margin: 24px 0; font-weight: 500; }
+.digest-nav { display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0 36px 0; }
+.digest-nav a { display: inline-block; padding: 8px 16px; background: #f0f0f0; border-radius: 20px; text-decoration: none; font-size: 14px; font-weight: 500; color: #333; transition: all 0.2s; }
+.digest-nav a:hover { background: #e0e0e0; }
+.tp-nav { background: #fff3cd !important; }
+.tp-nav:hover { background: #ffe69c !important; }
+.creator, .thought-provoker { border-left: 4px solid #667eea; padding: 24px; background: #fafafa; border-radius: 8px; margin-bottom: 24px; }
+.thought-provoker { border-left-color: #f59e0b; background: #fffbf0; }
+.creator-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+.creator-header h2 { margin: 0; font-size: 18px; font-weight: 700; }
+.date-badge { font-size: 12px; color: #999; font-weight: 500; }
+.creator-headline { font-size: 15px; color: #555; margin-bottom: 16px; font-weight: 500; }
+.tldr { background: white; padding: 16px; border-radius: 6px; margin-bottom: 16px; border-left: 3px solid #667eea; }
+.thought-provoker .tldr { border-left-color: #f59e0b; }
+.tldr-label { display: block; font-size: 12px; font-weight: 700; color: #667eea; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 8px; }
+.thought-provoker .tldr-label { color: #f59e0b; }
+.tldr { font-size: 14px; line-height: 1.5; color: #333; }
+details { cursor: pointer; }
+details summary { outline: none; font-size: 14px; font-weight: 600; color: #667eea; padding: 8px 0; user-select: none; }
+.thought-provoker details summary { color: #f59e0b; }
+details summary:hover { text-decoration: underline; }
+.detail-body { padding-top: 12px; font-size: 14px; line-height: 1.6; color: #555; }
+.detail-body p { margin: 0 0 12px 0; }
+.detail-body ul { margin: 12px 0; padding-left: 20px; }
+.detail-body li { margin-bottom: 6px; }
+.creator-links { margin-top: 16px; }
+.creator-links a { display: inline-block; padding: 10px 20px; background: #667eea; color: white; text-decoration: none; border-radius: 6px; font-size: 14px; font-weight: 600; transition: all 0.2s; }
+.thought-provoker .creator-links a { background: #f59e0b; }
+.creator-links a:hover { opacity: 0.9; transform: translateY(-2px); }
+.quiet-banner { background: #e8f4f8; border-left: 4px solid #0891b2; padding: 20px; border-radius: 8px; margin-bottom: 32px; display: flex; align-items: center; gap: 16px; font-size: 15px; color: #0c4a6e; }
+.quiet-icon { font-size: 24px; }
+</style>
+</head>
+<body>
+
+<div class="top-pick">
+  <div class="top-pick-label">🔥 Top pick this issue</div>
+  <div class="top-pick-content">Lenny Rachitsky walks through a real-world test of GLM-5.2 against Claude Opus for coding tasks—and discovers a cheaper, faster open-weight alternative. This is essential reading for PMs evaluating which AI models to build on, with concrete benchmarks on cost-per-task and latency that challenge closed-model assumptions.</div>
+</div>
+
+<div class="digest-meta">21 thought leaders tracked · 4 had updates this issue</div>
+
+<nav class="digest-nav">
+  <a href="#lenny">Lenny Rachitsky</a>
+  <a href="#simon">Simon Willison</a>
+  <a href="#swyx">Swyx</a>
+  <a href="#gergely">Gergely Orosz</a>
+  <a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+</nav>
+
+<div class="creator" id="lenny">
+  <div class="creator-header"><h2>Lenny Rachitsky</h2><span class="date-badge">Jun 24</span></div>
+  <div class="creator-headline">GLM-5.2: why I'm replacing Opus in Claude Code with this new model</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Open-weight models are closing the capability gap faster than expected. Test alternative models in your actual workflows—GLM-5.2 delivered comparable code quality at 90% cost savings ($3.36 vs typical Opus spend) in a 45-minute autonomous task, signaling that model selection is no longer a "best is best" decision but a cost-quality tradeoff you should measure directly.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Rachitsky benchmarked GLM-5.2, an open-weight model from Z.AI, against Claude Opus across three realistic PM-relevant tasks: codebase audits, UI redesigns, and a 45-minute autonomous bug-hunting session in Cursor and Claude Code. The key finding: GLM-5.2 matched Opus on quality while cutting costs dramatically. This matters for product decisions because it breaks the assumption that frontier closed models are always the right choice.</p><p>The shift has practical implications: if you're building AI-native products or internal tools, you now need a testing framework to measure which model to embed. Cost per task, latency, and output quality should all factor into your roadmap decisions. The era of "use the best model regardless of cost" is ending.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.lennysnewsletter.com/p/glm-52-why-im-replacing-opus-in-claude" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="simon">
+  <div class="creator-header"><h2>Simon Willison</h2><span class="date-badge">Jun 25</span></div>
+  <div class="creator-headline">AI and Liability</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>A German court ruled Google liable for errors in its AI-generated summaries. The principle: AI agents belong to the deploying organization, so your company owns the liability for inaccurate or harmful outputs. This fundamentally changes how PMs should think about QA, guardrails, and approval workflows for AI features—liability is no longer on the model vendor.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Bruce Schneier's analysis is blunt: if you hired human writers to generate summaries, your company is liable for their errors. The same logic applies to AI agents. Companies cannot use "the AI made a mistake" as a defense; they remain responsible for the outputs they publish or serve to users.</p><p>For PM teams, this means rethinking error budgets and feature rollout cadences. You need active monitoring, human-in-the-loop workflows for high-stakes outputs, and clear testing protocols before shipping. The cost of AI-generated content errors is now explicitly your cost, not the model vendor's.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://simonwillison.net/2026/Jun/25/ai-and-liability/#atom-everything" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="swyx">
+  <div class="creator-header"><h2>Swyx</h2><span class="date-badge">Jun 24</span></div>
+  <div class="creator-headline">Why the Frontier Ecosystem must be Open — Matei Zaharia and Reynold Xin, Databricks</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Databricks' technical leaders argue that the foundation for enterprise AI products is open-source infrastructure, not closed APIs. This reframes how you should think about AI moats: instead of betting on proprietary models, build on open ecosystems and create value through integration, orchestration, and domain-specific tuning—the new defensible layer for AI products.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Zaharia and Xin make the case that closed-garden AI vendor locks don't serve the enterprise market long-term. Companies want flexibility to run models, swap providers, and own their data. The competitive advantage shifts from "we have the best model" to "we have the best orchestration, governance, and domain expertise on top of open models."</p><p>For PMs building AI products, this suggests a strategy: invest in the tools and workflows that make open models usable at scale, not just wrapper products around frontier closed models. This is especially relevant if you're selling to enterprises that care about control and cost predictability.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.latent.space/p/databricks" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="gergely">
+  <div class="creator-header"><h2>Gergely Orosz</h2><span class="date-badge">Jun 23</span></div>
+  <div class="creator-headline">Slow down to speed up: so much has changed in 6 months' time</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>The engineering landscape has shifted radically in six months—AI coding tools, agent frameworks, and team structures are all in flux. Orosz argues that slowing down, consolidating, and letting teams adapt is smarter than chasing every new capability. For PMs, this is a reminder that velocity without stability kills learning; use this window to build practices and culture that stick, not just ship fast.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Orosz catalogs the changes: AI code generation shifted from "helper" to "agent," teams are experimenting with flat structures to avoid AI-era silos, and the cost-benefit of certain technologies has inverted. Companies that tried to adopt every new framework burned out their teams; those that paused and selected carefully are moving faster now with less churn.</p><p>The PM implication: your roadmap should include "consolidation sprints" and explicit time to let teams stabilize. It sounds counterintuitive, but building in slack now—time for learning, tool standardization, and culture-setting—reduces rework later.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://newsletter.pragmaticengineer.com/p/slow-down-to-speed-up" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker" id="thought-provokers">
+  <div class="creator-header"><h2>Lenny Rachitsky</h2><span class="date-badge">Jun 23</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>Rachitsky frames the coming wave of AI-driven work disruption as a solvable problem, not a doom scenario. He maps out a playbook for what gives individuals and teams an unfair advantage: focus, intentional constraint, and depth. For PMs, this is about recognizing that AI commoditizes shallow work, so your product and team strategy must compete on judgment and taste, not speed of execution.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>The "inner game" is about how you think and make decisions in an age when AI can do the mechanical parts. Rachitsky argues that advantages come from knowing what to build, whom to build for, and why it matters—not from being first to ship. This reframes PM priorities: invest in customer intimacy, problem clarity, and taste-based decision-making rather than process optimization and velocity theater.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.lennysnewsletter.com/p/the-new-inner-game-your-unfair-advantage" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker">
+  <div class="creator-header"><h2>Marty Cagan</h2><span class="date-badge">Apr 16</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>Cagan draws a critical distinction between "build to learn" (discovery) and "build to earn" (delivery). In the age of AI, the cost of delivery is collapsing, which means the real competitive advantage is in learning—understanding problems deeply before building. This shifts where PMs should spend their energy and budget.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>When the cost of building drops, the bottleneck moves upstream. The question is no longer "can we ship this fast?" but "are we solving the right problem?" Cagan argues that as AI makes delivery cheaper and faster, the teams that win are the ones that excel at discovery, validation, and problem definition. For PMs, this means protecting time and resources for research, prototyping, and user dialogue—the work that can't be outsourced to models.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.svpg.com/build-to-learn-vs-build-to-earn/" target="_blank">Read →</a></div>
+</div>
+
+</body>
+</html>
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 21 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
