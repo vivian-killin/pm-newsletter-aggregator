@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Monday, June 29, 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fafaf8;
+      color: #1a1a1a;
+      line-height: 1.65;
+    }
+
+    .header {
+      background: #fff;
+      border-bottom: 1px solid #e8e8e4;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.3px; }
+    .header .tagline { font-size: 0.9rem; color: #888; margin-top: 0.3rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.85rem;
+      font-size: 0.78rem; background: #f0f0ec; color: #666;
+      padding: 0.25rem 0.85rem; border-radius: 999px;
+    }
+
+    .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: #f7f7f4;
+      border: 1px solid #e0ddd5;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.5;
+    }
+    .quiet-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta {
+      font-size: 0.8rem; color: #888; margin-bottom: 1rem;
+    }
+
+    /* ── Jump nav ── */
+    .digest-nav {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-bottom: 1.5rem;
+    }
+    .digest-nav a {
+      display: inline-block; padding: 4px 11px;
+      font-size: 0.75rem; font-weight: 500; color: #444;
+      background: #fff; border: 1px solid #ddd;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.12s, border-color 0.12s;
+    }
+    .digest-nav a:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .digest-nav a.tp-nav { background: #fffdf5; border-color: #e8d98a; color: #a07800; }
+    .digest-nav a.tp-nav:hover { background: #a07800; color: #fff; border-color: #a07800; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fff; border: 1px solid #e8e8e4;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 0.9rem;
+    }
+    .thought-provoker { background: #fffdf5; border-color: #e8d98a; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.35rem;
+    }
+    .creator-header h2 { font-size: 1rem; font-weight: 700; line-height: 1.3; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 500;
+      color: #888; background: #f0f0ec;
+      padding: 2px 8px; border-radius: 999px; white-space: nowrap;
+    }
+    .badge-hot {
+      display: inline-block; background: #cc3300; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 1px 6px;
+      border-radius: 999px; margin-left: 5px; vertical-align: middle;
+    }
+    .creator-headline {
+      font-size: 0.8rem; color: #777; font-style: italic; margin-bottom: 0.75rem;
+    }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f0eeff; border-left: 3px solid #7b6ef6;
+      border-radius: 0 6px 6px 0; padding: 0.5rem 0.85rem;
+      font-size: 0.855rem; color: #2a2a2a; line-height: 1.55;
+      margin-bottom: 0.6rem;
+    }
+    .tldr-label {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; display: block; margin-bottom: 3px;
+    }
+    .thought-provoker .tldr { background: #fffbea; border-color: #c9a800; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 2px; }
+    summary {
+      cursor: pointer; font-size: 0.75rem; font-weight: 600; color: #7b6ef6;
+      list-style: none; display: inline-flex; align-items: center; gap: 3px;
+      user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; font-size: 0.7rem; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.75rem; }
+
+    .detail-body p { font-size: 0.875rem; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol {
+      font-size: 0.875rem; padding-left: 1.2rem; margin-bottom: 0.7rem;
+    }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #ddd; padding: 0.3rem 0.85rem;
+      color: #555; font-style: italic; font-size: 0.855rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.6rem; font-size: 0.8rem; }
+    .creator-links a { color: #7b6ef6; text-decoration: none; font-weight: 500; }
+    .creator-links a:hover { text-decoration: underline; }
+    .creator-links span { color: #ccc; margin: 0 5px; }
+
+    /* ── Top pick (appears at top of digest) ── */
+    .top-pick {
+      background: #f0eeff; border: 1px solid #c4b8ff;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 1.25rem;
+    }
+    .top-pick-label {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; margin-bottom: 0.5rem;
+    }
+    .top-pick-content { font-size: 0.925rem; color: #1a1a1a; line-height: 1.55; }
+
+    /* ── No updates fallback ── */
+    .no-updates {
+      text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #aaa;
+    }
+
+    .footer {
+      text-align: center; padding: 1.5rem;
+      font-size: 0.78rem; color: #bbb; border-top: 1px solid #e8e8e4;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.5rem 1rem 1.25rem; }
+      .header h1 { font-size: 1.1rem; }
+      .container { padding: 1rem 0.85rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1rem 1rem; border-radius: 10px; }
+      .creator-header { flex-direction: column; gap: 4px; }
+      .quiet-banner { font-size: 0.85rem; padding: 0.85rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Monday, June 29, 2026</div>
+  </div>
+
+  <div class="container">
+    <!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; background: #f9f9f9; }
+.top-pick { background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%); color: white; padding: 24px; border-radius: 12px; margin-bottom: 32px; box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2); }
+.top-pick-label { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; opacity: 0.95; }
+.top-pick-content { font-size: 16px; line-height: 1.7; }
+.digest-meta { font-size: 13px; color: #666; margin-bottom: 24px; font-weight: 500; }
+.digest-nav { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 32px; }
+.digest-nav a { display: inline-block; padding: 8px 16px; background: white; border: 1px solid #ddd; border-radius: 6px; text-decoration: none; color: #333; font-size: 14px; font-weight: 500; transition: all 0.2s; }
+.digest-nav a:hover { border-color: #ff6b35; color: #ff6b35; }
+.tp-nav { background: #f0f0f0; }
+.creator { background: white; border: 1px solid #e0e0e0; border-radius: 10px; padding: 24px; margin-bottom: 20px; }
+.thought-provoker { background: white; border: 2px solid #7c3aed; border-radius: 10px; padding: 24px; margin-bottom: 20px; }
+.creator-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+.creator-header h2 { margin: 0; font-size: 20px; font-weight: 600; }
+.date-badge { font-size: 12px; background: #f0f0f0; color: #666; padding: 4px 10px; border-radius: 4px; font-weight: 500; }
+.thought-provoker .date-badge { background: #ede9fe; color: #6d28d9; }
+.creator-headline { font-size: 15px; color: #666; margin-bottom: 16px; line-height: 1.6; }
+.tldr { background: #f9f9f9; padding: 14px; border-left: 3px solid #ff6b35; border-radius: 4px; margin-bottom: 16px; font-size: 14px; line-height: 1.7; }
+.thought-provoker .tldr { border-left-color: #7c3aed; background: #faf5ff; }
+.tldr-label { font-weight: 600; display: block; margin-bottom: 8px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.3px; }
+details { margin-bottom: 16px; }
+summary { cursor: pointer; font-weight: 500; color: #333; font-size: 14px; }
+summary:hover { color: #ff6b35; }
+.detail-body { padding: 14px 0; font-size: 14px; line-height: 1.8; color: #555; }
+.detail-body p { margin: 0 0 12px 0; }
+.detail-body ul { margin: 12px 0; padding-left: 20px; }
+.detail-body li { margin: 6px 0; }
+.creator-links { margin-top: 16px; }
+.creator-links a { display: inline-block; padding: 8px 16px; background: #ff6b35; color: white; text-decoration: none; border-radius: 6px; font-size: 14px; font-weight: 600; transition: all 0.2s; }
+.creator-links a:hover { background: #e55a25; }
+.thought-provoker .creator-links a { background: #7c3aed; }
+.thought-provoker .creator-links a:hover { background: #6d28d9; }
+.quiet-banner { background: linear-gradient(135deg, #e0e7ff 0%, #fce7f3 100%); border-left: 4px solid #7c3aed; padding: 16px 20px; border-radius: 6px; margin-bottom: 32px; font-size: 15px; display: flex; align-items: center; gap: 12px; }
+.quiet-icon { font-size: 20px; }
+</style>
+</head>
+<body>
+
+<div class="top-pick">
+  <div class="top-pick-label">🔥 Top pick this issue</div>
+  <div class="top-pick-content">Eddie Kim, CTO of Gusto, reveals how a 5-person team shipped a complete AI product line in 10 weeks using Claude Code—with zero Figma, zero Jira, and zero documentation. This is the canonical case study for how AI is fundamentally changing product development velocity, team structure, and what PM coordination actually looks like in practice.</div>
+</div>
+
+<div class="digest-meta">21 thought leaders tracked &nbsp;·&nbsp; 4 had updates this issue</div>
+
+<nav class="digest-nav">
+  <a href="#lenny">Lenny Rachitsky</a>
+  <a href="#simon">Simon Willison</a>
+  <a href="#swyx">Swyx</a>
+  <a href="#gergely">Gergely Orosz</a>
+  <a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+</nav>
+
+<div class="creator" id="lenny">
+  <div class="creator-header"><h2>Lenny Rachitsky</h2><span class="date-badge">Jun 29</span></div>
+  <div class="creator-headline">How a 5-person team shipped a new AI product line in 10 weeks with Claude Code and zero traditional process.</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>When AI handles the implementation bottleneck, coordination overhead collapses. Gusto's CTO demonstrates that small, aligned teams can operate without design specs, ticketing systems, or documentation—because the AI agent asks clarifying questions in real time. This is a template for how PM discipline shifts from pre-work specification to async feedback loops.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Eddie Kim shares how Gusto's team used Claude Code to build an entire product line in 10 weeks. The team operated in a "perma-Zoom" environment with minimal tooling: no Figma mockups, no Jira tickets, no documentation. Instead, the AI agent drove the conversation, asked for clarification, and built features iteratively.</p><p>The critical insight for PMs: when your development partner (AI or human) can synthesize requirements on the fly and ask smart questions, you don't need heavyweight process. The PM role becomes real-time feedback and taste judgment rather than detailed specification. This works because Claude Code reduces integration risk and ships working code fast enough that feedback loops become tighter than traditional planning cycles.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.lennysnewsletter.com/p/no-figma-no-jira-no-docs-how-gusto" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="simon">
+  <div class="creator-header"><h2>Simon Willison</h2><span class="date-badge">Jun 29</span></div>
+  <div class="creator-headline">Ornith-1.0: A new open-source model purpose-built for agentic coding with state-of-the-art performance.</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>An MIT-licensed open-weights coding model is arriving that matches or beats commercial options for agentic tasks. If you're building an AI product that relies on code generation or multi-step reasoning, Ornith variants (9B through 397B) give you a deployment-owned alternative to API dependency. Model choice becomes a product infrastructure decision, not just a capability question.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Ornith-1.0, released by DeepReinforce, is a self-scaffolding LLM built on Gemma 4 and Qwen 3.5 with multiple size variants (9B Dense, 31B Dense, 35B MoE, 397B MoE). It achieves state-of-the-art performance on coding benchmarks among open-source models of comparable size, making it competitive with larger proprietary models for agentic coding tasks.</p><p>For product teams, this matters because open models reduce vendor lock-in risk, lower inference costs at scale, and enable fine-tuning for domain-specific agent behavior. If your PM thesis includes long-term AI agent features, you now have a credible path to self-hosted inference that's not dependent on OpenAI or Anthropic's API availability and pricing.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://simonwillison.net/2026/Jun/29/ornith/#atom-everything" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="swyx">
+  <div class="creator-header"><h2>Swyx</h2><span class="date-badge">Jun 26</span></div>
+  <div class="creator-headline">OpenAI's internal Codex usage has exploded 56x in Research, 32x in Customer Support, 27x in Engineering, and 13x in Legal since November 2025.</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>This is the clearest signal yet that AI agents aren't hype—they're operational fact inside the companies building them. The 56x spike in Research and wide adoption across functions shows AI coding is solving real bottlenecks, not replacing people but accelerating them. If OpenAI's internal teams are using this intensity, your customers are already demanding similar tooling.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>OpenAI published internal metrics showing median output tokens from Codex grew dramatically across functions in just 7 months: Research (56x), Customer Support (32x), Engineering (27x), and Legal (13x). The variance in adoption rates is itself revealing—high-leverage functions like research are extending AI agent output more aggressively, while legal is still more conservative.</p><p>For PMs, this metric is proof that agent-driven workflows are not theoretical. When the companies shipping these models are internally using them at this scale and speed, it signals that your roadmap should account for multi-step agentic patterns, not just single-turn completion. The question shifts from "will agents matter?" to "how do we integrate agents into our loop?"</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.latent.space/p/ainews-openai-reports-median-internal" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="gergely">
+  <div class="creator-header"><h2>Gergely Orosz</h2><span class="date-badge">Jun 23</span></div>
+  <div class="creator-headline">How tech has shifted in six months—and why slowing down to speed up is becoming a sensible strategy.</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Gergely observes that elite tech teams are deliberately shifting away from maximum velocity toward thoughtful, slower iteration. In an AI-native environment where implementation is cheap but problem clarity is rare, the bottleneck moved from shipping to discovery. PMs should reframe "speed" as discovery speed, not deployment speed.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Gergely catalogs how engineering culture has evolved in the last six months: tooling maturity, organizational structure changes, and a surprising trend toward deliberate deceleration. Companies like Stripe and others are investing more in design, discovery, and alignment before shipping—a counterintuitive move in an AI era where feature velocity is technically unlimited.</p><p>The insight is that when your bottleneck shifts from implementation to insight, "going slow" is actually the fastest path. Teams that take time to understand user problems deeply, test hypotheses rigorously, and align stakeholders before shipping end up shipping better products faster than teams that ship constantly and iterate on feedback. In an AI-native product world, this becomes the competitive edge.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://newsletter.pragmaticengineer.com/p/slow-down-to-speed-up" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker" id="thought-provokers">
+  <div class="creator-header"><h2>Marty Cagan</h2><span class="date-badge">Apr 16</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>The "Build to Learn vs Build to Earn" framework is essential reading for PM strategy in the AI age. Cagan argues that discovery (build to learn) is fundamentally different from delivery (build to earn), and as AI makes delivery cheaper, your competitive advantage shifts entirely to discovery. This is the conceptual foundation for everything happening in the Gusto case study above.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Marty distinguishes two modes: the project model (roadmap → features → delivery) and the discovery model (problem → hypothesis → experiment → insight). In a traditional world with high implementation cost, teams conflated them. But AI has made delivery so cheap that the constraint is no longer "can we build it?" but "are we building the right thing?"</p><p>PMs who master discovery in the AI era—who can run rapid experiments, synthesize user insight, and validate hypotheses before implementation—will own product strategy. This is why Gusto's "no specs, tight feedback loops" model works: the team isn't discovering through slow specification cycles; they're discovering through rapid prototyping with an AI partner that executes at prototype speed.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.svpg.com/build-to-learn-vs-build-to-earn/" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker">
+  <div class="creator-header"><h2>Andrew Ambrosino</h2><span class="date-badge">Jun 28</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>Ambrosino, the lead on OpenAI's Codex, surfaces a critical truth: as software becomes cheaper to build, taste becomes the scarce resource. This reframes how PMs should think about their role when the execution partner (AI or engineer) can ship anything you ask for. Your job shifts from specification to judgment and vision.</div>
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 21 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
