@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Monday, July 06, 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fafaf8;
+      color: #1a1a1a;
+      line-height: 1.65;
+    }
+
+    .header {
+      background: #fff;
+      border-bottom: 1px solid #e8e8e4;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.3px; }
+    .header .tagline { font-size: 0.9rem; color: #888; margin-top: 0.3rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.85rem;
+      font-size: 0.78rem; background: #f0f0ec; color: #666;
+      padding: 0.25rem 0.85rem; border-radius: 999px;
+    }
+
+    .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: #f7f7f4;
+      border: 1px solid #e0ddd5;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.5;
+    }
+    .quiet-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta {
+      font-size: 0.8rem; color: #888; margin-bottom: 1rem;
+    }
+
+    /* ── Jump nav ── */
+    .digest-nav {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-bottom: 1.5rem;
+    }
+    .digest-nav a {
+      display: inline-block; padding: 4px 11px;
+      font-size: 0.75rem; font-weight: 500; color: #444;
+      background: #fff; border: 1px solid #ddd;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.12s, border-color 0.12s;
+    }
+    .digest-nav a:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .digest-nav a.tp-nav { background: #fffdf5; border-color: #e8d98a; color: #a07800; }
+    .digest-nav a.tp-nav:hover { background: #a07800; color: #fff; border-color: #a07800; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fff; border: 1px solid #e8e8e4;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 0.9rem;
+    }
+    .thought-provoker { background: #fffdf5; border-color: #e8d98a; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.35rem;
+    }
+    .creator-header h2 { font-size: 1rem; font-weight: 700; line-height: 1.3; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 500;
+      color: #888; background: #f0f0ec;
+      padding: 2px 8px; border-radius: 999px; white-space: nowrap;
+    }
+    .badge-hot {
+      display: inline-block; background: #cc3300; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 1px 6px;
+      border-radius: 999px; margin-left: 5px; vertical-align: middle;
+    }
+    .creator-headline {
+      font-size: 0.8rem; color: #777; font-style: italic; margin-bottom: 0.75rem;
+    }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f0eeff; border-left: 3px solid #7b6ef6;
+      border-radius: 0 6px 6px 0; padding: 0.5rem 0.85rem;
+      font-size: 0.855rem; color: #2a2a2a; line-height: 1.55;
+      margin-bottom: 0.6rem;
+    }
+    .tldr-label {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; display: block; margin-bottom: 3px;
+    }
+    .thought-provoker .tldr { background: #fffbea; border-color: #c9a800; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 2px; }
+    summary {
+      cursor: pointer; font-size: 0.75rem; font-weight: 600; color: #7b6ef6;
+      list-style: none; display: inline-flex; align-items: center; gap: 3px;
+      user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; font-size: 0.7rem; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.75rem; }
+
+    .detail-body p { font-size: 0.875rem; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol {
+      font-size: 0.875rem; padding-left: 1.2rem; margin-bottom: 0.7rem;
+    }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #ddd; padding: 0.3rem 0.85rem;
+      color: #555; font-style: italic; font-size: 0.855rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.6rem; font-size: 0.8rem; }
+    .creator-links a { color: #7b6ef6; text-decoration: none; font-weight: 500; }
+    .creator-links a:hover { text-decoration: underline; }
+    .creator-links span { color: #ccc; margin: 0 5px; }
+
+    /* ── Top pick (appears at top of digest) ── */
+    .top-pick {
+      background: #f0eeff; border: 1px solid #c4b8ff;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 1.25rem;
+    }
+    .top-pick-label {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; margin-bottom: 0.5rem;
+    }
+    .top-pick-content { font-size: 0.925rem; color: #1a1a1a; line-height: 1.55; }
+
+    /* ── No updates fallback ── */
+    .no-updates {
+      text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #aaa;
+    }
+
+    .footer {
+      text-align: center; padding: 1.5rem;
+      font-size: 0.78rem; color: #bbb; border-top: 1px solid #e8e8e4;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.5rem 1rem 1.25rem; }
+      .header h1 { font-size: 1.1rem; }
+      .container { padding: 1rem 0.85rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1rem 1rem; border-radius: 10px; }
+      .creator-header { flex-direction: column; gap: 4px; }
+      .quiet-banner { font-size: 0.85rem; padding: 0.85rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Monday, July 06, 2026</div>
+  </div>
+
+  <div class="container">
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PM Intelligence Digest — July 6, 2026</title>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; line-height: 1.6; color: #1a1a1a; background: #fafafa; padding: 40px 20px; margin: 0; }
+.digest-container { max-width: 720px; margin: 0 auto; }
+.top-pick { background: linear-gradient(135deg, #fff5e6 0%, #fffbf0 100%); border-left: 4px solid #ff8c00; padding: 24px; margin-bottom: 32px; border-radius: 8px; }
+.top-pick-label { font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; color: #ff8c00; margin-bottom: 12px; }
+.top-pick-content { font-size: 16px; line-height: 1.7; color: #333; }
+.digest-meta { font-size: 13px; color: #666; margin-bottom: 24px; text-align: center; }
+.digest-nav { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 40px; justify-content: center; }
+.digest-nav a { display: inline-block; padding: 8px 16px; background: #f0f0f0; text-decoration: none; color: #1a1a1a; border-radius: 20px; font-size: 14px; font-weight: 500; transition: all 0.2s; }
+.digest-nav a:hover { background: #e0e0e0; }
+.tp-nav { background: #e8f4f8 !important; color: #0066cc !important; }
+.tp-nav:hover { background: #d0e8f0 !important; }
+.creator { margin-bottom: 40px; background: white; border-radius: 8px; padding: 28px; border: 1px solid #e5e5e5; }
+.thought-provoker { margin-bottom: 40px; background: white; border-radius: 8px; padding: 28px; border: 1px solid #e5e5e5; border-left: 4px solid #9333ea; }
+.creator-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+.creator-header h2 { margin: 0; font-size: 20px; font-weight: 700; color: #1a1a1a; }
+.date-badge { font-size: 13px; color: #999; font-weight: 500; }
+.creator-headline { font-size: 15px; color: #666; margin-bottom: 16px; font-style: italic; }
+.tldr { background: #f9f9f9; padding: 16px; border-radius: 6px; margin-bottom: 16px; }
+.tldr-label { font-weight: 700; font-size: 13px; color: #1a1a1a; text-transform: uppercase; letter-spacing: 0.3px; display: block; margin-bottom: 8px; }
+.tldr { font-size: 15px; line-height: 1.6; color: #333; }
+details { margin-bottom: 16px; }
+details summary { cursor: pointer; font-weight: 600; font-size: 14px; color: #0066cc; user-select: none; }
+details summary:hover { text-decoration: underline; }
+details[open] summary { color: #1a1a1a; }
+.detail-body { padding-top: 12px; font-size: 15px; line-height: 1.7; color: #555; }
+.detail-body p { margin: 0 0 12px 0; }
+.detail-body ul { margin: 12px 0; padding-left: 20px; }
+.detail-body li { margin-bottom: 8px; }
+.creator-links { margin-top: 16px; }
+.creator-links a { display: inline-block; padding: 10px 20px; background: #0066cc; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 14px; transition: all 0.2s; }
+.creator-links a:hover { background: #0052a3; }
+.quiet-banner { display: flex; align-items: center; gap: 16px; background: #f0f8ff; border-left: 4px solid #6c757d; padding: 20px 24px; border-radius: 8px; margin-bottom: 32px; font-size: 15px; color: #555; }
+.quiet-icon { font-size: 28px; }
+</style>
+</head>
+<body>
+<div class="digest-container">
+<div class="top-pick">
+<div class="top-pick-label">🔥 Top pick this issue</div>
+<div class="top-pick-content">Gergely Orosz reports on firsthand visits to OpenAI, Anthropic, and Cursor labs, revealing that cloud-based agents and coding harnesses are defining the next generation of software engineering. For PMs building AI-native products, this is your insider view of where the industry's technical foundation is heading and what infrastructure your roadmap should account for.</div>
+</div>
+<div class="digest-meta">21 thought leaders tracked · 7 had updates this issue</div>
+<nav class="digest-nav">
+<a href="#orosz">Gergely Orosz</a>
+<a href="#mollick">Ethan Mollick</a>
+<a href="#willison">Simon Willison</a>
+<a href="#swyx">Swyx</a>
+<a href="#lenny">Lenny Rachitsky</a>
+<a href="#zhuo">Julie Zhuo</a>
+<a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+</nav>
+<div class="creator" id="orosz">
+<div class="creator-header"><h2>Gergely Orosz</h2><span class="date-badge">June 30</span></div>
+<div class="creator-headline">A peek into where software engineering is headed from inside the sector's leading AI labs.</div>
+<div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Agents running in the cloud are the dominant architecture being built, and coding harnesses (structured tools for controlling AI output) are spreading beyond engineering. If you're shipping AI features, expect your team to need both cloud infrastructure and prompt-engineering discipline—this is no longer optional tooling.</div>
+<details><summary>Read more</summary>
+<div class="detail-body"><p>Orosz synthesizes observations from visits to three centers of AI innovation. The pattern is clear: production AI systems are moving away from standalone chatbots toward agentic loops that run on cloud infrastructure with persistent memory and integration to external tools. Cursor's approach to IDE-embedded agents, Anthropic's focus on constitutional AI and chain-of-thought reasoning, and OpenAI's investment in orchestration frameworks all point to the same architecture.</p><p>For product teams, this means your roadmap should account for latency costs of cloud agents, versioning challenges in prompt management, and the need for robust monitoring of agent behavior. The era of "add a chatbot" is over; the next wave is building products where agents handle real workflows—which requires rethinking product discovery, testing, and deployment strategies.</p></div>
+</details>
+<div class="creator-links"><a href="https://newsletter.pragmaticengineer.com/p/impressions-from-visiting-openai" target="_blank">Read →</a></div>
+</div>
+<div class="creator" id="mollick">
+<div class="creator-header"><h2>Ethan Mollick</h2><span class="date-badge">June 30</span></div>
+<div class="creator-headline">How work changes along the exponential.</div>
+<div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Mollick argues that we're transitioning from an era of conversational AI assistants to a new paradigm where AI capabilities move from talk-based interaction to autonomous action. This shift has direct implications for how you design product surfaces and what tasks you prioritize for automation vs. user control.</div>
+<details><summary>Read more</summary>
+<div class="detail-body"><p>The "twilight of the chatbots" signals not the end of AI in products, but a fundamental reclassification. Early AI features were designed around dialogue—users ask, AI answers. The next generation is agentic: AI identifies problems, takes steps, and returns results. This is a UX and workflow design challenge that most product teams are still learning.</p><p>For PMs, this means rethinking your product interface layer. If the chatbot was about making AI accessible, agents are about making AI invisible. Your job shifts from "how do we explain what AI can do" to "what decisions and actions should the user see vs. let run in the background." This distinction fundamentally changes your feature roadmap and user research priorities.</p></div>
+</details>
+<div class="creator-links"><a href="https://www.oneusefulthing.org/p/the-twilight-of-the-chatbots" target="_blank">Read →</a></div>
+</div>
+<div class="creator" id="willison">
+<div class="creator-header"><h2>Simon Willison</h2><span class="date-badge">July 6</span></div>
+<div class="creator-headline">Release: sqlite-utils 4.0rc3 with compound foreign key support.</div>
+<div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Willison is rapidly shipping a major release using Claude Fable 5 and GPT-5.5, demonstrating practical AI-assisted development at scale. The meta-lesson: AI coding tools are now reliable enough for version-boundary decisions (SemVer) and breaking changes—start thinking about how to integrate AI-assisted development into your engineering culture and shipping velocity estimates.</div>
+<details><summary>Read more</summary>
+<div class="detail-body"><p>In the span of two weeks, Willison moved sqlite-utils from rc1 to rc3, with each release expanding scope. The biggest addition is support for introspecting and creating compound foreign keys—a feature that involved subtle breaking changes. The key insight: he was able to delegate high-stakes architectural decisions to Claude Fable because the tool produced code he trusted enough to ship as a major version bump.</p><p>This is a leading indicator for how teams should be staffing and planning. If a single developer using AI assistants can confidently ship a major version with API-breaking changes in weeks rather than months, your velocity assumptions need updating. Start experimenting with AI pair programming on your critical path, not just on side projects.</p></div>
+</details>
+<div class="creator-links"><a href="https://simonwillison.net/2026/Jul/6/sqlite-utils/#atom-everything" target="_blank">Read →</a></div>
+</div>
+<div class="creator" id="swyx">
+<div class="creator-header"><h2>Swyx</h2><span class="date-badge">July 3</span></div>
+<div class="creator-headline">Vercel's Chief of Software explains how agents are a fundamentally new kind of software.</div>
+<div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Andrew Qu articulates a critical framework: agents succeed or fail based on three pillars—skills (what they can do), sandboxes (safe execution environments), and agent-readable websites (discoverable APIs). This gives you a concrete checklist for auditing whether your product surface is agent-ready and where your roadmap gaps are.</div>
+<details><summary>Read more</summary>
+<div class="detail-body"><p>Vercel's agent framework (eve) was built by inverting the traditional product design question. Instead of "how do users interact with our product," they asked "how will agents interact with our product." This led to a different architecture: explicit skill definitions, isolated execution sandboxes, and machine-readable site maps rather than human-optimized navigation.</p><p>For PMs, this is a wake-up call. Your product is not agent-ready unless you've explicitly designed for it. Run an audit: Can agents discover what your product can do? Can they execute safely without breaking user data? Are your APIs and workflows documented in a form that language models can parse and reason about? If not, that's your next roadmap priority.</p></div>
+</details>
+<div class="creator-links"><a href="https://www.latent.space/p/vercel-agents-new-software" target="_blank">Read →</a></div>
+</div>
+<div class="creator" id="lenny">
+<div class="creator-header"><h2>Lenny Rachitsky</h2><span class="date-badge">July 6</span></div>
+<div class="creator-headline">Sonnet 5 review and running autonomous coding agents from your phone.</div>
+<div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Alessio Fanelli demonstrates a practical workflow for running parallel coding agents from a mobile device via OpenAI Symphony + Linear integration. For PMs, the takeaway is that agent-orchestrated work is becoming a mobile-first, always-on activity—your product needs to support async feedback loops and real-time agent status updates, not just linear task flows.</div>
+<details><summary>Read more</summary>
+<div class="detail-body"><p>The demo shows agents handling specialized, high-leverage tasks (Fanelli's example: hunting underpriced Pokémon cards) while the user checks in from their phone. This is different from "mobile AI assistant"—it's about delegating complex work streams to agents that run independently and surface results when ready. The architecture requires thoughtful queuing, status transparency, and resumable workflows.</p><p>Think about your product's async patterns. If agents are going to drive tasks in your domain, can users understand what's happening without polling? Do you surface agent reasoning, and do you let users course-correct mid-execution? These are new PM concerns that classic product design doesn't address.</p></div>
+</details>
+<div class="creator-links"><a href="https://www.lennysnewsletter.com/p/how-i-run-autonomous-coding-agents" target="_blank">Read →</a></div>
+</div>
+<div class="creator" id="zhuo">
+<div class="creator-header"><h2>Julie Zhuo</h2><span class="date-badge">July 6</span></div>
+<div class="creator-headline">AI for nostalgia's sake: restoring vintage websites.</div>
+<div class="tldr"><span class="tldr-label">TL;BR — PM Takeaway</span>While framed as a fun nostalgia project, this piece illustrates a new class of AI product opportunity: tools that preserve, reconstruct, and serve historical or archival content. PMs should consider whether their domain has latent demand for time-travel or restoration features powered by AI inference.</div>
+<details><summary>Read more</summary>
+<div class="detail-body"><p>Zhuo explores using AI to recreate defunct or archived websites—pulling from old screenshots, archives, and memory to reconstruct what they used to look like. It's a creative use case that sits at the intersection of nostalgia and AI reconstruction. The underlying capability is pattern recognition and creative inference from sparse data.</p><p>This is a signal about a broader PM opportunity. Enterprises and communities have enormous troves of legacy content that's expensive to manually restore or migrate. Consider whether your product can help users reconstruct, recover, or reimagine past data using AI—it's a category that's starting to mature.</p></div>
+</details><div class="thought-provoker">
+  <div class="creator-header"><h2>Marty Cagan</h2></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>Cagan's core thesis is the foundation of modern product thinking.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>The biggest mistake product teams make is confusing output with outcome. Shipping features is not the same as solving problems — the best PMs obsess over the latter.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.svpg.com/product-vs-feature-teams/" target="_blank">Read →</a></div>
+</div>
+<div class="thought-provoker">
+  <div class="creator-header"><h2>Shreyas Doshi</h2></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>Reframing how you measure your own success is the highest-leverage PM habit.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Most PMs optimise for output metrics (features shipped, velocity) when they should be optimising for outcome metrics (customer behaviour change, business impact). The distinction determines whether you build a great product or just a busy roadmap.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://twitter.com/shreyas/status/1276956836856393728" target="_blank">Read →</a></div>
+</div>
+
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 21 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
