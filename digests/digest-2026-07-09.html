@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Thursday, July 09, 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fafaf8;
+      color: #1a1a1a;
+      line-height: 1.65;
+    }
+
+    .header {
+      background: #fff;
+      border-bottom: 1px solid #e8e8e4;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.3px; }
+    .header .tagline { font-size: 0.9rem; color: #888; margin-top: 0.3rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.85rem;
+      font-size: 0.78rem; background: #f0f0ec; color: #666;
+      padding: 0.25rem 0.85rem; border-radius: 999px;
+    }
+
+    .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: #f7f7f4;
+      border: 1px solid #e0ddd5;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.5;
+    }
+    .quiet-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta {
+      font-size: 0.8rem; color: #888; margin-bottom: 1rem;
+    }
+
+    /* ── Jump nav ── */
+    .digest-nav {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-bottom: 1.5rem;
+    }
+    .digest-nav a {
+      display: inline-block; padding: 4px 11px;
+      font-size: 0.75rem; font-weight: 500; color: #444;
+      background: #fff; border: 1px solid #ddd;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.12s, border-color 0.12s;
+    }
+    .digest-nav a:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .digest-nav a.tp-nav { background: #fffdf5; border-color: #e8d98a; color: #a07800; }
+    .digest-nav a.tp-nav:hover { background: #a07800; color: #fff; border-color: #a07800; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fff; border: 1px solid #e8e8e4;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 0.9rem;
+    }
+    .thought-provoker { background: #fffdf5; border-color: #e8d98a; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.35rem;
+    }
+    .creator-header h2 { font-size: 1rem; font-weight: 700; line-height: 1.3; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 500;
+      color: #888; background: #f0f0ec;
+      padding: 2px 8px; border-radius: 999px; white-space: nowrap;
+    }
+    .badge-hot {
+      display: inline-block; background: #cc3300; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 1px 6px;
+      border-radius: 999px; margin-left: 5px; vertical-align: middle;
+    }
+    .creator-headline {
+      font-size: 0.8rem; color: #777; font-style: italic; margin-bottom: 0.75rem;
+    }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f0eeff; border-left: 3px solid #7b6ef6;
+      border-radius: 0 6px 6px 0; padding: 0.5rem 0.85rem;
+      font-size: 0.855rem; color: #2a2a2a; line-height: 1.55;
+      margin-bottom: 0.6rem;
+    }
+    .tldr-label {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; display: block; margin-bottom: 3px;
+    }
+    .thought-provoker .tldr { background: #fffbea; border-color: #c9a800; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 2px; }
+    summary {
+      cursor: pointer; font-size: 0.75rem; font-weight: 600; color: #7b6ef6;
+      list-style: none; display: inline-flex; align-items: center; gap: 3px;
+      user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; font-size: 0.7rem; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.75rem; }
+
+    .detail-body p { font-size: 0.875rem; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol {
+      font-size: 0.875rem; padding-left: 1.2rem; margin-bottom: 0.7rem;
+    }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #ddd; padding: 0.3rem 0.85rem;
+      color: #555; font-style: italic; font-size: 0.855rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.6rem; font-size: 0.8rem; }
+    .creator-links a { color: #7b6ef6; text-decoration: none; font-weight: 500; }
+    .creator-links a:hover { text-decoration: underline; }
+    .creator-links span { color: #ccc; margin: 0 5px; }
+
+    /* ── Top pick (appears at top of digest) ── */
+    .top-pick {
+      background: #f0eeff; border: 1px solid #c4b8ff;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 1.25rem;
+    }
+    .top-pick-label {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; margin-bottom: 0.5rem;
+    }
+    .top-pick-content { font-size: 0.925rem; color: #1a1a1a; line-height: 1.55; }
+
+    /* ── No updates fallback ── */
+    .no-updates {
+      text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #aaa;
+    }
+
+    .footer {
+      text-align: center; padding: 1.5rem;
+      font-size: 0.78rem; color: #bbb; border-top: 1px solid #e8e8e4;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.5rem 1rem 1.25rem; }
+      .header h1 { font-size: 1.1rem; }
+      .container { padding: 1rem 0.85rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1rem 1rem; border-radius: 10px; }
+      .creator-header { flex-direction: column; gap: 4px; }
+      .quiet-banner { font-size: 0.85rem; padding: 0.85rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Thursday, July 09, 2026</div>
+  </div>
+
+  <div class="container">
+    <!DOCTYPE html>
+<html>
+<head>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f5f5f5; padding: 20px; margin: 0; }
+.digest { max-width: 700px; margin: 0 auto; background: white; border-radius: 8px; padding: 32px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.digest-header { margin-bottom: 24px; border-bottom: 2px solid #f0f0f0; padding-bottom: 16px; }
+.digest-header h1 { margin: 0 0 4px 0; font-size: 28px; color: #1a1a1a; }
+.digest-date { color: #666; font-size: 14px; }
+.top-pick { background: linear-gradient(135deg, #fff5e6 0%, #ffe8cc 100%); border-left: 4px solid #ff9800; padding: 16px; margin-bottom: 28px; border-radius: 4px; }
+.top-pick-label { font-weight: 700; color: #e65100; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; display: block; }
+.top-pick-content { color: #333; font-size: 15px; line-height: 1.5; }
+.digest-meta { color: #999; font-size: 13px; margin-bottom: 20px; text-align: center; }
+.digest-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; justify-content: center; }
+.digest-nav a { background: #f0f0f0; color: #333; padding: 8px 12px; border-radius: 16px; text-decoration: none; font-size: 13px; font-weight: 500; transition: background 0.2s; border: 1px solid #e0e0e0; }
+.digest-nav a:hover { background: #e8e8e8; }
+.digest-nav .tp-nav { background: #f0e8ff; color: #5e35b1; border-color: #e8d5ff; }
+.digest-nav .tp-nav:hover { background: #e8d5ff; }
+.creator { margin-bottom: 32px; border-top: 1px solid #f0f0f0; padding-top: 24px; }
+.thought-provoker { margin-bottom: 32px; border-top: 1px solid #f0f0f0; padding-top: 24px; background: #f9f7ff; padding: 24px; margin-left: -24px; margin-right: -24px; margin-bottom: 0; padding-bottom: 24px; border-top: none; }
+.thought-provoker:first-of-type { margin-top: 40px; border-top: 2px solid #e8d5ff; }
+.creator-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.creator-header h2 { margin: 0; font-size: 18px; color: #1a1a1a; font-weight: 600; }
+.date-badge { background: #e8e8e8; color: #666; font-size: 12px; padding: 4px 8px; border-radius: 3px; font-weight: 500; }
+.thought-provoker .date-badge { background: #e8d5ff; color: #5e35b1; }
+.creator-headline { color: #666; font-size: 14px; margin-bottom: 12px; font-style: italic; }
+.tldr { background: #f9f9f9; padding: 12px; border-radius: 4px; margin-bottom: 12px; font-size: 14px; line-height: 1.6; }
+.thought-provoker .tldr { background: #f0e8ff; }
+.tldr-label { font-weight: 700; color: #333; display: block; margin-bottom: 4px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.3px; }
+details { margin-bottom: 12px; }
+summary { cursor: pointer; color: #0066cc; font-weight: 500; font-size: 14px; user-select: none; }
+summary:hover { color: #0052a3; }
+.detail-body { padding: 12px 0; color: #555; font-size: 14px; line-height: 1.6; }
+.detail-body p { margin: 0 0 12px 0; }
+.detail-body ul { margin: 8px 0; padding-left: 20px; }
+.detail-body li { margin-bottom: 6px; }
+.creator-links { margin-top: 12px; }
+.creator-links a { color: #0066cc; text-decoration: none; font-weight: 500; font-size: 14px; }
+.creator-links a:hover { text-decoration: underline; }
+.quiet-banner { background: #f5f5f5; border: 1px solid #ddd; border-radius: 6px; padding: 20px; text-align: center; margin-bottom: 28px; font-size: 15px; color: #666; }
+.quiet-icon { font-size: 24px; display: block; margin-bottom: 8px; }
+</style>
+</head>
+<body>
+<div class="digest">
+<div class="digest-header">
+<h1>PM Intelligence Digest</h1>
+<div class="digest-date">July 09, 2026</div>
+</div>
+<div class="top-pick">
+<div class="top-pick-label">🔥 Top pick this issue</div>
+<div class="top-pick-content">Lenny Rachitsky's latest benchmark reveals GPT-5.6 Sol outperforming Claude Fable across prototypes, PRDs, and browser use. For AI-native PMs, this matters because it signals a shift in the model landscape you should factor into your product roadmap and tooling decisions immediately.</div>
+</div>
+<div class="digest-meta">21 thought leaders tracked &nbsp;·&nbsp; 6 had updates this issue</div>
+<nav class="digest-nav">
+<a href="#lenny">Lenny Rachitsky</a>
+<a href="#simon">Simon Willison</a>
+<a href="#swyx">Swyx</a>
+<a href="#gergely">Gergely Orosz</a>
+<a href="#julie">Julie Zhuo</a>
+<a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+</nav>
+<div class="creator" id="lenny">
+<div class="creator-header"><h2>Lenny Rachitsky</h2><span class="date-badge">Jul 09</span></div>
+<div class="creator-headline">Benchmark comparing GPT-5.6 Sol against Claude Fable across five key PM use cases</div>
+<div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Sol wins on prototyping, PRD writing, and browser-based tasks—the exact workflows you likely use daily. Use benchmarks like this to validate which model to standardize on for your team, rather than relying on general performance claims.</div>
+<details><summary>Read more</summary>
+<div class="detail-body"><p>Lenny tested both models across five categories critical to product work: writing PRDs, prototyping interfaces, research synthesis, browser use, and code generation. Sol demonstrated measurable advantages in prototype quality and PRD structure, while Fable held ground in certain synthesis tasks.</p><p>The takeaway isn't "pick Sol for everything"—it's that model choice should be empirical and use-case-specific. PMs should run lightweight benchmarks against their own workflows before locking in tooling standards.</p></div>
+</details>
+<div class="creator-links"><a href="https://www.lennysnewsletter.com/p/gpt-56-sol-vs-claude-fable-why-openais" target="_blank">Read →</a></div>
+</div>
+<div class="creator" id="simon">
+<div class="creator-header"><h2>Simon Willison</h2><span class="date-badge">Jul 09</span></div>
+<div class="creator-headline">OpenAI's GPT-5.6 family arrives with three tiers and aggressive pricing</div>
+<div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Luna ($1/$6 per 1M tokens), Terra ($2.50/$15), and Sol ($5/$30) represent a significant pricing restructure that may reshape your AI infrastructure costs. If you've been building on Opus, it's worth modeling your cost footprint under the new pricing scheme to spot opportunities or risks.</div>
+<details><summary>Read more</summary>
+<div class="detail-body"><p>The new GPT-5.6 family introduces three capability tiers for the first time, with Luna designed for high-volume tasks and Sol as the flagship. Pricing is competitive with Claude Opus ($5/$25) and significantly cheaper than Claude Fable ($10/$50) at the premium tier.</p><p>For PMs managing AI product costs or infrastructure budgets, this opens up new cost-optimization vectors. You can now match model size to task complexity more granularly, which could reduce per-query costs substantially for lower-stakes agent tasks.</p></div>
+</details>
+<div class="creator-links"><a href="https://simonwillison.net/2026/Jul/9/gpt-5-6/#atom-everything" target="_blank">Read →</a></div>
+</div>
+<div class="creator" id="simon">
+<div class="creator-header"><h2>Simon Willison</h2><span class="date-badge">Jul 09</span></div>
+<div class="creator-headline">Meta's Muse Spark 1.1 introduces API access with agentic tool calling improvements</div>
+<div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>The "Attractor States in Self-Conversation" finding (where model copies align during conversation) hints at emergent multi-agent behavior patterns you should understand before building agent-based features. This is foundational research for designing agent swarms or collaborative workflows.</div>
+<details><summary>Read more</summary>
+<div class="detail-body"><p>Spark 1.1 is the first Meta model to offer public API access, shipping with measurable improvements in tool calling and computer-use tasks—the exact capabilities PMs need for agentic product features. The self-conversation phenomenon suggests models naturally align when given iterative feedback loops.</p><p>Implication: if you're building multi-step agent workflows, this self-alignment property could reduce the need for explicit state management or prompt engineering between agent steps.</p></div>
+</details>
+<div class="creator-links"><a href="https://simonwillison.net/2026/Jul/9/muse-spark-1-1/#atom-everything" target="_blank">Read →</a></div>
+</div>
+<div class="creator" id="swyx">
+<div class="creator-header"><h2>Swyx (Latent Space)</h2><span class="date-badge">Jul 09</span></div>
+<div class="creator-headline">SpaceXAI launches Grok 4.5, the first Opus-class model after Cursor acquisition</div>
+<div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>SpaceXAI's speed (shipping Opus-class models faster than Anthropic or OpenAI) signals that frontier-lab pacing is accelerating. If you're betting your product roadmap on model releases, build in flexibility for faster iteration cycles than you assumed 12 months ago.</div>
+<details><summary>Read more</summary>
+<div class="detail-body"><p>The Cursor acquisition gives SpaceXAI a direct feedback loop to developers, enabling them to ship models optimized for real coding and agentic workflows rather than abstract benchmarks. Grok 4.5 arriving as an Opus-class competitor shows the velocity gap is real.</p><p>For PMs: this validates the value of tight integration with your user base for model fine-tuning, and it means new model options appear more frequently than previously expected. Lock-in to a single provider carries higher risk.</p></div>
+</details>
+<div class="creator-links"><a href="https://www.latent.space/p/ainews-spacexai-launches-grok-45" target="_blank">Read →</a></div>
+</div>
+<div class="creator" id="swyx">
+<div class="creator-header"><h2>Swyx (Latent Space)</h2><span class="date-badge">Jul 08</span></div>
+<div class="creator-headline">Modal's CTO on why infrastructure must evolve for agent products to scale</div>
+<div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Agent products require different infrastructure primitives than chatbots—real-time state management, parallel task execution, and tool orchestration. If you're building agents, ensure your infrastructure team is not trying to retrofit chatbot architecture; this decision directly impacts your product velocity and reliability.</div>
+<details><summary>Read more</summary>
+<div class="detail-body"><p>Modal has spent two years learning how agents consume compute differently from traditional applications. Long-running tasks, variable execution paths, and tool integration create operational challenges that standard serverless cannot solve efficiently.</p><p>Takeaway: before you ship an agent feature to customers, pressure-test the infrastructure assumption. Many teams are discovering mid-launch that their compute model doesn't fit agentic patterns, leading to cost spikes or reliability issues.</p></div>
+</details>
+<div class="creator-links"><a href="https://www.latent.space/p/modal2026" target="_blank">Read →</a></div>
+</div>
+<div class="creator" id="gergely">
+<div class="creator-header"><h2>Gergely Orosz</h2><span class="date-badge">Jul 09</span></div>
+<div class="creator-headline">Bun's Rust rewrite completed in 11 days using AI at a fraction of traditional cost</div>
+<div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>An 11-day rewrite that would have taken a team a year, costing $165K in tokens, demonstrates AI's leverage on large codebases. If you manage infrastructure or tooling products, this signals that your customers' build vs. buy calculus is shifting—large refactors are now feasible targets for AI-accelerated delivery.</div>
+<details><summary>Read more</summary>
+<div class="detail-body"><p>Bun's team used coding agents to rewrite their runtime in Rust, completing a project that traditionally requires months or years. The cost and timeline advantage reshapes expectations for what's possible in infrastructure optimization.</p><p>For PMs: this is evidence that your customer's technical debt is becoming a product opportunity, not a barrier. Teams that previously couldn't afford rewrites can now execute them. Tooling and platform products should account for this new capability when defining product strategy.</p></div>
+</details>
+<div class="creator-links"><a href="https://newsletter.pragmaticengineer.com/p/the-pulse-what-can-we-learn-from" target="_blank">Read →</a></div>
+</div>
+<div class="creator" id="julie">
+<div class="creator-header"><h2>Julie Zhuo</h2><span class="date-badge">Jul 06</span></div>
+<div class="creator-headline"><div class="thought-provoker">
+  <div class="creator-header"><h2>Marty Cagan</h2></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>Cagan's core thesis is the foundation of modern product thinking.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>The biggest mistake product teams make is confusing output with outcome. Shipping features is not the same as solving problems — the best PMs obsess over the latter.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.svpg.com/product-vs-feature-teams/" target="_blank">Read →</a></div>
+</div>
+<div class="thought-provoker">
+  <div class="creator-header"><h2>Shreyas Doshi</h2></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>Reframing how you measure your own success is the highest-leverage PM habit.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Most PMs optimise for output metrics (features shipped, velocity) when they should be optimising for outcome metrics (customer behaviour change, business impact). The distinction determines whether you build a great product or just a busy roadmap.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://twitter.com/shreyas/status/1276956836856393728" target="_blank">Read →</a></div>
+</div>
+
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 21 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
