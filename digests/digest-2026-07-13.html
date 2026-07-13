@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Monday, July 13, 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fafaf8;
+      color: #1a1a1a;
+      line-height: 1.65;
+    }
+
+    .header {
+      background: #fff;
+      border-bottom: 1px solid #e8e8e4;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.3px; }
+    .header .tagline { font-size: 0.9rem; color: #888; margin-top: 0.3rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.85rem;
+      font-size: 0.78rem; background: #f0f0ec; color: #666;
+      padding: 0.25rem 0.85rem; border-radius: 999px;
+    }
+
+    .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: #f7f7f4;
+      border: 1px solid #e0ddd5;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.5;
+    }
+    .quiet-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta {
+      font-size: 0.8rem; color: #888; margin-bottom: 1rem;
+    }
+
+    /* ── Jump nav ── */
+    .digest-nav {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-bottom: 1.5rem;
+    }
+    .digest-nav a {
+      display: inline-block; padding: 4px 11px;
+      font-size: 0.75rem; font-weight: 500; color: #444;
+      background: #fff; border: 1px solid #ddd;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.12s, border-color 0.12s;
+    }
+    .digest-nav a:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .digest-nav a.tp-nav { background: #fffdf5; border-color: #e8d98a; color: #a07800; }
+    .digest-nav a.tp-nav:hover { background: #a07800; color: #fff; border-color: #a07800; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fff; border: 1px solid #e8e8e4;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 0.9rem;
+    }
+    .thought-provoker { background: #fffdf5; border-color: #e8d98a; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.35rem;
+    }
+    .creator-header h2 { font-size: 1rem; font-weight: 700; line-height: 1.3; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 500;
+      color: #888; background: #f0f0ec;
+      padding: 2px 8px; border-radius: 999px; white-space: nowrap;
+    }
+    .badge-hot {
+      display: inline-block; background: #cc3300; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 1px 6px;
+      border-radius: 999px; margin-left: 5px; vertical-align: middle;
+    }
+    .creator-headline {
+      font-size: 0.8rem; color: #777; font-style: italic; margin-bottom: 0.75rem;
+    }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f0eeff; border-left: 3px solid #7b6ef6;
+      border-radius: 0 6px 6px 0; padding: 0.5rem 0.85rem;
+      font-size: 0.855rem; color: #2a2a2a; line-height: 1.55;
+      margin-bottom: 0.6rem;
+    }
+    .tldr-label {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; display: block; margin-bottom: 3px;
+    }
+    .thought-provoker .tldr { background: #fffbea; border-color: #c9a800; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 2px; }
+    summary {
+      cursor: pointer; font-size: 0.75rem; font-weight: 600; color: #7b6ef6;
+      list-style: none; display: inline-flex; align-items: center; gap: 3px;
+      user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; font-size: 0.7rem; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.75rem; }
+
+    .detail-body p { font-size: 0.875rem; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol {
+      font-size: 0.875rem; padding-left: 1.2rem; margin-bottom: 0.7rem;
+    }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #ddd; padding: 0.3rem 0.85rem;
+      color: #555; font-style: italic; font-size: 0.855rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.6rem; font-size: 0.8rem; }
+    .creator-links a { color: #7b6ef6; text-decoration: none; font-weight: 500; }
+    .creator-links a:hover { text-decoration: underline; }
+    .creator-links span { color: #ccc; margin: 0 5px; }
+
+    /* ── Top pick (appears at top of digest) ── */
+    .top-pick {
+      background: #f0eeff; border: 1px solid #c4b8ff;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 1.25rem;
+    }
+    .top-pick-label {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; margin-bottom: 0.5rem;
+    }
+    .top-pick-content { font-size: 0.925rem; color: #1a1a1a; line-height: 1.55; }
+
+    /* ── No updates fallback ── */
+    .no-updates {
+      text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #aaa;
+    }
+
+    .footer {
+      text-align: center; padding: 1.5rem;
+      font-size: 0.78rem; color: #bbb; border-top: 1px solid #e8e8e4;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.5rem 1rem 1.25rem; }
+      .header h1 { font-size: 1.1rem; }
+      .container { padding: 1rem 0.85rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1rem 1rem; border-radius: 10px; }
+      .creator-header { flex-direction: column; gap: 4px; }
+      .quiet-banner { font-size: 0.85rem; padding: 0.85rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Monday, July 13, 2026</div>
+  </div>
+
+  <div class="container">
+    <!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 700px; margin: 0 auto; padding: 20px; }
+.top-pick { background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%); color: white; padding: 24px; border-radius: 8px; margin-bottom: 32px; }
+.top-pick-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; opacity: 0.95; }
+.top-pick-content { font-size: 16px; line-height: 1.5; }
+.digest-meta { font-size: 13px; color: #666; text-align: center; margin: 24px 0; letter-spacing: 0.5px; }
+.digest-nav { display: flex; flex-wrap: wrap; gap: 12px; margin: 32px 0; justify-content: center; }
+.digest-nav a { background: #f0f0f0; padding: 8px 14px; border-radius: 20px; text-decoration: none; color: #333; font-size: 13px; font-weight: 500; transition: all 0.2s; }
+.digest-nav a:hover { background: #e0e0e0; }
+.digest-nav a.tp-nav { background: #e8f4f8; color: #0066cc; }
+.digest-nav a.tp-nav:hover { background: #d0e8f0; }
+.creator, .thought-provoker { margin-bottom: 40px; padding-bottom: 32px; border-bottom: 1px solid #e8e8e8; }
+.creator:last-child, .thought-provoker:last-child { border-bottom: none; }
+.creator-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px; }
+.creator-header h2 { font-size: 18px; font-weight: 600; margin: 0; }
+.date-badge { font-size: 12px; color: #999; font-weight: 400; }
+.creator-headline { font-size: 14px; color: #666; margin-bottom: 16px; font-style: italic; }
+.tldr { background: #f9f9f9; padding: 14px; border-left: 3px solid #0066cc; border-radius: 4px; margin-bottom: 16px; }
+.tldr-label { font-weight: 600; font-size: 12px; text-transform: uppercase; color: #0066cc; display: block; margin-bottom: 6px; }
+details { margin: 16px 0; }
+summary { cursor: pointer; font-weight: 500; color: #0066cc; font-size: 13px; }
+summary:hover { text-decoration: underline; }
+.detail-body { padding: 12px 0; font-size: 14px; color: #555; line-height: 1.6; }
+.detail-body p { margin: 0 0 12px 0; }
+.detail-body ul { margin: 0; padding-left: 20px; }
+.detail-body li { margin-bottom: 6px; }
+.creator-links { margin-top: 16px; }
+.creator-links a { display: inline-block; font-weight: 500; color: #0066cc; text-decoration: none; font-size: 13px; }
+.creator-links a:hover { text-decoration: underline; }
+.quiet-banner { display: flex; align-items: center; gap: 16px; background: #f5f5f5; padding: 20px; border-radius: 8px; margin-bottom: 32px; font-size: 14px; color: #666; }
+.quiet-icon { font-size: 28px; }
+</style>
+</head>
+<body>
+
+<div class="top-pick">
+  <div class="top-pick-label">🔥 Top pick this issue</div>
+  <div class="top-pick-content">Lenny Rachitsky interviews Alex Finn on running a fully autonomous 24/7 local AI system across five computers. This is the emerging PM playbook: understanding how to architect agent loops that work while you sleep, and why self-hosted intelligence fundamentally changes your product leverage compared to API-dependent models.</div>
+</div>
+
+<div class="digest-meta">21 thought leaders tracked · 5 had updates this issue</div>
+
+<nav class="digest-nav">
+  <a href="#lenny">Lenny Rachitsky</a>
+  <a href="#gergely">Gergely Orosz</a>
+  <a href="#simon">Simon Willison</a>
+  <a href="#swyx">Swyx</a>
+  <a href="#julie">Julie Zhuo</a>
+  <a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+</nav>
+
+<div class="creator" id="lenny">
+  <div class="creator-header"><h2>Lenny Rachitsky</h2><span class="date-badge">July 13</span></div>
+  <div class="creator-headline">How a solo builder runs 24/7 local AI on his own hardware and ships features while he sleeps</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Local inference with autonomous agents changes the unit economics of product development entirely. Instead of thinking in API call budgets and latency constraints, think in terms of persistent, self-directed loops that can operate asynchronously and iterate on discovery without human bottlenecks.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Alex Finn's five-computer setup demonstrates a fundamentally different mental model for AI-native products. Rather than treating LLMs as stateless chat interfaces, he's architected a system where Claude Code acts as a autonomous builder—taking requirements, writing code, testing it, iterating on feedback, and shipping—all without human intervention between cycles. The key insight: unlimited local intelligence at near-zero marginal cost beats constrained, expensive API calls.</p><p>For PMs, this reframes the discovery and delivery loop. Instead of designing for synchronous user interaction, you design the agent harness itself—the prompts, the iteration logic, the evaluation criteria that let the model work independently. This is why understanding agent loops and build-and-review patterns is becoming table-stakes for AI product leaders.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.lennysnewsletter.com/p/this-solo-builder-runs-247-local" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="gergely">
+  <div class="creator-header"><h2>Gergely Orosz</h2><span class="date-badge">July 9</span></div>
+  <div class="creator-headline">What can we learn from Bun's rapid Rust rewrite with AI?</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>An 11-day rewrite for $165K in tokens that would have taken a small team a year shows the new velocity multiplier. But the real lesson for PMs: agent-assisted development compresses execution timelines dramatically, meaning validation and prioritization become the bottleneck, not implementation.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Jarred Sumner's team used coding LLMs to port Bun's core logic from JavaScript to Rust in 11 days. The cost was negligible—$165K in tokens versus hiring a team for a year. This isn't just about speed; it's about unlocking project types that were economically infeasible before. Suddenly, rewrites, major refactors, and ambitious technical pivots become realistic exploration paths.</p><p>The PM implication: your constraint is no longer "can we build this?" but "should we build this, and have we validated we should build it?" Discovery, validation, and prioritization become the real leverage points, because execution risk has dropped nearly to zero. Teams that master rapid prototyping and evidence gathering will outpace those still debating feasibility.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://newsletter.pragmaticengineer.com/p/the-pulse-what-can-we-learn-from" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="simon">
+  <div class="creator-header"><h2>Simon Willison</h2><span class="date-badge">July 12</span></div>
+  <div class="creator-headline">Directly Responsible Individuals (DRI)</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>DRI is the Apple-originated pattern where one person is "ultimately accountable for the success or failure" of a project. In AI-native teams with autonomous agents and distributed ownership, this becomes even more critical—clarity on who owns the agent's behavior, decisions, and failures prevents accountability gaps.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Simon explores the DRI framework from GitLab and Apple, noting it's been on his mind recently. The pattern is straightforward: assign one person who is accountable for an outcome, end of story. No committee, no shared responsibility that diffuses when things go wrong.</p><p>As teams adopt AI agents that make autonomous decisions, the DRI pattern becomes critical. Who's responsible for the agent's quality? Who owns the prompt? Who decides when it's ready to ship? Who's accountable when it fails? Clarity here prevents the "everyone owns it, so nobody owns it" trap that derails many AI initiatives.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://simonwillison.net/2026/Jul/12/directly-responsible-individuals/#atom-everything" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="swyx">
+  <div class="creator-header"><h2>Swyx</h2><span class="date-badge">July 10</span></div>
+  <div class="creator-headline">OpenAI launches GPT 5.6 Sol/Terra/Luna, Codex becomes ChatGPT superapp</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>OpenAI's multi-variant strategy (Sol for reasoning, Terra for code, Luna for specialized tasks) signals a shift toward model selection as product design. PMs should think beyond "which single model do we use?" toward "how do we route requests to the right model variant for the user's intent?"</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>The GPT 5.6 release introduces multiple variants optimized for different workloads. Sol excels at reasoning, Terra at code generation, Luna at specialized domain work. This mirrors the earlier pattern with Anthropic's Fable/Mythos, where different models serve different job-to-be-done.</p><p>For product teams, this unlocks a new design lever: routing logic. Instead of a single model powering your product, you can route users or requests to the optimal variant. This requires thinking about intent detection, which tasks benefit from which model's strengths, and how to surface these choices (or make them silently in the backend). It's a complexity multiplier, but also a differentiation opportunity.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.latent.space/p/ainews-openai-launches-gpt-56-solterraluna" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="julie">
+  <div class="creator-header"><h2>Julie Zhuo</h2><span class="date-badge">July 6</span></div>
+  <div class="creator-headline">AI for nostalgia's sake: restoring vintage websites and digital artifacts</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Julie explores using AI to reconstruct and preserve digital history—a niche but revealing use case. For PMs, this hints at a broader market: people want tools to recover, restore, and remix their digital past. Consider how your AI product might unlock preservation and restoration workflows alongside creation.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Julie shares her hobby of restoring old websites and digital artifacts—old menu screenshots, abstract paintings from decades past, photos from team events. She's beginning to use AI to help reconstruct missing pieces, restore faded images, and bring vintage digital content back to life. It's preservation through generative tools.</p><p>This points to an underexplored product direction: instead of focusing only on creation, consider how AI can be a tool for recovery and restoration. Nostalgia, memory, and curation are powerful human motivations. Products that help people reconstruct their digital past—old photos, lost documents, forgotten experiences—tap into emotion and meaning, not just productivity.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://joulee.medium.com/some-people-like-restoring-vintage-cars-i-like-restoring-vintage-websites-a293d02fd961" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker" id="thought-provokers">
+  <div class="creator-header"><h2>Marty Cagan</h2><span class="date-badge">June 30</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>A foundational piece on why great products alone don't guarantee great companies. In the AI era, this is especially relevant: a great AI model or feature means nothing without strong org health, hiring, alignment, and culture to scale it.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Marty argues that while great products are necessary for great companies, they're not sufficient. You can build an incredible product in a dysfunctional organization and still fail. The examples abound: brilliant products killed by bad management, poor strategy, or inability to scale the team and culture.</p><p>For AI PMs, this is a crucial reminder: shipping a world-class agent or AI feature is half the battle. The other half is ensuring your organization can sustain it—that you're hiring the right people, that decision-making is clear, that the company is actually set up to defend and iterate on what you've built. Many teams will nail the AI model and fumble the org.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.svpg.com/great-products-bad-companies/" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker">
+  <div class="creator-header"><h2>Ethan Mollick</h2><span class="date-badge">June 9</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>Understanding what it actually feels like to work with frontier-class models (Claude Mythos/Fable) changes how you design products. Mollick captures the shift from "AI as autocomplete" to "AI as active collaborator that surprises you."</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 21 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
