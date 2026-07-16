@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Thursday, July 16, 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fafaf8;
+      color: #1a1a1a;
+      line-height: 1.65;
+    }
+
+    .header {
+      background: #fff;
+      border-bottom: 1px solid #e8e8e4;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.3px; }
+    .header .tagline { font-size: 0.9rem; color: #888; margin-top: 0.3rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.85rem;
+      font-size: 0.78rem; background: #f0f0ec; color: #666;
+      padding: 0.25rem 0.85rem; border-radius: 999px;
+    }
+
+    .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: #f7f7f4;
+      border: 1px solid #e0ddd5;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.5;
+    }
+    .quiet-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta {
+      font-size: 0.8rem; color: #888; margin-bottom: 1rem;
+    }
+
+    /* ── Jump nav ── */
+    .digest-nav {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-bottom: 1.5rem;
+    }
+    .digest-nav a {
+      display: inline-block; padding: 4px 11px;
+      font-size: 0.75rem; font-weight: 500; color: #444;
+      background: #fff; border: 1px solid #ddd;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.12s, border-color 0.12s;
+    }
+    .digest-nav a:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .digest-nav a.tp-nav { background: #fffdf5; border-color: #e8d98a; color: #a07800; }
+    .digest-nav a.tp-nav:hover { background: #a07800; color: #fff; border-color: #a07800; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fff; border: 1px solid #e8e8e4;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 0.9rem;
+    }
+    .thought-provoker { background: #fffdf5; border-color: #e8d98a; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.35rem;
+    }
+    .creator-header h2 { font-size: 1rem; font-weight: 700; line-height: 1.3; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 500;
+      color: #888; background: #f0f0ec;
+      padding: 2px 8px; border-radius: 999px; white-space: nowrap;
+    }
+    .badge-hot {
+      display: inline-block; background: #cc3300; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 1px 6px;
+      border-radius: 999px; margin-left: 5px; vertical-align: middle;
+    }
+    .creator-headline {
+      font-size: 0.8rem; color: #777; font-style: italic; margin-bottom: 0.75rem;
+    }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f0eeff; border-left: 3px solid #7b6ef6;
+      border-radius: 0 6px 6px 0; padding: 0.5rem 0.85rem;
+      font-size: 0.855rem; color: #2a2a2a; line-height: 1.55;
+      margin-bottom: 0.6rem;
+    }
+    .tldr-label {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; display: block; margin-bottom: 3px;
+    }
+    .thought-provoker .tldr { background: #fffbea; border-color: #c9a800; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 2px; }
+    summary {
+      cursor: pointer; font-size: 0.75rem; font-weight: 600; color: #7b6ef6;
+      list-style: none; display: inline-flex; align-items: center; gap: 3px;
+      user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; font-size: 0.7rem; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.75rem; }
+
+    .detail-body p { font-size: 0.875rem; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol {
+      font-size: 0.875rem; padding-left: 1.2rem; margin-bottom: 0.7rem;
+    }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #ddd; padding: 0.3rem 0.85rem;
+      color: #555; font-style: italic; font-size: 0.855rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.6rem; font-size: 0.8rem; }
+    .creator-links a { color: #7b6ef6; text-decoration: none; font-weight: 500; }
+    .creator-links a:hover { text-decoration: underline; }
+    .creator-links span { color: #ccc; margin: 0 5px; }
+
+    /* ── Top pick (appears at top of digest) ── */
+    .top-pick {
+      background: #f0eeff; border: 1px solid #c4b8ff;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 1.25rem;
+    }
+    .top-pick-label {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; margin-bottom: 0.5rem;
+    }
+    .top-pick-content { font-size: 0.925rem; color: #1a1a1a; line-height: 1.55; }
+
+    /* ── No updates fallback ── */
+    .no-updates {
+      text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #aaa;
+    }
+
+    .footer {
+      text-align: center; padding: 1.5rem;
+      font-size: 0.78rem; color: #bbb; border-top: 1px solid #e8e8e4;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.5rem 1rem 1.25rem; }
+      .header h1 { font-size: 1.1rem; }
+      .container { padding: 1rem 0.85rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1rem 1rem; border-radius: 10px; }
+      .creator-header { flex-direction: column; gap: 4px; }
+      .quiet-banner { font-size: 0.85rem; padding: 0.85rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Thursday, July 16, 2026</div>
+  </div>
+
+  <div class="container">
+    <!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+.top-pick { background: #fff3cd; border-left: 4px solid #ffc107; padding: 16px; margin-bottom: 24px; border-radius: 4px; }
+.top-pick-label { font-weight: 600; font-size: 14px; color: #856404; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+.top-pick-content { font-size: 16px; color: #333; line-height: 1.5; }
+.digest-meta { font-size: 14px; color: #666; margin: 20px 0; padding: 12px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee; }
+.digest-nav { display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0; }
+.digest-nav a { background: #f0f0f0; padding: 8px 14px; border-radius: 20px; text-decoration: none; font-size: 14px; color: #333; transition: background 0.2s; }
+.digest-nav a:hover { background: #e0e0e0; }
+.tp-nav { background: #e8f4f8; }
+.creator, .thought-provoker { margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid #eee; }
+.creator:last-child, .thought-provoker:last-child { border-bottom: none; }
+.creator-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.creator-header h2 { margin: 0; font-size: 20px; font-weight: 600; color: #111; }
+.date-badge { font-size: 13px; color: #999; font-weight: 500; }
+.creator-headline { font-size: 16px; font-weight: 500; color: #555; margin-bottom: 12px; }
+.tldr { background: #f9f9f9; padding: 12px; border-radius: 4px; font-size: 15px; margin-bottom: 12px; }
+.tldr-label { font-weight: 600; color: #111; display: block; margin-bottom: 6px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.3px; }
+details { margin-bottom: 12px; }
+summary { cursor: pointer; font-weight: 500; color: #0066cc; font-size: 14px; }
+summary:hover { text-decoration: underline; }
+.detail-body { margin-top: 12px; font-size: 15px; color: #333; line-height: 1.6; }
+.detail-body p { margin: 0 0 12px 0; }
+.detail-body ul { margin: 8px 0; padding-left: 20px; }
+.detail-body li { margin-bottom: 6px; }
+.creator-links { margin-top: 12px; }
+.creator-links a { color: #0066cc; text-decoration: none; font-weight: 500; font-size: 14px; }
+.creator-links a:hover { text-decoration: underline; }
+.quiet-banner { background: #f0f0f0; padding: 16px; border-radius: 4px; text-align: center; font-size: 15px; color: #666; margin-bottom: 24px; }
+.quiet-icon { font-size: 20px; margin-right: 8px; }
+.thought-provoker { }
+</style>
+</head>
+<body>
+
+<div class="top-pick">
+  <div class="top-pick-label">🔥 Top pick this issue</div>
+  <div class="top-pick-content">Gergely Orosz dives into what "loop engineering" actually is—and whether it's a lasting trend or hype. As a PM building AI-native workflows, understanding the mechanics of triggers, cron jobs, and agent loops is critical to designing products that scale autonomously. This reframes how you should think about feature architecture in the AI era.</div>
+</div>
+
+<div class="digest-meta">21 thought leaders tracked &nbsp;·&nbsp; 3 had updates this issue</div>
+
+<nav class="digest-nav">
+  <a href="#orosz">Gergely Orosz</a>
+  <a href="#willison">Simon Willison</a>
+  <a href="#swyx">Swyx</a>
+  <a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+</nav>
+
+<div class="creator" id="orosz">
+  <div class="creator-header"><h2>Gergely Orosz</h2><span class="date-badge">July 14</span></div>
+  <div class="creator-headline">What is "loop engineering" exactly?</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Loop engineering is how autonomous agents chain actions—define the trigger clearly, design the loop to minimize unnecessary iterations, and bake in human oversight at critical checkpoints. This is now table-stakes for PMs shipping AI agents.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Orosz investigated the emerging term "loop engineering" and found it encompasses triggers, cron jobs, AI-generated workflows, and more. It's the discipline of orchestrating how an agent moves through repeated cycles of observation, decision, and action—whether human-initiated or fully autonomous.</p><p>For product teams, this means rethinking task decomposition: instead of asking "what should the AI do once?" ask "how should this agent behave over 100 iterations?" Design loops to be predictable, avoid infinite cycles, and always include abort conditions or human escalation gates.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://newsletter.pragmaticengineer.com/p/what-is-loop-engineering" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="willison">
+  <div class="creator-header"><h2>Simon Willison</h2><span class="date-badge">July 16</span></div>
+  <div class="creator-headline">GPT-5.6 unexpectedly deletes files—here's why it matters</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>When agents run in full-access mode without sandboxing or auto-review, they can cause real damage. As a PM, enforce guardrails by default: always require code review before file operations, isolate agent environments, and test with restricted permissions first. This is not a model problem—it's an architecture problem.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Thibault Sottiaux documented cases where GPT-5.6's Codex unexpectedly deleted files. The common thread: full access mode + no sandboxing + no auto-review. The model tried to override environment variables or made an honest mistake, and the infrastructure had no safety rails.</p><p>This is a critical reminder that powerful models need powerful constraints. Your product architecture must assume the agent will make mistakes, so build in human-in-the-loop review stages, containerize agent work, use read-only access where possible, and version-control all outputs before committing changes.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://simonwillison.net/2026/Jul/16/bad-codex-bug/#atom-everything" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="swyx">
+  <div class="creator-header"><h2>Swyx</h2><span class="date-badge">July 16</span></div>
+  <div class="creator-headline">Thinky's Inkling: 975B-A41B multimodal open-weights model released</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Mira Murati's Thinking Machines Lab released Inkling, an Apache 2.0 open-weights model that's competitive with closed APIs. For PMs: open-weights models mean cost control, data privacy, and on-device inference become viable. This shifts the competitive moat from model capability to application design and domain-specific tuning.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Inkling is a 975B-parameter Mixture-of-Experts multimodal model trained on 45 trillion tokens, with an active parameter count of 41B. It's fully open-licensed, making it a viable alternative to proprietary APIs for teams that want to own their inference stack.</p><p>From a product perspective, this changes the game: you're no longer locked into OpenAI or Anthropic pricing tiers. You can fine-tune on proprietary data, run locally, and iterate faster. The tradeoff is infrastructure and ops work—but for teams with strong engineering, open models eliminate vendor lock-in and reduce per-token costs dramatically.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.latent.space/p/ainews-thinkys-inkling-975b-a41b" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker" id="thought-provokers">
+  <div class="creator-header"><h2>Lenny Rachitsky</h2><span class="date-badge">July 13</span></div>
+  <div class="creator-headline">This solo builder runs 24/7 local AI on his own hardware</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>Alex Finn shows how a single engineer can ship features continuously by running a local AI loop that builds, reviews, and commits code while he sleeps. It's a glimpse of the PM role in a world where agents are your team members—rethink hiring, capacity planning, and what "velocity" means.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Finn runs five computers to execute Claude Code loops autonomously. The model builds features, runs tests, and reviews its own output before committing. No human in the loop between iterations—just a developer defining the goal and the agent executing toward it.</p><p>For product leaders, this is the inflection point: if one person can operate at 10x throughput by architecting AI loops well, how do you staff a team? How do you think about roadmaps when agents can parallelize work? This reshapes what a "senior engineer" is—less about code output, more about designing effective agent loops and catching failures at scale.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.lennysnewsletter.com/p/this-solo-builder-runs-247-local" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker">
+  <div class="creator-header"><h2>Marty Cagan</h2><span class="date-badge">June 30</span></div>
+  <div class="creator-headline">Great Products, Bad Companies</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>A fundamental reminder that product excellence alone doesn't guarantee company success. As AI commoditizes certain product capabilities, PMs must invest in organizational design, culture, and team structure—not just feature shipping.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Cagan argues that great products are necessary but not sufficient for great companies. You can build an amazing feature and still fail if the team, process, or company culture is broken. In 2026, this is even more critical: with agents and AI tools democratizing feature delivery, the gap between a ship-fast startup and a slow incumbent is no longer engineering velocity—it's decision quality, hiring, and trust.</p><p>For PMs, this means: focus on your team's structure and decision-making frameworks as much as your roadmap. How are decisions made? Who has context? How fast can you course-correct? These organizational factors now matter more than raw feature count.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.svpg.com/great-products-bad-companies/" target="_blank">Read →</a></div>
+</div>
+
+</body>
+</html>
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 21 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
