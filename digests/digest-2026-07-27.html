@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Monday, July 27, 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fafaf8;
+      color: #1a1a1a;
+      line-height: 1.65;
+    }
+
+    .header {
+      background: #fff;
+      border-bottom: 1px solid #e8e8e4;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.3px; }
+    .header .tagline { font-size: 0.9rem; color: #888; margin-top: 0.3rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.85rem;
+      font-size: 0.78rem; background: #f0f0ec; color: #666;
+      padding: 0.25rem 0.85rem; border-radius: 999px;
+    }
+
+    .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: #f7f7f4;
+      border: 1px solid #e0ddd5;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.5;
+    }
+    .quiet-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta {
+      font-size: 0.8rem; color: #888; margin-bottom: 1rem;
+    }
+
+    /* ── Jump nav ── */
+    .digest-nav {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-bottom: 1.5rem;
+    }
+    .digest-nav a {
+      display: inline-block; padding: 4px 11px;
+      font-size: 0.75rem; font-weight: 500; color: #444;
+      background: #fff; border: 1px solid #ddd;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.12s, border-color 0.12s;
+    }
+    .digest-nav a:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .digest-nav a.tp-nav { background: #fffdf5; border-color: #e8d98a; color: #a07800; }
+    .digest-nav a.tp-nav:hover { background: #a07800; color: #fff; border-color: #a07800; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fff; border: 1px solid #e8e8e4;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 0.9rem;
+    }
+    .thought-provoker { background: #fffdf5; border-color: #e8d98a; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.35rem;
+    }
+    .creator-header h2 { font-size: 1rem; font-weight: 700; line-height: 1.3; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 500;
+      color: #888; background: #f0f0ec;
+      padding: 2px 8px; border-radius: 999px; white-space: nowrap;
+    }
+    .badge-hot {
+      display: inline-block; background: #cc3300; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 1px 6px;
+      border-radius: 999px; margin-left: 5px; vertical-align: middle;
+    }
+    .creator-headline {
+      font-size: 0.8rem; color: #777; font-style: italic; margin-bottom: 0.75rem;
+    }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f0eeff; border-left: 3px solid #7b6ef6;
+      border-radius: 0 6px 6px 0; padding: 0.5rem 0.85rem;
+      font-size: 0.855rem; color: #2a2a2a; line-height: 1.55;
+      margin-bottom: 0.6rem;
+    }
+    .tldr-label {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; display: block; margin-bottom: 3px;
+    }
+    .thought-provoker .tldr { background: #fffbea; border-color: #c9a800; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 2px; }
+    summary {
+      cursor: pointer; font-size: 0.75rem; font-weight: 600; color: #7b6ef6;
+      list-style: none; display: inline-flex; align-items: center; gap: 3px;
+      user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; font-size: 0.7rem; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.75rem; }
+
+    .detail-body p { font-size: 0.875rem; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol {
+      font-size: 0.875rem; padding-left: 1.2rem; margin-bottom: 0.7rem;
+    }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #ddd; padding: 0.3rem 0.85rem;
+      color: #555; font-style: italic; font-size: 0.855rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.6rem; font-size: 0.8rem; }
+    .creator-links a { color: #7b6ef6; text-decoration: none; font-weight: 500; }
+    .creator-links a:hover { text-decoration: underline; }
+    .creator-links span { color: #ccc; margin: 0 5px; }
+
+    /* ── Top pick (appears at top of digest) ── */
+    .top-pick {
+      background: #f0eeff; border: 1px solid #c4b8ff;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 1.25rem;
+    }
+    .top-pick-label {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; margin-bottom: 0.5rem;
+    }
+    .top-pick-content { font-size: 0.925rem; color: #1a1a1a; line-height: 1.55; }
+
+    /* ── No updates fallback ── */
+    .no-updates {
+      text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #aaa;
+    }
+
+    .footer {
+      text-align: center; padding: 1.5rem;
+      font-size: 0.78rem; color: #bbb; border-top: 1px solid #e8e8e4;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.5rem 1rem 1.25rem; }
+      .header h1 { font-size: 1.1rem; }
+      .container { padding: 1rem 0.85rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1rem 1rem; border-radius: 10px; }
+      .creator-header { flex-direction: column; gap: 4px; }
+      .quiet-banner { font-size: 0.85rem; padding: 0.85rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Monday, July 27, 2026</div>
+  </div>
+
+  <div class="container">
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PM Intelligence Digest — July 27, 2026</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif; background: #f8f9fa; color: #1a1a1a; line-height: 1.6; }
+    .container { max-width: 680px; margin: 0 auto; padding: 24px 16px; }
+    .digest-header { margin-bottom: 32px; }
+    .digest-header h1 { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
+    .digest-header p { font-size: 14px; color: #666; }
+    .top-pick { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-left: 4px solid #f59e0b; padding: 20px; border-radius: 6px; margin-bottom: 28px; }
+    .top-pick-label { font-size: 12px; font-weight: 700; text-transform: uppercase; color: #92400e; margin-bottom: 8px; letter-spacing: 0.5px; }
+    .top-pick-content { font-size: 15px; line-height: 1.7; color: #1a1a1a; }
+    .digest-meta { font-size: 13px; color: #666; margin-bottom: 24px; text-align: center; }
+    .digest-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; justify-content: center; }
+    .digest-nav a { display: inline-block; padding: 8px 14px; background: #f0f0f0; border-radius: 20px; font-size: 13px; font-weight: 500; text-decoration: none; color: #1a1a1a; transition: all 0.2s; }
+    .digest-nav a:hover { background: #e0e0e0; }
+    .digest-nav a.tp-nav { background: #f3f3f3; color: #1a1a1a; }
+    .digest-nav a.tp-nav:hover { background: #e8e8e8; }
+    .creator, .thought-provoker { background: white; border: 1px solid #e5e5e5; border-radius: 8px; padding: 24px; margin-bottom: 20px; }
+    .thought-provoker { border-left: 4px solid #8b5cf6; }
+    .creator-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+    .creator-header h2 { font-size: 18px; font-weight: 700; color: #1a1a1a; }
+    .date-badge { font-size: 12px; color: #999; font-weight: 400; }
+    .creator-headline { font-size: 14px; color: #666; margin-bottom: 16px; }
+    .tldr { background: #f9fafb; border-left: 3px solid #3b82f6; padding: 12px 16px; margin-bottom: 16px; border-radius: 4px; }
+    .tldr-label { font-size: 12px; font-weight: 700; color: #1e40af; text-transform: uppercase; display: block; margin-bottom: 6px; letter-spacing: 0.5px; }
+    .tldr { font-size: 14px; line-height: 1.6; color: #1a1a1a; }
+    details { margin-bottom: 16px; }
+    details summary { cursor: pointer; font-size: 13px; color: #3b82f6; font-weight: 600; outline: none; }
+    details summary:hover { text-decoration: underline; }
+    .detail-body { padding: 16px 0; font-size: 14px; line-height: 1.7; color: #444; }
+    .detail-body p { margin-bottom: 12px; }
+    .detail-body ul { margin: 12px 0 12px 20px; }
+    .detail-body li { margin-bottom: 8px; }
+    .creator-links { margin-top: 16px; }
+    .creator-links a { display: inline-block; padding: 8px 14px; background: #f0f0f0; border-radius: 4px; font-size: 13px; font-weight: 600; text-decoration: none; color: #1a1a1a; transition: all 0.2s; }
+    .creator-links a:hover { background: #e0e0e0; }
+    .quiet-banner { background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; margin-bottom: 32px; display: flex; align-items: center; gap: 12px; }
+    .quiet-icon { font-size: 24px; }
+    .quiet-banner span:last-child { font-size: 14px; color: #666; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="digest-header">
+      <h1>PM Intelligence Digest</h1>
+      <p>July 27, 2026</p>
+    </div>
+
+    <div class="top-pick">
+      <div class="top-pick-label">🔥 Top pick this issue</div>
+      <div class="top-pick-content">Dianne Penn, Anthropic's first PM, shares the strategic bets that made Claude dominant—from the early coding pivot to the eval-driven development loop. This is a masterclass in how PM thinking shapes AI product direction and why focusing on narrow, measurable improvements compounds into market leadership.</div>
+    </div>
+
+    <div class="digest-meta">21 thought leaders tracked · 6 had updates this issue</div>
+
+    <nav class="digest-nav">
+      <a href="#lenny">Lenny Rachitsky</a>
+      <a href="#mollick">Ethan Mollick</a>
+      <a href="#willison">Simon Willison</a>
+      <a href="#swyx">Swyx</a>
+      <a href="#orosz">Gergely Orosz</a>
+      <a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+    </nav>
+
+    <div class="creator" id="lenny">
+      <div class="creator-header"><h2>Lenny Rachitsky</h2><span class="date-badge">July 27</span></div>
+      <div class="creator-headline">Anthropic's first technical PM on token maxing, the jagged edge, and living in the future</div>
+      <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Dianne Penn reveals how Anthropic's eval-driven development loop—measuring specific capabilities in a repeatable way—became the PM playbook for shipping competitive AI. The key insight: make narrow bets measurable, then let engineering compound them into defensible products.</div>
+      <details><summary>Read more</summary>
+      <div class="detail-body"><p>Penn was Anthropic's first PM and led the decision-making that shaped Claude's competitive positioning. She discusses the "jagged edge" concept—the uneven performance profile of LLMs—and how PMs must think differently about product roadmaps when your product has both superhuman and subhuman capabilities in different domains.</p><p>The core PM thesis: rather than chase every benchmark, identify high-leverage use cases (like coding), build evals that measure progress in those specific areas, and use the eval results to drive engineering prioritization. This creates a virtuous cycle where product focus drives research focus.</p></div>
+      </details>
+      <div class="creator-links"><a href="https://www.lennysnewsletter.com/p/anthropics-first-technical-pm-on" target="_blank">Read →</a></div>
+    </div>
+
+    <div class="creator" id="mollick">
+      <div class="creator-header"><h2>Ethan Mollick</h2><span class="date-badge">July 23</span></div>
+      <div class="creator-headline">Summer 2026 edition—which AI model to use for what job</div>
+      <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Mollick's opinionated model selection guide cuts through the noise of constant model releases. For PM teams: this shows the practical tradeoffs between price, latency, and capability that matter for shipping—use this as a decision framework for your LLM selection, not benchmarks.</div>
+      <details><summary>Read more</summary>
+      <div class="detail-body"><p>With new models shipping weekly, teams often default to the latest release. Mollick lays out which models win in different categories: pure capability, cost-efficiency, speed, vision, coding, and reasoning. He factors in real-world constraints like pricing tiers and latency that actually matter when building products.</p><p>The PM angle: instead of waiting for the perfect model, make deliberate tradeoff decisions based on your product's constraints. Fast and cheap beats slow and smart if your user is waiting for a response.</p></div>
+      </details>
+      <div class="creator-links"><a href="https://www.oneusefulthing.org/p/an-opinionated-guide-to-which-ai-b22" target="_blank">Read →</a></div>
+    </div>
+
+    <div class="creator" id="willison">
+      <div class="creator-header"><h2>Simon Willison</h2><span class="date-badge">July 26</span></div>
+      <div class="creator-headline">An inside look at the relay market powering token resellers and fraud</div>
+      <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>A hidden arbitrage market has emerged where resellers discount LLM API access by pooling keys and routing requests through proxies. For PMs: this reveals customer willingness to pay and emerging security/compliance risks if your pricing doesn't reflect real customer economics.</div>
+      <details><summary>Read more</summary>
+      <div class="detail-body"><p>Matt Lenhard's investigation uncovers a largely China-based market where token resellers offer 30–50% discounts on API pricing by abusing free trial accounts, shared keys, and proxy routing. This isn't just cost arbitrage—it's a signal that some customers see official API pricing as uncompetitive.</p><p>The PM implication: if a meaningful cohort is willing to add latency and security risk to save on tokens, your pricing model may not be calibrated to customer value. Tiered pricing, volume discounts, or usage-based models might recapture this cohort and reduce fraud incentive.</p></div>
+      </details>
+      <div class="creator-links"><a href="https://simonwillison.net/2026/Jul/26/relay-market/#atom-everything" target="_blank">Read →</a></div>
+    </div>
+
+    <div class="creator" id="swyx">
+      <div class="creator-header"><h2>Swyx</h2><span class="date-badge">July 25</span></div>
+      <div class="creator-headline">Claude Opus 5: Fable-level performance at Opus price</div>
+      <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Anthropic shipped a performance leap—Fable-level capability at half the cost—without waiting for a new flagship model. The PM lesson: capability distillation and efficient scaling matter more than raw model size. Evaluate your LLM partner on iteration speed, not just benchmark leaps.</div>
+      <details><summary>Read more</summary>
+      <div class="detail-body"><p>Swyx flags Anthropic's ability to close the gap between Opus and its flagship Fable through optimization and scaling. This is a competitive move that affects your product roadmap: if your feature roadmap assumed you'd need to wait 6 months for a new model tier, you may now have options sooner.</p></div>
+      </details>
+      <div class="creator-links"><a href="https://www.latent.space/p/ainews-claude-opus-5-fable-level" target="_blank">Read →</a></div>
+    </div>
+
+    <div class="creator" id="orosz">
+      <div class="creator-header"><h2>Gergely Orosz</h2><span class="date-badge">July 21</span></div>
+      <div class="creator-headline">Pushing software engineering limits with "napkin math"</div>
+      <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Turbopuffer's cofounder on using first principles (napkin math) to make durable engineering decisions. For PMs: when your team defaults to "let's optimize later," this is a framework to push back—align on what scales and what doesn't before committing architecture.</div>
+      <details><summary>Read more</summary>
+      <div class="detail-body"><p>Simon Eskildsen discusses how longer tenure and deep ownership enable engineers to think in terms of scaling limits from day one. The insight for PMs: involve your architect early, ask "what breaks at 100x load?", and use those constraints to shape product roadmap prioritization.</p></div>
+      </details>
+      <div class="creator-links"><a href="https://newsletter.pragmaticengineer.com/p/pushing-software-engineering-limits" target="_blank">Read →</a></div>
+    </div>
+
+    <div class="thought-provoker" id="thought-provokers">
+      <div class="creator-header"><h2>Marty Cagan</h2><span class="date-badge">July 23</span></div>
+      <div class="creator-headline">Worth your time regardless of when it was published</div>
+      <div class="tldr"><span class="tldr-label">Why it's worth your time</span>Teams are shipping faster with AI but outcomes aren't improving—a paradox that reveals the difference between velocity and value. This reframes how you should be measuring AI adoption on your team.</div>
+      <details><summary>Read more</summary>
+      <div class="detail-body"><p>The AI Productivity Paradox recognizes a pattern across the industry: product teams using AI are delivering more features, more quickly, yet customer satisfaction and business metrics remain flat or decline. Cagan argues this is because speed without strategy compounds bad decisions faster.</p><p>For your team: AI is a multiplier. If your discovery process is weak, AI amplifies that weakness into more shipped waste. Before measuring "features shipped per sprint," measure "discovery conversations per feature" and "customer feedback loops per release." Make discovery faster with AI, not just execution.</p></div>
+      </details>
+      <div class="creator-links"><a href="https://www.svpg.com/the-ai-productivity-paradox/" target="_blank">Read →</a></div>
+    </div>
+
+    <div class="thought-provoker">
+      <div class="creator-header"><h2>Lenny Rachitsky</h2><span class="date-badge">July 27</span></div>
+      <div class="creator-headline">Worth your time regardless of when it was published</div>
+      <div class="tldr"><span class="tldr-label">Why it's worth your time</span>
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 21 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
