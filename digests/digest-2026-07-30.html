@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Thursday, July 30, 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fafaf8;
+      color: #1a1a1a;
+      line-height: 1.65;
+    }
+
+    .header {
+      background: #fff;
+      border-bottom: 1px solid #e8e8e4;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.3px; }
+    .header .tagline { font-size: 0.9rem; color: #888; margin-top: 0.3rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.85rem;
+      font-size: 0.78rem; background: #f0f0ec; color: #666;
+      padding: 0.25rem 0.85rem; border-radius: 999px;
+    }
+
+    .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: #f7f7f4;
+      border: 1px solid #e0ddd5;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.5;
+    }
+    .quiet-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta {
+      font-size: 0.8rem; color: #888; margin-bottom: 1rem;
+    }
+
+    /* ── Jump nav ── */
+    .digest-nav {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-bottom: 1.5rem;
+    }
+    .digest-nav a {
+      display: inline-block; padding: 4px 11px;
+      font-size: 0.75rem; font-weight: 500; color: #444;
+      background: #fff; border: 1px solid #ddd;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.12s, border-color 0.12s;
+    }
+    .digest-nav a:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .digest-nav a.tp-nav { background: #fffdf5; border-color: #e8d98a; color: #a07800; }
+    .digest-nav a.tp-nav:hover { background: #a07800; color: #fff; border-color: #a07800; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fff; border: 1px solid #e8e8e4;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 0.9rem;
+    }
+    .thought-provoker { background: #fffdf5; border-color: #e8d98a; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.35rem;
+    }
+    .creator-header h2 { font-size: 1rem; font-weight: 700; line-height: 1.3; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 500;
+      color: #888; background: #f0f0ec;
+      padding: 2px 8px; border-radius: 999px; white-space: nowrap;
+    }
+    .badge-hot {
+      display: inline-block; background: #cc3300; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 1px 6px;
+      border-radius: 999px; margin-left: 5px; vertical-align: middle;
+    }
+    .creator-headline {
+      font-size: 0.8rem; color: #777; font-style: italic; margin-bottom: 0.75rem;
+    }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f0eeff; border-left: 3px solid #7b6ef6;
+      border-radius: 0 6px 6px 0; padding: 0.5rem 0.85rem;
+      font-size: 0.855rem; color: #2a2a2a; line-height: 1.55;
+      margin-bottom: 0.6rem;
+    }
+    .tldr-label {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; display: block; margin-bottom: 3px;
+    }
+    .thought-provoker .tldr { background: #fffbea; border-color: #c9a800; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 2px; }
+    summary {
+      cursor: pointer; font-size: 0.75rem; font-weight: 600; color: #7b6ef6;
+      list-style: none; display: inline-flex; align-items: center; gap: 3px;
+      user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; font-size: 0.7rem; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.75rem; }
+
+    .detail-body p { font-size: 0.875rem; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol {
+      font-size: 0.875rem; padding-left: 1.2rem; margin-bottom: 0.7rem;
+    }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #ddd; padding: 0.3rem 0.85rem;
+      color: #555; font-style: italic; font-size: 0.855rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.6rem; font-size: 0.8rem; }
+    .creator-links a { color: #7b6ef6; text-decoration: none; font-weight: 500; }
+    .creator-links a:hover { text-decoration: underline; }
+    .creator-links span { color: #ccc; margin: 0 5px; }
+
+    /* ── Top pick (appears at top of digest) ── */
+    .top-pick {
+      background: #f0eeff; border: 1px solid #c4b8ff;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 1.25rem;
+    }
+    .top-pick-label {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; margin-bottom: 0.5rem;
+    }
+    .top-pick-content { font-size: 0.925rem; color: #1a1a1a; line-height: 1.55; }
+
+    /* ── No updates fallback ── */
+    .no-updates {
+      text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #aaa;
+    }
+
+    .footer {
+      text-align: center; padding: 1.5rem;
+      font-size: 0.78rem; color: #bbb; border-top: 1px solid #e8e8e4;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.5rem 1rem 1.25rem; }
+      .header h1 { font-size: 1.1rem; }
+      .container { padding: 1rem 0.85rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1rem 1rem; border-radius: 10px; }
+      .creator-header { flex-direction: column; gap: 4px; }
+      .quiet-banner { font-size: 0.85rem; padding: 0.85rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Thursday, July 30, 2026</div>
+  </div>
+
+  <div class="container">
+    <!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; background: #fafafa; }
+.top-pick { background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%); color: white; padding: 24px; border-radius: 8px; margin-bottom: 32px; box-shadow: 0 4px 12px rgba(255, 107, 53, 0.15); }
+.top-pick-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; opacity: 0.95; }
+.top-pick-content { font-size: 16px; line-height: 1.5; }
+.digest-meta { text-align: center; font-size: 13px; color: #666; margin: 24px 0; font-weight: 500; }
+.digest-nav { display: flex; flex-wrap: wrap; gap: 12px; margin: 32px 0; justify-content: center; }
+.digest-nav a { padding: 8px 14px; background: #f0f0f0; border-radius: 20px; text-decoration: none; color: #333; font-size: 14px; font-weight: 500; transition: all 0.2s; }
+.digest-nav a:hover { background: #e0e0e0; }
+.digest-nav a.tp-nav { background: #e8f4f8; color: #0066cc; }
+.creator { background: white; border: 1px solid #eee; border-radius: 8px; padding: 24px; margin-bottom: 20px; }
+.creator-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+.creator-header h2 { margin: 0; font-size: 18px; color: #222; }
+.date-badge { font-size: 12px; color: #999; font-weight: 400; }
+.creator-headline { font-size: 14px; color: #666; margin-bottom: 16px; font-style: italic; }
+.tldr { background: #f9f9f9; padding: 14px; border-left: 3px solid #0066cc; border-radius: 4px; margin-bottom: 16px; font-size: 14px; line-height: 1.5; }
+.tldr-label { font-weight: 700; color: #0066cc; display: block; margin-bottom: 6px; font-size: 12px; }
+details { cursor: pointer; }
+details summary { font-weight: 500; color: #0066cc; font-size: 14px; padding: 8px 0; outline: none; }
+details summary:hover { text-decoration: underline; }
+.detail-body { padding: 16px 0; font-size: 14px; color: #555; line-height: 1.6; }
+.detail-body p { margin: 0 0 12px 0; }
+.detail-body ul { margin: 12px 0; padding-left: 20px; }
+.detail-body li { margin-bottom: 6px; }
+.creator-links { margin-top: 16px; }
+.creator-links a { color: #0066cc; text-decoration: none; font-weight: 500; font-size: 14px; }
+.creator-links a:hover { text-decoration: underline; }
+.thought-provoker { background: white; border: 1px solid #e0e8f0; border-radius: 8px; padding: 24px; margin-bottom: 20px; border-left: 4px solid #6366f1; }
+.quiet-banner { background: #f5f5f5; border: 1px solid #e0e0e0; border-radius: 8px; padding: 20px; text-align: center; font-size: 15px; color: #666; margin-bottom: 32px; }
+.quiet-icon { font-size: 24px; margin-right: 12px; }
+</style>
+</head>
+<body>
+
+<div class="top-pick">
+  <div class="top-pick-label">🔥 Top pick this issue</div>
+  <div class="top-pick-content">Gergely Orosz's deep dive into Anthropic's software development practices reveals how the leading AI lab is transforming code review and testing through AI-assisted workflows while maintaining two-pizza team structures. This is essential reading for any PM building AI-native products—it shows the practical playbook for how world-class teams actually ship faster without losing rigor.</div>
+</div>
+
+<div class="digest-meta">21 thought leaders tracked · 6 had updates this issue</div>
+
+<nav class="digest-nav">
+  <a href="#orosz">Gergely Orosz</a>
+  <a href="#willison">Simon Willison</a>
+  <a href="#swyx">Swyx</a>
+  <a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+</nav>
+
+<div class="creator" id="orosz">
+  <div class="creator-header"><h2>Gergely Orosz</h2><span class="date-badge">Jul 28</span></div>
+  <div class="creator-headline">A deepdive on what's changed in how the leading AI lab makes software.</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>AI code review and testing is now a production reality at scale at Anthropic—not a gimmick. Larger implications: PMs need to rethink quality gates, reviewer-to-engineer ratios, and what "testing coverage" means in an AI-augmented workflow.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Orosz interviews Anthropic engineers and reveals that AI-assisted code review and test writing have become core to their development process. The key insight: two-pizza team structures remain intact, but the team's ability to move through review cycles and catch edge cases has fundamentally changed. Engineers report that Cursor and similar tools accelerate the drafting phase, while AI reviewers handle boilerplate and pattern matching, freeing humans for architectural and business logic review.</p><p>For PMs, the lesson is structural: if AI can reliably handle routine code review, your bottleneck isn't review anymore—it's requirement clarity and design decisions upstream. This shifts how you staff teams, how you think about velocity metrics, and what kinds of bugs make it to production.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://newsletter.pragmaticengineer.com/p/inside-anthropic" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="willison">
+  <div class="creator-header"><h2>Simon Willison</h2><span class="date-badge">Jul 30</span></div>
+  <div class="creator-headline">On writing as a skill-building exercise, not just an output.</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Bruce Schneier's insight—that writing assignments are "gym tasks" for critical thinking—reframes how you should approach documentation, spec writing, and even PRD drafts in the age of AI. The act of writing itself builds judgment; outsourcing it entirely may undermine the decision-making muscle you need as a PM.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Willison quotes Schneier on why writing policy memos isn't about the memos themselves—it's about the thinking that happens in the outlining, drafting, and editing phases. In a world where AI can generate specs and docs in seconds, this is a critical challenge for PMs: if you delegate all writing to AI, you may gain speed but lose the thinking process that actually builds your strategic instincts.</p><p>The implication for product leaders is subtle but important: encourage your team to write PRDs and strategy docs themselves, even if AI could do it faster. The friction is the feature.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://simonwillison.net/2026/Jul/30/bruce-schneier/#atom-everything" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="swyx">
+  <div class="creator-header"><h2>Swyx</h2><span class="date-badge">Jul 30</span></div>
+  <div class="creator-headline">AI engineers are rediscovering ontologies as a way to keep probabilistic agents inside deterministic boundaries.</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Ontologies (structured knowledge representations) are becoming foundational infrastructure for production agentic systems. As a PM building agent-based products, understanding ontology-driven design helps you scope agent authority, prevent hallucination in critical paths, and scale reliability.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Swyx reports that after years of the semantic web being written off, AI engineers are actively rebuilding structured knowledge systems to constrain agent behavior. Instead of pure RAG or prompt-based agents, production teams are using ontologies to define what an agent can and can't do, what entities exist, and what relationships are valid. This is the inverse of the "just scale up the model" philosophy—it's structured reasoning making a comeback.</p><p>For PMs: this is critical for safety and reliability in agent products. A well-designed ontology becomes your product's "policy layer"—it's how you operationalize trust and control without constant human intervention.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.latent.space/p/ontologies-agentic-systems" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker" id="thought-provokers">
+  <div class="creator-header"><h2>Marty Cagan</h2><span class="date-badge">Jul 23</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>The AI Productivity Paradox cuts through the hype: teams are shipping faster with AI tools, but business outcomes haven't improved. This is the most important meta-question PMs need to answer right now—are you optimizing for velocity or impact?</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Cagan surfaces the McKinsey finding that many organizations report faster delivery and lower costs from AI, yet their actual business results (user adoption, revenue, retention) are flat or declining. The paradox suggests that teams are doing the wrong things faster—shipping features that don't matter, or solving problems that don't exist for users.</p><p>The implication for your roadmap: AI is a force multiplier on execution quality, not a substitute for discovery. Before you let AI accelerate your team, make sure you've actually validated that you're building the right thing. Otherwise you're just shipping wrong things at scale.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.svpg.com/the-ai-productivity-paradox/" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker">
+  <div class="creator-header"><h2>Ethan Mollick</h2><span class="date-badge">Jul 23</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>A practical, opinionated ranking of which AI tools are best for which jobs—useful not just for your own workflow, but as a mental model for how your users will think about your AI product's role in their toolkit.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Mollick's guide doesn't just benchmark models; it categorizes them by use case and user sophistication. The framework reveals how non-technical users actually choose tools—they care about results, not training data or parameter counts. This is a valuable lens for PMs deciding how to position AI features in existing products or whether to build AI-native products.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.oneusefulthing.org/p/an-opinionated-guide-to-which-ai-b22" target="_blank">Read →</a></div>
+</div>
+
+</body>
+</html>
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 21 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
