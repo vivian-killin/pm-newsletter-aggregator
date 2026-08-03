@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Monday, August 03, 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fafaf8;
+      color: #1a1a1a;
+      line-height: 1.65;
+    }
+
+    .header {
+      background: #fff;
+      border-bottom: 1px solid #e8e8e4;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.3px; }
+    .header .tagline { font-size: 0.9rem; color: #888; margin-top: 0.3rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.85rem;
+      font-size: 0.78rem; background: #f0f0ec; color: #666;
+      padding: 0.25rem 0.85rem; border-radius: 999px;
+    }
+
+    .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: #f7f7f4;
+      border: 1px solid #e0ddd5;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.5;
+    }
+    .quiet-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta {
+      font-size: 0.8rem; color: #888; margin-bottom: 1rem;
+    }
+
+    /* ── Jump nav ── */
+    .digest-nav {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-bottom: 1.5rem;
+    }
+    .digest-nav a {
+      display: inline-block; padding: 4px 11px;
+      font-size: 0.75rem; font-weight: 500; color: #444;
+      background: #fff; border: 1px solid #ddd;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.12s, border-color 0.12s;
+    }
+    .digest-nav a:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .digest-nav a.tp-nav { background: #fffdf5; border-color: #e8d98a; color: #a07800; }
+    .digest-nav a.tp-nav:hover { background: #a07800; color: #fff; border-color: #a07800; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fff; border: 1px solid #e8e8e4;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 0.9rem;
+    }
+    .thought-provoker { background: #fffdf5; border-color: #e8d98a; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.35rem;
+    }
+    .creator-header h2 { font-size: 1rem; font-weight: 700; line-height: 1.3; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 500;
+      color: #888; background: #f0f0ec;
+      padding: 2px 8px; border-radius: 999px; white-space: nowrap;
+    }
+    .badge-hot {
+      display: inline-block; background: #cc3300; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 1px 6px;
+      border-radius: 999px; margin-left: 5px; vertical-align: middle;
+    }
+    .creator-headline {
+      font-size: 0.8rem; color: #777; font-style: italic; margin-bottom: 0.75rem;
+    }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f0eeff; border-left: 3px solid #7b6ef6;
+      border-radius: 0 6px 6px 0; padding: 0.5rem 0.85rem;
+      font-size: 0.855rem; color: #2a2a2a; line-height: 1.55;
+      margin-bottom: 0.6rem;
+    }
+    .tldr-label {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; display: block; margin-bottom: 3px;
+    }
+    .thought-provoker .tldr { background: #fffbea; border-color: #c9a800; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 2px; }
+    summary {
+      cursor: pointer; font-size: 0.75rem; font-weight: 600; color: #7b6ef6;
+      list-style: none; display: inline-flex; align-items: center; gap: 3px;
+      user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; font-size: 0.7rem; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.75rem; }
+
+    .detail-body p { font-size: 0.875rem; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol {
+      font-size: 0.875rem; padding-left: 1.2rem; margin-bottom: 0.7rem;
+    }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #ddd; padding: 0.3rem 0.85rem;
+      color: #555; font-style: italic; font-size: 0.855rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.6rem; font-size: 0.8rem; }
+    .creator-links a { color: #7b6ef6; text-decoration: none; font-weight: 500; }
+    .creator-links a:hover { text-decoration: underline; }
+    .creator-links span { color: #ccc; margin: 0 5px; }
+
+    /* ── Top pick (appears at top of digest) ── */
+    .top-pick {
+      background: #f0eeff; border: 1px solid #c4b8ff;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 1.25rem;
+    }
+    .top-pick-label {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; margin-bottom: 0.5rem;
+    }
+    .top-pick-content { font-size: 0.925rem; color: #1a1a1a; line-height: 1.55; }
+
+    /* ── No updates fallback ── */
+    .no-updates {
+      text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #aaa;
+    }
+
+    .footer {
+      text-align: center; padding: 1.5rem;
+      font-size: 0.78rem; color: #bbb; border-top: 1px solid #e8e8e4;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.5rem 1rem 1.25rem; }
+      .header h1 { font-size: 1.1rem; }
+      .container { padding: 1rem 0.85rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1rem 1rem; border-radius: 10px; }
+      .creator-header { flex-direction: column; gap: 4px; }
+      .quiet-banner { font-size: 0.85rem; padding: 0.85rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Monday, August 03, 2026</div>
+  </div>
+
+  <div class="container">
+    <!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; line-height: 1.6; color: #1a1a1a; background: #f9f9f9; padding: 20px; }
+.digest-container { max-width: 680px; margin: 0 auto; background: white; border-radius: 8px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.top-pick { background: linear-gradient(135deg, #fff5e6 0%, #ffe6cc 100%); border-left: 4px solid #ff9500; padding: 20px; margin-bottom: 28px; border-radius: 6px; }
+.top-pick-label { font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: #d97706; margin-bottom: 8px; }
+.top-pick-content { font-size: 15px; line-height: 1.7; color: #1a1a1a; }
+.digest-meta { font-size: 13px; color: #666; margin: 24px 0; text-align: center; }
+.digest-nav { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 32px; justify-content: center; }
+.digest-nav a { padding: 8px 14px; background: #f0f0f0; border-radius: 20px; text-decoration: none; font-size: 14px; font-weight: 500; color: #1a1a1a; transition: background 0.2s; }
+.digest-nav a:hover { background: #e0e0e0; }
+.digest-nav a.tp-nav { background: #e8f4f8; color: #0066cc; }
+.creator { margin-bottom: 32px; border: 1px solid #e0e0e0; border-radius: 8px; padding: 24px; background: #fafafa; }
+.thought-provoker { margin-bottom: 32px; border: 1px solid #e0e0e0; border-radius: 8px; padding: 24px; background: #f5f9fc; border-left: 4px solid #0066cc; }
+.creator-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+.creator-header h2 { margin: 0; font-size: 18px; font-weight: 700; color: #1a1a1a; }
+.date-badge { font-size: 12px; color: #999; font-weight: 500; }
+.creator-headline { font-size: 14px; color: #666; margin-bottom: 16px; font-style: italic; }
+.tldr { background: white; padding: 16px; border-radius: 6px; margin-bottom: 16px; }
+.tldr-label { font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: #0066cc; display: block; margin-bottom: 8px; }
+.tldr { font-size: 14px; line-height: 1.6; color: #1a1a1a; }
+details { margin-top: 12px; }
+details summary { cursor: pointer; font-size: 14px; color: #0066cc; font-weight: 500; padding: 8px 0; user-select: none; }
+details summary:hover { text-decoration: underline; }
+.detail-body { padding-top: 12px; font-size: 14px; line-height: 1.7; color: #333; }
+.detail-body p { margin: 0 0 12px 0; }
+.detail-body ul { margin: 12px 0; padding-left: 20px; }
+.detail-body li { margin-bottom: 6px; }
+.creator-links { margin-top: 16px; }
+.creator-links a { display: inline-block; padding: 8px 16px; background: #0066cc; color: white; text-decoration: none; border-radius: 4px; font-size: 13px; font-weight: 600; transition: background 0.2s; }
+.creator-links a:hover { background: #0052a3; }
+.quiet-banner { background: #f0f0f0; border-left: 4px solid #999; padding: 20px; border-radius: 6px; margin-bottom: 28px; display: flex; align-items: center; gap: 12px; font-size: 15px; color: #666; }
+.quiet-icon { font-size: 24px; }
+</style>
+</head>
+<body>
+<div class="digest-container">
+<div class="quiet-banner"><span class="quiet-icon">💤</span><span>Quiet week — none of your thought leaders posted in the last 7 days. Here are reads worth your time regardless.</span></div>
+<div class="thought-provoker" id="thought-provokers">
+<div class="creator-header"><h2>Lenny Rachitsky</h2><span class="date-badge">August 2</span></div>
+<div class="creator-headline">Why a leading CPO believes the role itself may be problematic</div>
+<div class="tldr"><span class="tldr-label">Why it's worth your time</span>Tom Verrilli's contrarian take challenges conventional PM org structures. For AI-native teams moving fast, his argument for fewer, more senior PMs doing hands-on work over scaled teams is directly relevant to how you should staff product in 2026.</div>
+<details><summary>Read more</summary>
+<div class="detail-body"><p>Verrilli argues that traditional PM org scaling—hiring more junior PMs to hit staffing ratios—often produces worse outcomes than having a smaller team of senior, IC-level product thinkers. This is especially acute in AI products where the pace of experimentation and the technical depth required favor deep ownership over delegation.</p><p>The insight applies squarely to AI-native product: when your team is shipping agents, fine-tuning models, and iterating on prompts weekly, you need PMs who can think in systems, code when necessary, and make trade-offs independently. Ratio-based thinking is a relic.</p></div>
+</details>
+<div class="creator-links"><a href="https://www.lennysnewsletter.com/p/this-cpo-regrets-that-product-management" target="_blank">Read →</a></div>
+</div>
+<div class="thought-provoker">
+<div class="creator-header"><h2>Marty Cagan</h2><span class="date-badge">July 23</span></div>
+<div class="creator-headline">The trap teams fall into when shipping faster doesn't mean shipping better</div>
+<div class="tldr"><span class="tldr-label">Why it's worth your time</span>The AI Productivity Paradox cuts to the core tension every PM faces in 2026: teams are clearly shipping more with AI, yet outcomes aren't improving. Understanding why exposes where your PM thinking needs to shift.</div>
+<details><summary>Read more</summary>
+<div class="detail-body"><p>The paradox is real and well-documented by McKinsey and others: companies leveraging AI tools see velocity spike but business outcomes plateau or decline. Why? Because shipping faster without better strategic thinking, customer discovery, or prioritization just amplifies the wrong bets. An AI-generated feature shipped twice as fast is still a wrong feature.</p><p>For product leaders in the AI era, this is a critical reframe: your job isn't to enable teams to ship more. It's to ensure they ship the right things, and AI tools should unlock clearer thinking, faster validation, and better customer insight—not just faster coding. If you're not measuring this distinction, you're caught in the productivity trap.</p></div>
+</details>
+<div class="creator-links"><a href="https://www.svpg.com/the-ai-productivity-paradox/" target="_blank">Read →</a></div>
+</div>
+</div>
+</body>
+</html>
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 21 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
