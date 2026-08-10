@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Monday, August 10, 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fafaf8;
+      color: #1a1a1a;
+      line-height: 1.65;
+    }
+
+    .header {
+      background: #fff;
+      border-bottom: 1px solid #e8e8e4;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.3px; }
+    .header .tagline { font-size: 0.9rem; color: #888; margin-top: 0.3rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.85rem;
+      font-size: 0.78rem; background: #f0f0ec; color: #666;
+      padding: 0.25rem 0.85rem; border-radius: 999px;
+    }
+
+    .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: #f7f7f4;
+      border: 1px solid #e0ddd5;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.5;
+    }
+    .quiet-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta {
+      font-size: 0.8rem; color: #888; margin-bottom: 1rem;
+    }
+
+    /* ── Jump nav ── */
+    .digest-nav {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-bottom: 1.5rem;
+    }
+    .digest-nav a {
+      display: inline-block; padding: 4px 11px;
+      font-size: 0.75rem; font-weight: 500; color: #444;
+      background: #fff; border: 1px solid #ddd;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.12s, border-color 0.12s;
+    }
+    .digest-nav a:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .digest-nav a.tp-nav { background: #fffdf5; border-color: #e8d98a; color: #a07800; }
+    .digest-nav a.tp-nav:hover { background: #a07800; color: #fff; border-color: #a07800; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fff; border: 1px solid #e8e8e4;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 0.9rem;
+    }
+    .thought-provoker { background: #fffdf5; border-color: #e8d98a; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.35rem;
+    }
+    .creator-header h2 { font-size: 1rem; font-weight: 700; line-height: 1.3; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 500;
+      color: #888; background: #f0f0ec;
+      padding: 2px 8px; border-radius: 999px; white-space: nowrap;
+    }
+    .badge-hot {
+      display: inline-block; background: #cc3300; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 1px 6px;
+      border-radius: 999px; margin-left: 5px; vertical-align: middle;
+    }
+    .creator-headline {
+      font-size: 0.8rem; color: #777; font-style: italic; margin-bottom: 0.75rem;
+    }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f0eeff; border-left: 3px solid #7b6ef6;
+      border-radius: 0 6px 6px 0; padding: 0.5rem 0.85rem;
+      font-size: 0.855rem; color: #2a2a2a; line-height: 1.55;
+      margin-bottom: 0.6rem;
+    }
+    .tldr-label {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; display: block; margin-bottom: 3px;
+    }
+    .thought-provoker .tldr { background: #fffbea; border-color: #c9a800; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 2px; }
+    summary {
+      cursor: pointer; font-size: 0.75rem; font-weight: 600; color: #7b6ef6;
+      list-style: none; display: inline-flex; align-items: center; gap: 3px;
+      user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; font-size: 0.7rem; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.75rem; }
+
+    .detail-body p { font-size: 0.875rem; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol {
+      font-size: 0.875rem; padding-left: 1.2rem; margin-bottom: 0.7rem;
+    }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #ddd; padding: 0.3rem 0.85rem;
+      color: #555; font-style: italic; font-size: 0.855rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.6rem; font-size: 0.8rem; }
+    .creator-links a { color: #7b6ef6; text-decoration: none; font-weight: 500; }
+    .creator-links a:hover { text-decoration: underline; }
+    .creator-links span { color: #ccc; margin: 0 5px; }
+
+    /* ── Top pick (appears at top of digest) ── */
+    .top-pick {
+      background: #f0eeff; border: 1px solid #c4b8ff;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 1.25rem;
+    }
+    .top-pick-label {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; margin-bottom: 0.5rem;
+    }
+    .top-pick-content { font-size: 0.925rem; color: #1a1a1a; line-height: 1.55; }
+
+    /* ── No updates fallback ── */
+    .no-updates {
+      text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #aaa;
+    }
+
+    .footer {
+      text-align: center; padding: 1.5rem;
+      font-size: 0.78rem; color: #bbb; border-top: 1px solid #e8e8e4;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.5rem 1rem 1.25rem; }
+      .header h1 { font-size: 1.1rem; }
+      .container { padding: 1rem 0.85rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1rem 1rem; border-radius: 10px; }
+      .creator-header { flex-direction: column; gap: 4px; }
+      .quiet-banner { font-size: 0.85rem; padding: 0.85rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Monday, August 10, 2026</div>
+  </div>
+
+  <div class="container">
+    <!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; color: #333; max-width: 900px; margin: 0 auto; padding: 20px; }
+.top-pick { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 24px; border-radius: 8px; margin-bottom: 28px; }
+.top-pick-label { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.9; margin-bottom: 8px; }
+.top-pick-content { font-size: 16px; line-height: 1.7; }
+.digest-meta { font-size: 13px; color: #666; margin: 20px 0 24px 0; font-weight: 500; }
+.digest-nav { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 32px; }
+.digest-nav a { display: inline-block; padding: 8px 14px; background: #f0f0f0; border-radius: 20px; text-decoration: none; color: #333; font-size: 14px; font-weight: 500; transition: background 0.2s; }
+.digest-nav a:hover { background: #e0e0e0; }
+.digest-nav a.tp-nav { background: #fef3c7; color: #92400e; }
+.digest-nav a.tp-nav:hover { background: #fcd34d; }
+.creator { margin-bottom: 32px; border: 1px solid #e5e5e5; border-radius: 8px; overflow: hidden; }
+.thought-provoker { margin-bottom: 32px; border: 2px solid #fbbf24; border-radius: 8px; overflow: hidden; background: #fffbf0; }
+.creator-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; background: #fafafa; border-bottom: 1px solid #e5e5e5; }
+.thought-provoker .creator-header { background: #fef3c7; border-bottom: 1px solid #fcd34d; }
+.creator-header h2 { margin: 0; font-size: 18px; font-weight: 600; }
+.date-badge { font-size: 12px; background: #e5e5e5; padding: 4px 10px; border-radius: 12px; white-space: nowrap; }
+.thought-provoker .date-badge { background: #fcd34d; }
+.creator-headline { padding: 16px 20px; font-size: 15px; font-weight: 500; color: #555; border-bottom: 1px solid #e5e5e5; }
+.thought-provoker .creator-headline { border-bottom: 1px solid #fcd34d; color: #666; }
+.tldr { padding: 16px 20px; background: #fafafa; border-bottom: 1px solid #e5e5e5; }
+.thought-provoker .tldr { background: #fffbf0; border-bottom: 1px solid #fcd34d; }
+.tldr-label { font-weight: 600; font-size: 12px; text-transform: uppercase; color: #666; letter-spacing: 0.5px; display: block; margin-bottom: 8px; }
+.tldr p, .detail-body p { margin: 0 0 12px 0; font-size: 14px; line-height: 1.6; }
+.tldr p:last-child, .detail-body p:last-child { margin-bottom: 0; }
+.detail-body ul, .detail-body ol { margin: 12px 0; padding-left: 20px; }
+.detail-body li { margin: 6px 0; }
+details { padding: 0; }
+summary { cursor: pointer; padding: 16px 20px; background: #fafafa; border-top: 1px solid #e5e5e5; font-weight: 500; font-size: 14px; user-select: none; }
+.thought-provoker summary { background: #fffbf0; border-top: 1px solid #fcd34d; }
+summary:hover { background: #f0f0f0; }
+.thought-provoker summary:hover { background: #fef3c7; }
+.detail-body { padding: 16px 20px; background: white; font-size: 14px; line-height: 1.6; }
+.thought-provoker .detail-body { background: #fffbf0; }
+.creator-links { padding: 12px 20px; background: #fafafa; border-top: 1px solid #e5e5e5; }
+.thought-provoker .creator-links { background: #fffbf0; border-top: 1px solid #fcd34d; }
+.creator-links a { display: inline-block; color: #667eea; text-decoration: none; font-weight: 500; font-size: 14px; }
+.creator-links a:hover { text-decoration: underline; }
+.quiet-banner { display: flex; align-items: center; gap: 16px; padding: 20px; background: #f3f4f6; border-left: 4px solid #9ca3af; border-radius: 4px; margin-bottom: 32px; }
+.quiet-icon { font-size: 24px; }
+.quiet-banner span:last-child { color: #555; font-size: 15px; }
+</style>
+</head>
+<body>
+
+<div class="top-pick">
+  <div class="top-pick-label">🔥 Top pick this issue</div>
+  <div class="top-pick-content">Marty Cagan redefines the product role for the AI era in "A Fresh Definition of The Product Role." This piece cuts through conflicting job descriptions to establish what modern PMs actually need to do differently—moving beyond generic definitions to a framework that reflects how product work itself has fundamentally shifted.</div>
+</div>
+
+<div class="digest-meta">21 thought leaders tracked · 6 had updates this issue</div>
+
+<nav class="digest-nav">
+  <a href="#cagan">Marty Cagan</a>
+  <a href="#willison">Simon Willison</a>
+  <a href="#lenny">Lenny Rachitsky</a>
+  <a href="#swyx">Swyx</a>
+  <a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+</nav>
+
+<div class="creator" id="cagan">
+  <div class="creator-header"><h2>Marty Cagan</h2><span class="date-badge">August 10</span></div>
+  <div class="creator-headline">Establishing what the product role actually requires in modern product organizations.</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span><p>Operating models—not titles—determine what PMs need to do. Cagan argues for clarity on whether you're building in an <em>optimization model</em> (incremental value through discovery) or a <em>transformation model</em> (breakthrough innovation). Your responsibilities, team structure, and success metrics shift dramatically based on which one you're in. Define your model first; the job description follows.</p></div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Cagan shows that "product manager," "product owner," and similar titles have become nearly meaningless because organizations don't agree on what they mean. The real differentiator is operating model: teams either optimize existing products and platforms (incremental discovery and prioritization) or pursue transformational goals that require deep innovation and market creation.</p><p>In an optimization model, you manage roadmaps, run discovery, prioritize features, and measure incremental growth. In a transformation model, you immerse yourself in the problem space, build deep user relationships, prototype relentlessly, and define success by learning and product-market fit signals—not velocity or quarterly metrics.</p><p>The AI context amplifies this distinction. AI-native products rarely start with clear feature lists; they require deeper discovery about what problems AI actually solves for users. Your model determines whether you can do that work effectively.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.svpg.com/a-fresh-definition-of-the-product-role/" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="willison">
+  <div class="creator-header"><h2>Simon Willison</h2><span class="date-badge">August 10</span></div>
+  <div class="creator-headline">AI agents used to hack a real-world booking system with zero authorization checks.</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span><p>This is a cautionary tale for shipping AI-powered features: authorization logic must be explicit and enforced at the API level, not assumed. OpenClaw (an AI security researcher) used an LLM agent to test an Australian gym-booking system and successfully canceled other users' reservations because the cancellation endpoint had no permission checks. Before shipping any agent-powered feature touching user data or transactions, audit your API security—assume agents will test every path.</p></div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>OpenClaw discovered that the gym-booking platform's API allowed canceling reservations without verifying ownership or permissions. A simple LLM agent probing the API found the vulnerability and exploited it. This demonstrates a real gap between human-centered API design and agent-ready API design: humans might not discover or attempt such tests in normal UX flows, but agents will.</p><p>For product teams building AI agents that interact with external APIs or your own services, this is a critical reminder: security and authorization assumptions don't hold at agent scale. Agents execute systematically; they don't have the human hesitation to "try that."</p></div>
+  </details>
+  <div class="creator-links"><a href="https://simonwillison.net/2026/Aug/10/openclaw/#atom-everything" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="lenny">
+  <div class="creator-header"><h2>Lenny Rachitsky</h2><span class="date-badge">August 10</span></div>
+  <div class="creator-headline">Grace Clarke rebuilt her entire service business as a Claude-powered automation workflow.</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span><p>This is what AI-native workflow design looks like: Grace automated 20 hours of weekly admin work (proposals, client tracking, email) into a single Claude-powered pipeline. The PM insight isn't the code—it's how she thought about bundling disconnected manual tasks into one coherent AI system. She didn't automate each task independently; she automated the *entire process flow*. That's the mental model shift for building AI products: look for end-to-end workflows, not feature automation.</p></div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Grace's workflow runs end-to-end: prospects fill a form, Claude generates a customized proposal, logs the prospect data, and sends personalized email follow-ups. One integrated system replaces a fragmented set of manual tools. The outcome: 20 hours of weekly admin eliminated, more time for client relationships and business growth.</p><p>For PMs: This shows the difference between automating a feature and automating a workflow. Grace didn't build "a proposal generator" or "an email writer"—she built a system that reasons across the entire business process. That's where AI creates leverage. The implication for your roadmap: look for workflows that span multiple tools or manual handoffs. Those are your targets for AI-native redesign.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.lennysnewsletter.com/p/claude-code-for-normal-people-skills" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="swyx">
+  <div class="creator-header"><h2>Swyx</h2><span class="date-badge">August 8</span></div>
+  <div class="creator-headline">Zawinski's Law applies to multi-agent systems: every agent tries to become a full platform.</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span><p>Swyx connects an old design principle (Zawinski's Law: "Every program attempts to expand until it can read mail") to modern multi-agent systems. Single-purpose agents are unstable; they drift toward becoming full platforms. For PMs building agent-based products, recognize that agents naturally want broader scope, which creates scope creep and fragmentation. Design your system architecture and incentives to constrain agent scope explicitly, or watch your agent ecosystem sprawl.</p></div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Zawinski's Law is an old programmer observation: software tends to expand beyond its original scope to duplicate functionality found in other tools. In agent systems, this manifests as agents attempting to do things outside their domain because they have access to APIs and reasoning capability. The result is sprawl, redundancy, and a chaotic multi-agent ecosystem.</p><p>The implications for AI product design are significant. You need explicit boundaries and role definitions for agents, clear API constraints, and careful orchestration logic. Otherwise, agents will compete, duplicate work, and make your system harder to reason about.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.latent.space/p/ainews-zawinskis-law-of-multiagents" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker" id="thought-provokers">
+  <div class="creator-header"><h2>Julie Zhuo</h2><span class="date-badge">August 5</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span><p>Julie writes a letter to her daughter about the paradox of AI making things easy: the easier tools become, the less valuable the act of *making* becomes. The deeper insight for PMs is about user psychology and behavior design. If your AI product removes all friction and challenge, you might also remove motivation and satisfaction. How do you design AI systems that empower and delight, not just automate?</p></div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Julie reflects on how technological ease can become a trap. When creating something requires no effort or skill, it often loses meaning—both for the creator and the audience. She asks: if an AI does the work, what have you actually learned? What have you created?</p><p>For product teams, this questions the default assumption that frictionless = good. Some friction—the friction of learning, experimenting, iterating—is what makes creation feel worthwhile. The best AI products augment human effort, not erase it entirely. They should preserve the parts of the process that matter to users psychologically.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://joulee.medium.com/eye-hand-ai-a-letter-to-my-daughter-91780b37ff6c" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker">
+  <div class="creator-header"><h2>Marty Cagan</h2><span class="date-badge">
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 21 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
