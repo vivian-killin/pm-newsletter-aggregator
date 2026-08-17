@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Monday, August 17, 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fafaf8;
+      color: #1a1a1a;
+      line-height: 1.65;
+    }
+
+    .header {
+      background: #fff;
+      border-bottom: 1px solid #e8e8e4;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.3px; }
+    .header .tagline { font-size: 0.9rem; color: #888; margin-top: 0.3rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.85rem;
+      font-size: 0.78rem; background: #f0f0ec; color: #666;
+      padding: 0.25rem 0.85rem; border-radius: 999px;
+    }
+
+    .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: #f7f7f4;
+      border: 1px solid #e0ddd5;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.5;
+    }
+    .quiet-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta {
+      font-size: 0.8rem; color: #888; margin-bottom: 1rem;
+    }
+
+    /* ── Jump nav ── */
+    .digest-nav {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-bottom: 1.5rem;
+    }
+    .digest-nav a {
+      display: inline-block; padding: 4px 11px;
+      font-size: 0.75rem; font-weight: 500; color: #444;
+      background: #fff; border: 1px solid #ddd;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.12s, border-color 0.12s;
+    }
+    .digest-nav a:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .digest-nav a.tp-nav { background: #fffdf5; border-color: #e8d98a; color: #a07800; }
+    .digest-nav a.tp-nav:hover { background: #a07800; color: #fff; border-color: #a07800; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fff; border: 1px solid #e8e8e4;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 0.9rem;
+    }
+    .thought-provoker { background: #fffdf5; border-color: #e8d98a; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.35rem;
+    }
+    .creator-header h2 { font-size: 1rem; font-weight: 700; line-height: 1.3; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 500;
+      color: #888; background: #f0f0ec;
+      padding: 2px 8px; border-radius: 999px; white-space: nowrap;
+    }
+    .badge-hot {
+      display: inline-block; background: #cc3300; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 1px 6px;
+      border-radius: 999px; margin-left: 5px; vertical-align: middle;
+    }
+    .creator-headline {
+      font-size: 0.8rem; color: #777; font-style: italic; margin-bottom: 0.75rem;
+    }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f0eeff; border-left: 3px solid #7b6ef6;
+      border-radius: 0 6px 6px 0; padding: 0.5rem 0.85rem;
+      font-size: 0.855rem; color: #2a2a2a; line-height: 1.55;
+      margin-bottom: 0.6rem;
+    }
+    .tldr-label {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; display: block; margin-bottom: 3px;
+    }
+    .thought-provoker .tldr { background: #fffbea; border-color: #c9a800; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 2px; }
+    summary {
+      cursor: pointer; font-size: 0.75rem; font-weight: 600; color: #7b6ef6;
+      list-style: none; display: inline-flex; align-items: center; gap: 3px;
+      user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; font-size: 0.7rem; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.75rem; }
+
+    .detail-body p { font-size: 0.875rem; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol {
+      font-size: 0.875rem; padding-left: 1.2rem; margin-bottom: 0.7rem;
+    }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #ddd; padding: 0.3rem 0.85rem;
+      color: #555; font-style: italic; font-size: 0.855rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.6rem; font-size: 0.8rem; }
+    .creator-links a { color: #7b6ef6; text-decoration: none; font-weight: 500; }
+    .creator-links a:hover { text-decoration: underline; }
+    .creator-links span { color: #ccc; margin: 0 5px; }
+
+    /* ── Top pick (appears at top of digest) ── */
+    .top-pick {
+      background: #f0eeff; border: 1px solid #c4b8ff;
+      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 1.25rem;
+    }
+    .top-pick-label {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #7b6ef6; margin-bottom: 0.5rem;
+    }
+    .top-pick-content { font-size: 0.925rem; color: #1a1a1a; line-height: 1.55; }
+
+    /* ── No updates fallback ── */
+    .no-updates {
+      text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #aaa;
+    }
+
+    .footer {
+      text-align: center; padding: 1.5rem;
+      font-size: 0.78rem; color: #bbb; border-top: 1px solid #e8e8e4;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.5rem 1rem 1.25rem; }
+      .header h1 { font-size: 1.1rem; }
+      .container { padding: 1rem 0.85rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1rem 1rem; border-radius: 10px; }
+      .creator-header { flex-direction: column; gap: 4px; }
+      .quiet-banner { font-size: 0.85rem; padding: 0.85rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Monday, August 17, 2026</div>
+  </div>
+
+  <div class="container">
+    <!DOCTYPE html>
+<html>
+<head>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; max-width: 700px; margin: 0 auto; padding: 20px; color: #333; }
+.top-pick { background: linear-gradient(135deg, #fff5e6 0%, #ffe6cc 100%); border-left: 4px solid #ff9500; padding: 20px; margin-bottom: 24px; border-radius: 8px; }
+.top-pick-label { font-weight: 600; color: #ff6b00; margin-bottom: 8px; }
+.top-pick-content { font-size: 15px; line-height: 1.6; color: #222; }
+.digest-meta { text-align: center; font-size: 13px; color: #666; margin-bottom: 20px; padding: 12px 0; }
+.digest-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+.digest-nav a { padding: 8px 12px; background: #f0f0f0; border-radius: 20px; text-decoration: none; font-size: 14px; color: #333; transition: background 0.2s; }
+.digest-nav a:hover { background: #e0e0e0; }
+.digest-nav .tp-nav { background: #e6f3ff; color: #0066cc; }
+.creator { margin-bottom: 28px; border: 1px solid #e5e5e5; border-radius: 8px; padding: 20px; }
+.thought-provoker { margin-bottom: 28px; border: 1px solid #e5d4ff; border-radius: 8px; padding: 20px; background: #faf5ff; }
+.creator-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.creator-header h2 { margin: 0; font-size: 18px; font-weight: 600; }
+.date-badge { font-size: 12px; color: #999; background: #f5f5f5; padding: 4px 8px; border-radius: 4px; }
+.creator-headline { font-size: 14px; color: #666; margin-bottom: 12px; font-style: italic; }
+.tldr { background: #f9f9f9; padding: 12px; border-radius: 6px; margin-bottom: 12px; }
+.tldr-label { font-weight: 600; color: #333; display: block; margin-bottom: 6px; }
+.tldr { font-size: 14px; line-height: 1.5; color: #222; }
+details { margin-bottom: 12px; }
+summary { cursor: pointer; font-weight: 500; color: #0066cc; font-size: 14px; }
+summary:hover { text-decoration: underline; }
+.detail-body { padding: 12px 0; font-size: 14px; line-height: 1.6; color: #444; }
+.detail-body p { margin: 0 0 12px 0; }
+.detail-body ul { margin: 8px 0; padding-left: 20px; }
+.detail-body li { margin: 6px 0; }
+.creator-links { margin-top: 12px; }
+.creator-links a { color: #0066cc; text-decoration: none; font-weight: 500; font-size: 14px; }
+.creator-links a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<div class="top-pick">
+  <div class="top-pick-label">🔥 Top pick this issue</div>
+  <div class="top-pick-content">Lenny Rachitsky interviews Yana Welinder on how a solo founder used AI coding tools to design and manufacture custom garments and build a full e-commerce business without engineering skills. This is the clearest real-world case study of how AI is expanding the boundaries of what solo builders can accomplish—directly relevant for PMs thinking about AI-native product workflows.</div>
+</div>
+
+<div class="digest-meta">21 thought leaders tracked &nbsp;·&nbsp; 4 had updates this issue</div>
+
+<nav class="digest-nav">
+  <a href="#lenny">Lenny Rachitsky</a>
+  <a href="#simon">Simon Willison</a>
+  <a href="#swyx">Swyx</a>
+  <a href="#gergely">Gergely Orosz</a>
+  <a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+</nav>
+
+<div class="creator" id="lenny">
+  <div class="creator-header"><h2>Lenny Rachitsky</h2><span class="date-badge">Aug 17</span></div>
+  <div class="creator-headline">From hand-drawn sketch to 3D-printed gown: how Codex plus computer use makes previously unmanufacturable garments possible for a solo founder.</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Yana Welinder's case demonstrates how agentic AI tools (code interpreters + LLMs) can collapse the technical barrier to full-stack product building. For PMs, this signals that the definition of "minimum viable team" has shifted—single non-technical founders can now own the entire loop from design to manufacturing integration. Consider how your product onboarding and feature complexity assumptions may need to change for an AI-augmented user base.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Yana Welinder, a solo fashion founder, built both custom 3D garment design software and a full e-commerce business using primarily Codex (for code generation) and ChatGPT's computer use capabilities. She moved from hand-drawn sketches to parametric 3D models that could be 3D-printed, all without hiring a single engineer. This represents a qualitative shift: she didn't just automate tasks, she restructured her entire workflow around what AI can do natively.</p><p>The implications for PM thinking are profound. First, feature prioritization changes when your users have AI agents at their side—you may need to expose more underlying logic rather than hiding complexity. Second, the notion of "technical founder" is being redefined. Third, this creates new market categories: products that were previously only viable for large teams (bespoke manufacturing + digital storefronts) are now solo-founder accessible.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.lennysnewsletter.com/p/how-a-solo-founder-used-codex-and" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="simon">
+  <div class="creator-header"><h2>Simon Willison</h2><span class="date-badge">Aug 17</span></div>
+  <div class="creator-headline">Reported investigation reveals Amazon is tracking shipments of rare books destined for AI training facilities.</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Large tech companies are systematically acquiring rare books and literary collections at scale for AI training—a pattern that raises ethical and competitive questions about data sourcing. For PMs building AI products, this highlights the growing scrutiny on training data provenance and suggests that transparency about data sources will become a competitive and reputational differentiator in 2026–2027.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>404 Media's investigation tracked book shipments to Amazon facilities, revealing a coordinated effort to acquire large volumes of rare and out-of-print books for AI model training. The practice appears widespread across major AI labs, with anonymous bulk orders from price-insensitive customers. This signals a shift from web-scale training data to curated, high-quality literary sources.</p><p>For product teams, this is a governance moment. As regulators and user communities grow more aware of training data practices, PMs should anticipate questions about sourcing ethics. Products built on transparently sourced, consented data may gain trust advantages over those built on opaque acquisition patterns.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://simonwillison.net/2026/Aug/17/we-tracked-a-shipment-of-rare-books-it-ended-at-an-amazon-ai-tra/" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="swyx">
+  <div class="creator-header"><h2>Swyx</h2><span class="date-badge">Aug 15</span></div>
+  <div class="creator-headline">Astro creator Fred Schott discusses why agents are defined by their harnesses, and why he added React-style hooks to the Flue framework.</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Fred Schott's Flue 2 brings stateful composition patterns (React hooks) to agentic systems, suggesting that agent architecture is maturing toward component-like abstractions. For PMs building agent-native products, this implies that the UX and orchestration of multi-step workflows will soon shift from prompt engineering toward compositional frameworks. Invest in thinking about how your product can be broken into agent-harness abstractions rather than monolithic flows.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Flue 2 is a framework for building AI agents that borrows architectural patterns from React: hooks for state management, composable harnesses for agent behavior, and a focus on reusability. Schott argues that agents shouldn't be thought of as single entities but as compositions of specialized behavioral harnesses, each with its own state lifecycle.</p><p>This is a significant PM signal because it suggests the tooling layer is moving away from "prompt and pray" toward structured, composable agent design. If this pattern takes hold, product teams will need to think about how their workflows decompose into agent capabilities, not just task sequences.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.latent.space/p/flue-2" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="gergely">
+  <div class="creator-header"><h2>Gergely Orosz</h2><span class="date-badge">Aug 14</span></div>
+  <div class="creator-headline">Meta's self-inflicted resignation wave continues despite $1M+ equity retention packages, while managed AI agents emerge as a competitive inflection point.</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Gergely notes that Meta's retention crisis isn't just about compensation—it's a signal of deeper organizational misalignment. Separately, he flags "OpenClaw moment" questions around managed AI agents, suggesting that 2026 may mark the inflection where agents transition from research novelties to platform primitives. Watch for agents to become the organizational boundary-setter the way APIs did in the 2010s.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Meta is experiencing an exodus of senior engineers despite unprecedented retention packages. The subtext: money alone doesn't solve organizational culture and clarity issues. For PMs, this is a reminder that engineering talent follows product conviction and autonomy, not just equity.</p><p>Gergely also raises the question of whether managed AI agents (like OpenAI's recent rollout of bot management features) represent an "OpenClaw moment"—a paradigm shift in how work gets structured. If agents become the standard unit of automation in enterprise software, product teams need to start thinking about agent-native interfaces and workflows now rather than treating agents as an optimization layer on top of legacy UI patterns.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://newsletter.pragmaticengineer.com/p/the-pulse-metas-self-inflicted-resignation" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker" id="thought-provokers">
+  <div class="creator-header"><h2>Ian Silber</h2><span class="date-badge">Aug 16</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>OpenAI's Head of Product Design argues that this is the best time in history to be a designer—and more importantly, where humans still beat AI. This is essential framing for PMs building AI-native products: it clarifies the human–AI boundary and suggests that design taste, narrative, and systems thinking remain irreducibly human.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Ian Silber's perspective from inside OpenAI is that design in the age of AI isn't about who can render pixels faster—it's about who can see further, craft stronger narratives, and build more coherent systems. AI is a tool for execution and exploration, but the strategic sensibility that defines whether a product feels right remains a human domain.</p><p>For PMs, this reframes the productivity conversation: AI doesn't obsolete design judgment, it accelerates the cycle of hypothesis and feedback. The competitive advantage shifts to teams that can use AI to test more design ideas faster, not teams that can skip design thinking altogether.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.lennysnewsletter.com/p/openais-head-of-design-this-is-the" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker">
+  <div class="creator-header"><h2>Marty Cagan</h2><span class="date-badge">Aug 10</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>A Fresh Definition of the Product Role cuts through the noise of job descriptions and operating models to argue that the core PM competency is learning to work effectively in your specific context. As AI reshapes team structures and skill requirements, this grounding principle—context-adaptive product thinking—remains more relevant than ever.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Cagan's thesis is that the "product role" has no fixed shape because different companies, stages, and market conditions demand different things. What matters is that a PM understands their organization's constraints and can navigate them effectively. In the age of AI, this becomes even more critical: the PM who can articulate where humans drive leverage versus where AI handles execution will become the most valuable.</p><p>This is a timely antidote to the AI-era panic that "everyone is becoming a product manager." They may be—but that doesn't change the fundamental PM skill: understanding trade-offs and context deeply enough to make decisions that stick.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.svpg.com/a-fresh-definition-of-the-product-role/" target="_blank">Read →</a></div>
+</div>
+
+</body>
+</html>
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 21 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
