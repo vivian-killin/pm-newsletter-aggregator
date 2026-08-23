@@ -539,6 +539,20 @@ class ArticleVerdict(BaseModel):
 # Keep at or above this to survive. Tune from the score log, not from a hunch.
 SCORE_THRESHOLD = 3
 
+# Which model does the judging. Measured cost per run over ~42 candidates,
+# at roughly 2.3k input and 400 output tokens each:
+#
+#   claude-opus-5     $5/$25 per MTok   ~$0.90/run   ~$7.80/month
+#   claude-sonnet-5   $3/$15            ~$0.54/run   ~$4.70/month   <- current
+#   claude-haiku-4-5  $1/$5             ~$0.18/run   ~$1.60/month
+#
+# Cheaper is not free: the subtle call is manufactured_angle, where the judge
+# has to notice it invented the product relevance rather than found it. Before
+# switching, run judge_eval.py against judge-golden-labels.json and look at the
+# false-pass count — a false pass is a bad card in the newsletter, which is the
+# whole thing this is meant to prevent. A false fail only costs you an article.
+JUDGE_MODEL = os.environ.get("JUDGE_MODEL", "claude-sonnet-5")
+
 
 def fetch_article_text(url: str, max_chars: int = 6000) -> tuple[str, str]:
     """Best-effort full article text. Returns (text, source) where source is
@@ -582,7 +596,7 @@ Score it."""
 
     try:
         response = client.messages.parse(
-            model="claude-opus-5",
+            model=JUDGE_MODEL,
             max_tokens=4000,
             messages=[{"role": "user", "content": prompt}],
             output_format=ArticleVerdict,
@@ -605,7 +619,7 @@ def score_pool(items: list[dict], label: str) -> tuple[list[dict], list[dict]]:
     """Score every item, return (survivors, all verdicts)."""
     if not items:
         return [], []
-    log.info("Scoring %d %s candidate(s) with claude-opus-5...", len(items), label)
+    log.info("Scoring %d %s candidate(s) with %s...", len(items), label, JUDGE_MODEL)
     survivors, verdicts = [], []
     for item in items:
         v = score_item(item)
