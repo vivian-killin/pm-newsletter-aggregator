@@ -8,6 +8,7 @@ Vivian's PM Skills Digest Generator v4
 - shown_urls.json tracking to avoid reusing articles
 - No markdown leaking into the page
 """
+import glob
 import os
 import re
 import json
@@ -565,6 +566,34 @@ SCORE_THRESHOLD = 3
 JUDGE_MODEL = os.environ.get("JUDGE_MODEL", "claude-sonnet-5")
 JUDGE_ENABLED = JUDGE_MODEL.lower() not in ("off", "none", "0", "")
 
+# The judge runs for this many issues and then switches itself off, leaving the
+# rest of the API credit for generation. Running the account to zero would break
+# the newsletter outright, not just the judging: generation needs credit too,
+# and a failed generation call aborts the run with no digest and no email.
+#
+# Each judged run writes exactly one digests/scores-<date>.json, and the
+# workflow commits digests/, so those files ARE the counter. No extra state to
+# drift out of sync, and they are the same files harvest_scores.py reads.
+# Set JUDGE_MAX_RUNS=0 for no limit.
+JUDGE_MAX_RUNS = int(os.environ.get("JUDGE_MAX_RUNS", "2"))
+
+# Decided once at the start of each run by judge_should_run().
+JUDGE_ACTIVE = True
+
+
+def judged_runs_so_far() -> int:
+    return len(glob.glob(os.path.join("digests", "scores-*.json")))
+
+
+def judge_should_run() -> tuple[bool, str]:
+    """Whether to spend anything on judging this run, and why not if not."""
+    if not JUDGE_ENABLED:
+        return False, "JUDGE_MODEL=off"
+    done = judged_runs_so_far()
+    if JUDGE_MAX_RUNS and done >= JUDGE_MAX_RUNS:
+        return False, f"{done} of {JUDGE_MAX_RUNS} budgeted judge runs already spent"
+    return True, ""
+
 
 def fetch_article_text(url: str, max_chars: int = 6000) -> tuple[str, str]:
     """Best-effort full article text. Returns (text, source) where source is
@@ -631,7 +660,7 @@ def score_pool(items: list[dict], label: str) -> tuple[list[dict], list[dict]]:
     """Score every item, return (survivors, all verdicts)."""
     if not items:
         return [], []
-    if not JUDGE_ENABLED:
+    if not JUDGE_ACTIVE:
         return items, []
     log.info("Scoring %d %s candidate(s) with %s...", len(items), label, JUDGE_MODEL)
     survivors, verdicts = [], []
@@ -1134,8 +1163,15 @@ def main():
         thought_provokers = gather_thought_provokers(shown_urls, recent)
 
         # Score every candidate before anything is selected or written.
-        if not JUDGE_ENABLED:
-            log.info("JUDGE_MODEL=off — skipping the scoring pass, no judge spend this run")
+        global JUDGE_ACTIVE
+        JUDGE_ACTIVE, why = judge_should_run()
+        if JUDGE_ACTIVE:
+            log.info("Judge ACTIVE — run %d of %d budgeted",
+                     judged_runs_so_far() + 1, JUDGE_MAX_RUNS or 0)
+        else:
+            log.info("Judge OFF (%s) — no judge spend this run; "
+                     "remaining credit goes to generation", why)
+            log.info("Run harvest_scores.py to turn what it learned into free filters")
         all_verdicts = []
         for name, items in list(recent.items()):
             kept, verdicts = score_pool(items, f"recent/{name}")
