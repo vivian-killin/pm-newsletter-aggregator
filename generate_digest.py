@@ -28,32 +28,74 @@ log = logging.getLogger("digest")
 client = Anthropic()
 
 # RSS feed for each thought leader. None = no feed, falls back to search.
+# Every feed here was checked live on 2026-08-23: it resolves, it has dated
+# entries, and it has published within the last ~120 days. Re-run that check
+# before adding anyone — several previous entries were 404s or Substacks that
+# had been silent for years, which quietly shrank the pool without any error.
+#
+# Cadence is deliberately mixed. High-frequency feeds (Simon Willison at ~19
+# posts/week) will always dominate a "most recent N per creator" fetch, so the
+# low-cadence PM voices are the ones that keep the digest on topic.
 THOUGHT_LEADERS = [
-    ("Lenny Rachitsky",   "https://www.lennysnewsletter.com/feed"),
-    ("Ethan Mollick",     "https://www.oneusefulthing.org/feed"),
-    ("Simon Willison",    "https://simonwillison.net/atom/everything/"),
-    ("Andrej Karpathy",   None),   # No RSS — DuckDuckGo fallback
-    ("Swyx",              "https://www.latent.space/feed"),
-    ("Andrew Ng",         "https://www.deeplearning.ai/the-batch/feed/"),
-    ("Aakash Gupta",      "https://aakashg.substack.com/feed"),
-    ("Harrison Chase",    "https://blog.langchain.dev/rss/"),
-    ("Kristen Berman",    "https://kristenberman.substack.com/feed"),
-    ("Shreyas Doshi",     "https://shreyasdoshi.substack.com/feed"),
-    ("Julie Zhuo",        "https://joulee.medium.com/feed"),
-    ("John Cutler",       "https://cutlefish.substack.com/feed"),
+    # ── PM craft: discovery, prioritisation, strategy ──────────────────────
     ("Marty Cagan",       "https://www.svpg.com/feed/"),
+    ("Teresa Torres",     "https://www.producttalk.org/feed/"),
+    ("Itamar Gilad",      "https://itamargilad.com/feed/"),
+    ("Rich Mironov",      "https://www.mironov.com/feed/"),
+    ("Shreyas Doshi",     "https://shreyasdoshi.substack.com/feed"),
+    ("John Cutler",       "https://cutlefish.substack.com/feed"),
     ("Pawel Huryn",       "https://huryn.substack.com/feed"),
-    ("Karo Zieminski",    "https://karozieminski.substack.com/feed"),
-    ("Josh Miller",       "https://josh.substack.com/feed"),
-    ("Claire Vo",         "https://clairevo.substack.com/feed"),
-    ("Amjad Masad",       "https://blog.replit.com/rss.xml"),
-    ("Logan Kilpatrick",  "https://logankilpatrick.substack.com/feed"),
-    ("Gergely Orosz",     "https://newsletter.pragmaticengineer.com/feed"),
+
+    # ── PM career, leadership and communication ────────────────────────────
+    ("Nikhyl Singhal",    "https://theskip.substack.com/feed"),
+    ("Ken Norton",        "https://www.bringthedonuts.com/feed.xml"),
+    ("Wes Kao",           "https://newsletter.weskao.com/feed"),
+    ("Jackie Bavaro",     "https://jackiebavaro.substack.com/feed"),
+    ("Julie Zhuo",        "https://joulee.medium.com/feed"),
     ("Deb Liu",           "https://debliu.substack.com/feed"),
+
+    # ── Growth, PLG and behavioural design ─────────────────────────────────
+    ("Elena Verna",       "https://www.elenaverna.com/feed"),
+    ("Leah Tharin",       "https://www.leahtharin.com/feed"),
+    ("Kristen Berman",    "https://kristenberman.substack.com/feed"),
+    ("Karo Zieminski",    "https://karozieminski.substack.com/feed"),
+
+    # ── AI and product, and the engineering side PMs need to read ──────────
+    ("Lenny Rachitsky",   "https://www.lennysnewsletter.com/feed"),
+    ("Aakash Gupta",      "https://aakashgupta.substack.com/feed"),
+    ("Peter Yang",        "https://creatoreconomy.so/feed"),
+    ("Ethan Mollick",     "https://www.oneusefulthing.org/feed"),
+    ("Gergely Orosz",     "https://newsletter.pragmaticengineer.com/feed"),
+    ("Simon Willison",    "https://simonwillison.net/atom/everything/"),
+    ("Swyx",              "https://www.latent.space/feed"),
 ]
 
-# Subset used for thought provoker candidates — same RSS feeds, wider time window
-TP_FEEDS = [feed for _, feed in THOUGHT_LEADERS if feed is not None]
+# Removed 2026-08-23 after a live feed check, all producing nothing:
+#   Andrew Ng (the-batch)      404
+#   Amjad Masad (replit blog)  404
+#   Harrison Chase (langchain) feed returns no entries
+#   Logan Kilpatrick           feed returns no entries
+#   Andrej Karpathy            no feed at all; the DuckDuckGo fallback was noise
+#   Josh Miller                last post 2023-05-25
+#   Claire Vo                  last post 2025-03-04 — she publishes in Lenny's
+#                              newsletter now, so the byline logic surfaces her
+#                              under her own name from Lenny's feed
+
+def _feed(name: str, url: str) -> str:
+    """Allow a private Substack feed to override the public one.
+
+    A paid Substack subscription comes with a private RSS URL that contains a
+    secret token, and it returns full post bodies where the public feed returns
+    a paywalled preview. The token must not live in this file — set an env var
+    named FEED_<NAME> (e.g. FEED_AAKASH_GUPTA) to your private feed URL, as a
+    GitHub Actions secret alongside ANTHROPIC_API_KEY. Find it in Substack under
+    Settings -> your private feed.
+    """
+    key = "FEED_" + re.sub(r"[^A-Z0-9]+", "_", name.upper()).strip("_")
+    return os.environ.get(key) or url
+
+
+THOUGHT_LEADERS = [(n, _feed(n, u) if u else None) for n, u in THOUGHT_LEADERS]
 
 SHOWN_URLS_PATH = os.path.join("digests", "shown_urls.json")
 
@@ -89,13 +131,40 @@ def _strip_html(text: str) -> str:
     return re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', '', text or '')).strip()
 
 
-def fetch_rss(name: str, url: str, max_age_days: int = 7, max_items: int = 3) -> list[dict]:
-    """Return recent items from an RSS/Atom feed, filtered to max_age_days."""
+# A link-blog quote post — the creator is quoting someone else, so the idea is
+# not theirs and a card built from it misattributes the author.
+QUOTE_POST_RE = re.compile(r"^\s*(quoting|link)\b\s*[:\s]", re.I)
+
+# An automated or aggregated roundup rather than the creator's own writing
+# (e.g. Latent Space's [AINews] firehose, which is most of that feed).
+ROUNDUP_RE = re.compile(r"^\s*[\[(]?\s*(ainews|ai news|community wisdom|weekly roundup|this week in)", re.I)
+
+# A release note / changelog for the creator's own tooling — not PM content.
+RELEASE_RE = re.compile(r"^\s*[\w.-]+\s+v?\d+\.\d+", re.I)
+
+
+def fetch_rss(name: str, url: str, max_age_days: int = 7, max_items: int = 3,
+              min_age_days: int = 0) -> list[dict]:
+    """Return feed items aged between min_age_days and max_age_days.
+
+    Two things worth knowing:
+
+    - min_age_days is a floor. max_age_days alone is only a ceiling, so
+      "last 90 days" happily matches something published yesterday. Thought
+      provokers need the floor or they are just this week's news relabelled.
+    - Items are sorted newest-first before truncation, so max_items means
+      "the N most recent", not "the first N the feed happened to list".
+    """
     try:
         import feedparser
-        from datetime import timezone
         feed = feedparser.parse(url)
-        cutoff = datetime.now() - timedelta(days=max_age_days)
+        now    = datetime.now()
+        oldest = now - timedelta(days=max_age_days)
+        newest = now - timedelta(days=min_age_days)
+
+        feed_author = ((feed.feed.get("author_detail") or {}).get("name")
+                       or feed.feed.get("author") or name)
+
         results = []
         for entry in feed.entries:
             # Parse publish date
@@ -109,28 +178,56 @@ def fetch_rss(name: str, url: str, max_age_days: int = 7, max_items: int = 3) ->
                         pass
                     break
 
-            if pub and pub < cutoff:
+            if pub and pub < oldest:
                 continue  # too old
+            if pub and pub > newest:
+                continue  # too new for this window
+            if min_age_days and not pub:
+                continue  # undated, so we cannot prove it is old enough
+
+            title = entry.get("title", "") or ""
+
+            # Substack guest posts carry dc:creator, which feedparser maps onto
+            # entry.author. Without reading it, every guest post is attributed
+            # to whoever owns the feed.
+            author = ((entry.get("author_detail") or {}).get("name")
+                      or entry.get("author") or feed_author)
 
             snippet = _strip_html(
-                getattr(entry, "summary", None) or
-                getattr(entry, "description", None) or ""
+                entry.get("summary") or entry.get("description") or ""
             )[:400]
 
             results.append({
-                "title":   entry.get("title", ""),
-                "snippet": snippet,
-                "url":     entry.get("link", ""),
-                "date":    pub.strftime("%B %d, %Y") if pub else "",
+                "title":      title,
+                "snippet":    snippet,
+                "url":        entry.get("link", "") or "",
+                "date":       pub.strftime("%B %d, %Y") if pub else "",
+                "feed_owner": name,
+                "author":     author,
+                "quote_post": bool(QUOTE_POST_RE.match(title)),
+                "roundup":    bool(ROUNDUP_RE.match(title)),
+                "release":    bool(RELEASE_RE.match(title)),
+                "_sort":      pub or datetime.min,
             })
 
-            if len(results) >= max_items:
-                break
-
-        return results
+        results.sort(key=lambda r: r["_sort"], reverse=True)
+        for r in results:
+            r.pop("_sort", None)
+        return results[:max_items]
     except Exception as e:
         log.warning("RSS fetch failed for %s (%s): %s", name, url, e)
         return []
+
+
+def _drop_reason(item: dict) -> str | None:
+    """Why this item can never be a card, regardless of what it says."""
+    if item.get("quote_post"):
+        return "quote post"
+    if item.get("roundup"):
+        return "automated roundup"
+    if item.get("release"):
+        return "release note"
+    return None
 
 
 def search_fallback(query: str, max_results: int = 3) -> list[dict]:
@@ -153,52 +250,97 @@ def search_fallback(query: str, max_results: int = 3) -> list[dict]:
         return []
 
 
-def gather_recent() -> dict:
+MAX_ITEMS_PER_CREATOR = 3
+
+
+def gather_recent(shown_urls: list[str]) -> dict:
     log.info("Fetching recent creator content via RSS (last 7 days)...")
+    shown = set(shown_urls)
     findings = {}
     found_count = 0
     for name, feed_url in THOUGHT_LEADERS:
         if feed_url:
-            results = fetch_rss(name, feed_url, max_age_days=7, max_items=3)
+            # Over-fetch, then filter, then cap. Filtering after the cap would
+            # let three quote posts crowd out a creator's one real article.
+            candidates = fetch_rss(name, feed_url, max_age_days=7, max_items=12)
         else:
             # Fallback to search for creators with no RSS
-            results = search_fallback(f'"{name}" AI product', max_results=3)
-        findings[name] = results
-        if results:
+            candidates = search_fallback(f'"{name}" AI product', max_results=3)
+            for item in candidates:
+                item.setdefault("feed_owner", name)
+                item.setdefault("author", name)
+
+        kept, dropped = [], []
+        for item in candidates:
+            if item["url"] in shown:
+                dropped.append("already shown")
+                continue
+            reason = _drop_reason(item)
+            if reason:
+                dropped.append(reason)
+                continue
+            kept.append(item)
+            if len(kept) >= MAX_ITEMS_PER_CREATOR:
+                break
+
+        findings[name] = kept
+        if kept:
             found_count += 1
-            log.info("  ✓ %-22s — %d item(s)", name, len(results))
+            extra = f" ({len(dropped)} filtered)" if dropped else ""
+            log.info("  ✓ %-22s — %d item(s)%s", name, len(kept), extra)
         else:
-            log.info("  ✗ %-22s — nothing recent", name)
-    log.info("Gather complete: %d/%d thought leaders had recent content", found_count, len(THOUGHT_LEADERS))
+            why = f" ({', '.join(sorted(set(dropped)))})" if dropped else ""
+            log.info("  ✗ %-22s — nothing qualifying%s", name, why)
+
+    log.info("Gather complete: %d/%d thought leaders had qualifying content",
+             found_count, len(THOUGHT_LEADERS))
     return findings
 
 
-def gather_thought_provokers() -> list[dict]:
-    log.info("Gathering thought provoker candidates via RSS (last 90 days)...")
-    candidates = []
-    seen_urls: set[str] = set()
-    for name, feed_url in THOUGHT_LEADERS:
-        if not feed_url:
-            continue
-        items = fetch_rss(name, feed_url, max_age_days=90, max_items=2)
-        for item in items:
-            if item["url"] not in seen_urls:
-                seen_urls.add(item["url"])
-                candidates.append(item)
+# A thought provoker is pitched as "worth your time regardless of when it was
+# published". Anything newer than this is just this week's news wearing a hat.
+TP_MIN_AGE_DAYS = 30
 
+
+def gather_thought_provokers(shown_urls: list[str], recent: dict) -> list[dict]:
+    log.info("Gathering thought provoker candidates (%d-90 days old)...", TP_MIN_AGE_DAYS)
+    shown = set(shown_urls)
+
+    # Cross-pool dedup. Without this the same creator can headline a creator
+    # card and a thought provoker in the same issue.
+    recent_urls     = {i["url"] for items in recent.values() for i in items}
+    recent_creators = {name for name, items in recent.items() if items}
+
+    def collect(max_age_days: int, per_feed: int, seen: set) -> list[dict]:
+        out = []
+        for name, feed_url in THOUGHT_LEADERS:
+            if not feed_url or name in recent_creators:
+                continue
+            kept = 0
+            for item in fetch_rss(name, feed_url,
+                                  max_age_days=max_age_days,
+                                  max_items=per_feed * 6,
+                                  min_age_days=TP_MIN_AGE_DAYS):
+                url = item["url"]
+                if url in seen or url in shown or url in recent_urls:
+                    continue
+                if _drop_reason(item):
+                    continue
+                seen.add(url)
+                out.append(item)
+                kept += 1
+                if kept >= per_feed:
+                    break
+        return out
+
+    seen_urls: set[str] = set()
+    candidates = collect(90, 2, seen_urls)
     log.info("Thought provoker pool (90 days): %d candidates", len(candidates))
 
     # If still thin, widen to 365 days
     if len(candidates) < 6:
         log.info("Pool thin — widening to 365 days...")
-        for name, feed_url in THOUGHT_LEADERS:
-            if not feed_url:
-                continue
-            items = fetch_rss(name, feed_url, max_age_days=365, max_items=3)
-            for item in items:
-                if item["url"] not in seen_urls:
-                    seen_urls.add(item["url"])
-                    candidates.append(item)
+        candidates += collect(365, 3, seen_urls)
         log.info("Thought provoker pool (365 days): %d candidates", len(candidates))
 
     return candidates[:20]
@@ -251,8 +393,10 @@ def build_digest_html(recent: dict, thought_provokers: list, shown_urls: list[st
 Pick articles whose URLs do NOT appear in the above list.
 """
 
-    # If thought provokers are completely empty, use hardcoded evergreen cards
-    if not thought_provokers:
+    # If thought provokers are completely empty, use hardcoded evergreen cards.
+    # Only when there is no recent content either — otherwise this path would
+    # discard perfectly good creator cards just because the TP pool came up dry.
+    if not thought_provokers and not any(recent.values()):
         log.warning("Thought provoker search returned nothing — using evergreen fallback cards")
         tp_html = ""
         for tp in EVERGREEN_FALLBACK_TPS:
@@ -283,7 +427,11 @@ Pick articles whose URLs do NOT appear in the above list.
 OUTPUT RULES — READ CAREFULLY:
 - Output ONLY valid HTML. Zero markdown. Zero code fences. Zero plain text outside HTML tags.
 - Never output "Note:", "Consider:", asterisks, dashes, or any explanation.
-- The digest MUST always contain at least 1-2 thought provoker cards. Never output an empty digest.
+- Include a card ONLY if it genuinely passes the filter below. A short issue is the
+  correct output on a quiet week — do NOT pad to fill space. Two strong cards beat
+  five weak ones, and one strong card beats two weak ones.
+- If nothing qualifies, output the quiet-week banner on its own. An honest short
+  issue is a successful result, not a failure.
 
 {shown_urls_note}
 
@@ -304,14 +452,29 @@ OUTPUT RULES — READ CAREFULLY:
 ✗ EXCLUDE from creator cards: General AI model benchmarks or releases (no PM angle)
 ✗ EXCLUDE from creator cards: Pure coding tutorials
 ✗ EXCLUDE from creator cards: General tech news (Netflix, funding rounds, hardware)
+✗ EXCLUDE: Model releases, benchmarks, parameter counts, or lab/funding news
+✗ EXCLUDE: Anything whose PM relevance you would have to invent. If the source does not
+   itself speak to product decisions, DROP IT. Do not manufacture a PM angle for an
+   article that has none — that is the single worst failure this digest can make.
 ✗ EXCLUDE from creator cards: Off-topic results (furniture, baby names, clinics, airlines)
 ✗ EXCLUDE any URL that appears in the ALREADY SHOWN list above
 
+━━━ ATTRIBUTION — GET THE BYLINE RIGHT ━━━
+Every item carries "feed_owner" (whose feed it arrived on) and "author" (who actually
+wrote it). These are frequently DIFFERENT — guest posts are common.
+- The card's <h2> MUST be the "author" value, never "feed_owner".
+- Write the summary about what the AUTHOR said. Never write "<feed_owner> tested X"
+  about a piece that someone else wrote for <feed_owner>'s newsletter.
+- Never credit the author with an idea they are quoting from a third party.
+- Never merge two different items into one card. Each card summarises exactly one
+  URL, and every claim in it must come from that URL.
+- If "author" is missing or empty, fall back to "feed_owner".
+
 ━━━ FORMAT — output in THIS EXACT ORDER ━━━
 
-STEP 1 — Decide if there is qualifying creator content from the last 7 days.
-If NO qualifying recent content: output quiet-week banner, then 1-2 thought provokers. Stop.
-If YES: follow steps 2-6 in order.
+STEP 1 — Decide which items genuinely qualify. Be strict. Dropping every item is allowed.
+If NO qualifying recent content: output quiet-week banner, then 0-2 thought provokers. Stop.
+If YES: follow steps 2-6 in order, using ONLY the items that qualified.
 
 STEP 2 — Top pick FIRST (only when qualifying creator content exists):
 <div class="top-pick">
@@ -331,7 +494,7 @@ Use the creator's lowercased first name or surname as the slug (e.g. "lenny", "c
 
 STEP 5 — Creator cards (one per qualifying creator, id must match the nav slug):
 <div class="creator" id="[slug]">
-  <div class="creator-header"><h2>[NAME]</h2><span class="date-badge">[e.g. May 21]</span></div>
+  <div class="creator-header"><h2>[AUTHOR — the item's "author" field, not "feed_owner"]</h2><span class="date-badge">[e.g. May 21]</span></div>
   <div class="creator-headline">[One-sentence article subtitle]</div>
   <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>[2-3 sentence PM takeaway — lead with the actionable insight]</div>
   <details><summary>Read more</summary>
@@ -340,7 +503,7 @@ STEP 5 — Creator cards (one per qualifying creator, id must match the nav slug
   <div class="creator-links"><a href="[URL]" target="_blank">Read →</a></div>
 </div>
 
-STEP 6 — Thought provoker cards (ALWAYS 1-2; id="thought-provokers" on the first one):
+STEP 6 — Thought provoker cards (0-2, only ones genuinely worth it; id="thought-provokers" on the first one):
 <div class="thought-provoker" id="thought-provokers">
   <div class="creator-header"><h2>[NAME]</h2><span class="date-badge">[date if known]</span></div>
   <div class="creator-headline">Worth your time regardless of when it was published</div>
@@ -377,9 +540,11 @@ Output nothing else. No notes. No markdown. No explanations."""
     tp_count = html.count('class="thought-provoker"')
     log.info("Digest contains %d creator card(s) and %d thought provoker(s)", creator_count, tp_count)
 
-    # Safety net: if Claude produced no thought provokers, inject evergreen ones
-    if tp_count == 0:
-        log.warning("Claude produced 0 thought provokers — injecting evergreen fallback")
+    # Safety net: only when the issue is completely empty. A thin issue that has
+    # real creator cards and no thought provoker is a valid outcome — injecting
+    # filler there is exactly the padding this digest is trying to stop.
+    if creator_count == 0 and tp_count == 0:
+        log.warning("Claude produced an empty digest — injecting evergreen fallback")
         banner = """<div class="quiet-banner"><span class="quiet-icon">💤</span><span>Quiet week — nothing new from your thought leaders. Here are reads worth your time regardless.</span></div>\n"""
         tp_html = ""
         for tp in EVERGREEN_FALLBACK_TPS:
@@ -584,7 +749,7 @@ def generate_page(digest_html: str) -> str:
   </div>
 
   <div class="footer">
-    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 21 PM &amp; AI thought leaders
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking {len(THOUGHT_LEADERS)} PM &amp; AI thought leaders
   </div>
 
 </body>
@@ -645,8 +810,8 @@ def main():
         shown_urls = load_shown_urls()
         log.info("Loaded %d previously shown URLs", len(shown_urls))
 
-        recent = gather_recent()
-        thought_provokers = gather_thought_provokers()
+        recent = gather_recent(shown_urls)
+        thought_provokers = gather_thought_provokers(shown_urls, recent)
 
         digest_html = build_digest_html(recent, thought_provokers, shown_urls)
 

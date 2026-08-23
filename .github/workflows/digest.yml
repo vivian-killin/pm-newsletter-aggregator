@@ -32,6 +32,15 @@ jobs:
           GMAIL_USER: viviankillin@gmail.com
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           TZ: America/Denver
+          # Private Substack feeds for paid subscriptions. A paid feed URL
+          # contains a secret token and returns full post bodies where the
+          # public feed returns a paywalled preview, so it lives in a repo
+          # secret rather than in generate_digest.py. An unset secret resolves
+          # to an empty string and falls back to the public feed.
+          # To add another: create secret FEED_<NAME> matching the roster name
+          # (uppercased, non-alphanumerics -> underscore) and list it here.
+          FEED_AAKASH_GUPTA: ${{ secrets.FEED_AAKASH_GUPTA }}
+          FEED_LENNY_RACHITSKY: ${{ secrets.FEED_LENNY_RACHITSKY }}
         run: python generate_digest.py
 
       - name: Commit and push new digest
