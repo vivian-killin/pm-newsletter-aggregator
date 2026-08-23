@@ -551,7 +551,14 @@ SCORE_THRESHOLD = 3
 # switching, run judge_eval.py against judge-golden-labels.json and look at the
 # false-pass count — a false pass is a bad card in the newsletter, which is the
 # whole thing this is meant to prevent. A false fail only costs you an article.
+# Set JUDGE_MODEL=off to stop paying for the judge. The run then falls back to
+# the free layers: the post-type filters in _drop_reason, the roster, and the
+# rules in the writer prompt. Those are permanent and cost nothing, but none of
+# them read the article — so a genuinely new off-topic piece from a good source
+# will get through again. Run harvest_scores.py first to convert whatever the
+# judge learned into filters that survive turning it off.
 JUDGE_MODEL = os.environ.get("JUDGE_MODEL", "claude-sonnet-5")
+JUDGE_ENABLED = JUDGE_MODEL.lower() not in ("off", "none", "0", "")
 
 
 def fetch_article_text(url: str, max_chars: int = 6000) -> tuple[str, str]:
@@ -619,6 +626,8 @@ def score_pool(items: list[dict], label: str) -> tuple[list[dict], list[dict]]:
     """Score every item, return (survivors, all verdicts)."""
     if not items:
         return [], []
+    if not JUDGE_ENABLED:
+        return items, []
     log.info("Scoring %d %s candidate(s) with %s...", len(items), label, JUDGE_MODEL)
     survivors, verdicts = [], []
     for item in items:
@@ -1114,6 +1123,8 @@ def main():
         thought_provokers = gather_thought_provokers(shown_urls, recent)
 
         # Score every candidate before anything is selected or written.
+        if not JUDGE_ENABLED:
+            log.info("JUDGE_MODEL=off — skipping the scoring pass, no judge spend this run")
         all_verdicts = []
         for name, items in list(recent.items()):
             kept, verdicts = score_pool(items, f"recent/{name}")
@@ -1121,7 +1132,8 @@ def main():
             all_verdicts += verdicts
         thought_provokers, tp_verdicts = score_pool(thought_provokers, "thought provokers")
         all_verdicts += tp_verdicts
-        save_scores(all_verdicts)
+        if all_verdicts:
+            save_scores(all_verdicts)
 
         digest_html = build_digest_html(recent, thought_provokers, shown_urls)
 
