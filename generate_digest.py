@@ -740,6 +740,9 @@ Pick articles whose URLs do NOT appear in the above list.
 
 OUTPUT RULES — READ CAREFULLY:
 - Output ONLY valid HTML. Zero markdown. Zero code fences. Zero plain text outside HTML tags.
+- Output card MARKUP ONLY, using exactly the class names shown below. Never output
+  <!DOCTYPE>, <html>, <head>, <body>, <style>, <link>, or any style="..." attribute.
+  The page supplies all styling; any CSS you emit overrides it and breaks the theme.
 - Never output "Note:", "Consider:", asterisks, dashes, or any explanation.
 - Include a card ONLY if it genuinely passes the filter below. A short issue is the
   correct output on a quiet week — do NOT pad to fill space. Two strong cards beat
@@ -889,164 +892,167 @@ def generate_page(digest_html: str) -> str:
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vivian's PM Skills Digest — {date_display}</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
 
     body {{
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #fafaf8;
-      color: #1a1a1a;
-      line-height: 1.65;
+      font-family: 'Karla', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fdf2f7;
+      color: #3b2340;
+      line-height: 1.7;
     }}
 
     .header {{
-      background: #fff;
-      border-bottom: 1px solid #e8e8e4;
-      padding: 2.5rem 1.5rem 2rem;
+      background: linear-gradient(180deg, #fffbfd, #fdf2f7);
+      border-bottom: 1px solid #f3d9e7;
+      padding: 2.6rem 1.5rem 2rem;
       text-align: center;
     }}
-    .header h1 {{ font-size: 1.4rem; font-weight: 700; letter-spacing: -0.3px; }}
-    .header .tagline {{ font-size: 0.9rem; color: #888; margin-top: 0.3rem; }}
+    .header h1 {{ font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 600; }}
+    .header .tagline {{ font-size: 0.95rem; font-style: italic; color: #8a6b7d; margin-top: 0.35rem; }}
     .header .updated {{
-      display: inline-block; margin-top: 0.85rem;
-      font-size: 0.78rem; background: #f0f0ec; color: #666;
-      padding: 0.25rem 0.85rem; border-radius: 999px;
+      display: inline-block; margin-top: 0.9rem;
+      font-size: 0.8rem; font-weight: 600;
+      background: #ffeef6; color: #c2437f;
+      padding: 0.35rem 1rem; border-radius: 999px;
     }}
 
-    .container {{ max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }}
+    .container {{ max-width: 760px; margin: 0 auto; padding: 1.75rem 1.5rem 3rem; }}
 
     /* ── Quiet week banner ── */
     .quiet-banner {{
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-      background: #f7f7f4;
-      border: 1px solid #e0ddd5;
-      border-radius: 10px;
-      padding: 1rem 1.25rem;
-      margin-bottom: 1.25rem;
-      font-size: 0.9rem;
-      color: #666;
-      line-height: 1.5;
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      background: #fffaf0; border: 1px solid #f0e0bd; border-radius: 16px;
+      padding: 1rem 1.25rem; margin-bottom: 1.25rem;
+      font-size: 0.9rem; color: #7a5f14; line-height: 1.6;
     }}
-    .quiet-icon {{ font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }}
+    .quiet-icon {{ font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }}
 
     /* ── Digest meta line ── */
-    .digest-meta {{
-      font-size: 0.8rem; color: #888; margin-bottom: 1rem;
-    }}
+    .digest-meta {{ font-size: 0.82rem; color: #a68a99; text-align: center; margin-bottom: 1rem; }}
 
     /* ── Jump nav ── */
-    .digest-nav {{
-      display: flex; flex-wrap: wrap; gap: 6px;
-      margin-bottom: 1.5rem;
-    }}
+    .digest-nav {{ display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 1.5rem; }}
     .digest-nav a {{
-      display: inline-block; padding: 4px 11px;
-      font-size: 0.75rem; font-weight: 500; color: #444;
-      background: #fff; border: 1px solid #ddd;
+      display: inline-block; padding: 7px 15px;
+      font-size: 0.79rem; font-weight: 600; color: #8a5f7a;
+      background: #fffbfd; border: 1px solid #f0d3e3;
       border-radius: 999px; text-decoration: none;
-      transition: background 0.12s, border-color 0.12s;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
     }}
-    .digest-nav a:hover {{ background: #1a1a1a; color: #fff; border-color: #1a1a1a; }}
-    .digest-nav a.tp-nav {{ background: #fffdf5; border-color: #e8d98a; color: #a07800; }}
-    .digest-nav a.tp-nav:hover {{ background: #a07800; color: #fff; border-color: #a07800; }}
+    .digest-nav a:hover {{ background: #e0559a; color: #fff; border-color: #e0559a; }}
+    .digest-nav a.tp-nav {{ background: #f6f0ff; border-color: #ddd0f5; color: #7a5fbd; }}
+    .digest-nav a.tp-nav:hover {{ background: #7a5fbd; color: #fff; border-color: #7a5fbd; }}
 
     /* ── Creator + thought-provoker cards ── */
     .creator, .thought-provoker {{
-      background: #fff; border: 1px solid #e8e8e4;
-      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 0.9rem;
+      background: #fffdfb; border: 1px solid #f3d9e7;
+      border-radius: 18px; padding: 1.4rem 1.5rem; margin-bottom: 0.9rem;
+      box-shadow: 0 8px 22px rgba(224, 85, 154, 0.07);
     }}
-    .thought-provoker {{ background: #fffdf5; border-color: #e8d98a; }}
+    .thought-provoker {{ background: #fffaf0; border-color: #f0e0bd; box-shadow: none; }}
 
     .creator-header {{
       display: flex; align-items: flex-start;
-      justify-content: space-between; gap: 10px; margin-bottom: 0.35rem;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.2rem;
     }}
-    .creator-header h2 {{ font-size: 1rem; font-weight: 700; line-height: 1.3; }}
+    .creator-header h2 {{ font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 600; line-height: 1.3; }}
+    .thought-provoker .creator-header h2 {{ color: #4a3a1a; }}
     .date-badge {{
-      flex-shrink: 0; font-size: 0.7rem; font-weight: 500;
-      color: #888; background: #f0f0ec;
-      padding: 2px 8px; border-radius: 999px; white-space: nowrap;
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 600;
+      color: #c2437f; background: #ffeef6;
+      padding: 4px 11px; border-radius: 999px; white-space: nowrap;
     }}
+    .thought-provoker .date-badge {{ color: #a07800; background: #fdf0d3; }}
     .badge-hot {{
-      display: inline-block; background: #cc3300; color: #fff;
-      font-size: 0.65rem; font-weight: 700; padding: 1px 6px;
-      border-radius: 999px; margin-left: 5px; vertical-align: middle;
+      display: inline-block; background: #e0559a; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 2px 8px;
+      border-radius: 999px; margin-left: 6px; vertical-align: middle;
     }}
-    .creator-headline {{
-      font-size: 0.8rem; color: #777; font-style: italic; margin-bottom: 0.75rem;
-    }}
+    .creator-headline {{ font-size: 0.86rem; color: #9a7a8b; font-style: italic; margin-bottom: 0.85rem; }}
+    .thought-provoker .creator-headline {{ color: #9a875f; }}
 
     /* ── TL;DR block ── */
     .tldr {{
-      background: #f0eeff; border-left: 3px solid #7b6ef6;
-      border-radius: 0 6px 6px 0; padding: 0.5rem 0.85rem;
-      font-size: 0.855rem; color: #2a2a2a; line-height: 1.55;
-      margin-bottom: 0.6rem;
+      background: #f7f2ff; border-left: 4px solid #9a86d6;
+      border-radius: 0 12px 12px 0; padding: 0.75rem 0.95rem;
+      font-size: 0.86rem; color: #3b2340; line-height: 1.68;
+      margin-bottom: 0.7rem;
     }}
     .tldr-label {{
-      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.06em; color: #7b6ef6; display: block; margin-bottom: 3px;
+      font-size: 0.66rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: #7a5fbd; display: block; margin-bottom: 5px;
     }}
-    .thought-provoker .tldr {{ background: #fffbea; border-color: #c9a800; }}
+    .thought-provoker .tldr {{ background: #fffdf6; border-color: #d9b154; }}
     .thought-provoker .tldr-label {{ color: #a07800; }}
 
     /* ── Collapsible body ── */
-    details {{ margin-top: 2px; }}
+    details {{ margin-top: 4px; }}
     summary {{
-      cursor: pointer; font-size: 0.75rem; font-weight: 600; color: #7b6ef6;
-      list-style: none; display: inline-flex; align-items: center; gap: 3px;
-      user-select: none;
+      cursor: pointer; font-size: 0.79rem; font-weight: 700; color: #e0559a;
+      list-style: none; display: inline-flex; align-items: center; gap: 4px;
+      user-select: none; padding: 4px 0;
     }}
     summary::-webkit-details-marker {{ display: none; }}
-    summary::before {{ content: '↓ '; font-size: 0.7rem; }}
+    summary::before {{ content: '↓ '; }}
     details[open] summary::before {{ content: '↑ '; }}
-    details[open] summary {{ margin-bottom: 0.75rem; }}
+    details[open] summary {{ margin-bottom: 0.7rem; }}
+    .thought-provoker summary {{ color: #a07800; }}
 
-    .detail-body p {{ font-size: 0.875rem; margin-bottom: 0.7rem; }}
-    .detail-body ul, .detail-body ol {{
-      font-size: 0.875rem; padding-left: 1.2rem; margin-bottom: 0.7rem;
-    }}
+    .detail-body p {{ font-size: 0.875rem; color: #5c4a55; line-height: 1.75; margin-bottom: 0.7rem; }}
+    .detail-body ul, .detail-body ol {{ font-size: 0.875rem; color: #5c4a55; padding-left: 1.2rem; margin-bottom: 0.7rem; }}
     .detail-body li {{ margin-bottom: 0.4rem; }}
     .detail-body blockquote {{
-      border-left: 3px solid #ddd; padding: 0.3rem 0.85rem;
-      color: #555; font-style: italic; font-size: 0.855rem; margin: 0.5rem 0;
+      border-left: 3px solid #f0d3e3; padding: 0.3rem 0.9rem;
+      color: #8a6b7d; font-style: italic; font-size: 0.86rem; margin: 0.5rem 0;
     }}
 
-    .creator-links {{ margin-top: 0.6rem; font-size: 0.8rem; }}
-    .creator-links a {{ color: #7b6ef6; text-decoration: none; font-weight: 500; }}
-    .creator-links a:hover {{ text-decoration: underline; }}
-    .creator-links span {{ color: #ccc; margin: 0 5px; }}
+    .creator-links {{ margin-top: 0.9rem; }}
+    .creator-links a {{
+      display: inline-block; background: #e0559a; color: #fff;
+      text-decoration: none; font-size: 0.79rem; font-weight: 700;
+      padding: 9px 18px; border-radius: 999px;
+    }}
+    .creator-links a:hover {{ background: #c2437f; }}
+    .thought-provoker .creator-links a {{ background: #a07800; }}
+    .thought-provoker .creator-links a:hover {{ background: #856300; }}
+    .creator-links span {{ color: #e8cbdb; margin: 0 6px; }}
 
-    /* ── Top pick (appears at top of digest) ── */
+    /* ── Top pick ── */
     .top-pick {{
-      background: #f0eeff; border: 1px solid #c4b8ff;
-      border-radius: 12px; padding: 1.25rem 1.4rem; margin-bottom: 1.25rem;
+      background: linear-gradient(135deg, #ffc2dd, #d9c8f5 55%, #bcd8f8);
+      border: none; border-radius: 20px;
+      padding: 1.5rem 1.6rem; margin-bottom: 1.25rem;
+      color: #3b2340;
     }}
     .top-pick-label {{
-      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.06em; color: #7b6ef6; margin-bottom: 0.5rem;
+      font-family: 'Playfair Display', serif; font-size: 0.88rem; font-style: italic;
+      letter-spacing: 0.04em; margin-bottom: 0.6rem;
     }}
-    .top-pick-content {{ font-size: 0.925rem; color: #1a1a1a; line-height: 1.55; }}
+    .top-pick-content {{ font-size: 0.98rem; line-height: 1.68; }}
 
     /* ── No updates fallback ── */
-    .no-updates {{
-      text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #aaa;
-    }}
+    .no-updates {{ text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #bfa3b3; }}
 
     .footer {{
-      text-align: center; padding: 1.5rem;
-      font-size: 0.78rem; color: #bbb; border-top: 1px solid #e8e8e4;
+      text-align: center; padding: 1.6rem;
+      font-size: 0.8rem; color: #bfa3b3; border-top: 1px solid #f3d9e7;
     }}
 
     @media (max-width: 600px) {{
-      .header {{ padding: 1.5rem 1rem 1.25rem; }}
-      .header h1 {{ font-size: 1.1rem; }}
-      .container {{ padding: 1rem 0.85rem 2.5rem; }}
-      .creator, .thought-provoker, .top-pick {{ padding: 1rem 1rem; border-radius: 10px; }}
-      .creator-header {{ flex-direction: column; gap: 4px; }}
-      .quiet-banner {{ font-size: 0.85rem; padding: 0.85rem 1rem; }}
+      .header {{ padding: 1.6rem 1rem 1.3rem; }}
+      .header h1 {{ font-size: 1.35rem; }}
+      .container {{ padding: 1rem 0.9rem 2.5rem; }}
+      .creator, .thought-provoker, .top-pick {{ padding: 1.05rem 1.05rem; border-radius: 16px; }}
+      .creator-header {{ flex-direction: column; align-items: flex-start; gap: 6px; }}
+      .creator-header h2 {{ font-size: 1.2rem; }}
+      .digest-nav {{ flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding-bottom: 4px; }}
+      .digest-nav a {{ flex-shrink: 0; padding: 10px 15px; }}
+      .creator-links a {{ display: block; text-align: center; padding: 13px 18px; }}
+      summary {{ padding: 9px 0; font-size: 0.85rem; }}
+      .quiet-banner {{ font-size: 0.87rem; padding: 0.9rem 1rem; }}
     }}
   </style>
 </head>
