@@ -14,7 +14,10 @@ import json
 import logging
 import sys
 from datetime import datetime, timedelta
+from typing import Literal
+
 from anthropic import Anthropic
+from pydantic import BaseModel, Field
 
 # ── Logging setup ──────────────────────────────────────────────────────────────
 logging.basicConfig(
@@ -82,14 +85,15 @@ THOUGHT_LEADERS = [
 #                              under her own name from Lenny's feed
 
 def _feed(name: str, url: str) -> str:
-    """Allow a private Substack feed to override the public one.
+    """Allow an alternate feed URL to override the one above, via env var
+    FEED_<NAME> (e.g. FEED_AAKASH_GUPTA), set as a GitHub Actions secret.
 
-    A paid Substack subscription comes with a private RSS URL that contains a
-    secret token, and it returns full post bodies where the public feed returns
-    a paywalled preview. The token must not live in this file — set an env var
-    named FEED_<NAME> (e.g. FEED_AAKASH_GUPTA) to your private feed URL, as a
-    GitHub Actions secret alongside ANTHROPIC_API_KEY. Find it in Substack under
-    Settings -> your private feed.
+    Note this does NOT solve paywalled posts. Substack's public RSS truncates
+    every paid post at "Read more", and the private feed Substack documents is
+    a private *podcast* feed, not a full-text post feed. For paid written
+    posts, see fetch_paid_from_gmail below — the full text arrives by email.
+    This override remains useful for a publication that genuinely offers a
+    full-text feed, or to repoint a feed that moved.
     """
     key = "FEED_" + re.sub(r"[^A-Z0-9]+", "_", name.upper()).strip("_")
     return os.environ.get(key) or url
@@ -250,16 +254,137 @@ def search_fallback(query: str, max_results: int = 3) -> list[dict]:
         return []
 
 
+# ══════════════════════════════════════════════════════════════════════════════
+# PAID SUBSCRIPTIONS
+#
+# Substack's public RSS gives a preview and cuts off at "Read more" — measured
+# on 2026-08-23, Aakash's paid posts came through at ~4-6k characters ending in
+# "Upgrade to a paid subscriber ... Read more". The judge would be scoring a
+# teaser, and the digest would be summarising one.
+#
+# The full text does arrive, by email, because Vivian pays for these. So for
+# paid publications we read her inbox over IMAP instead of the feed, using the
+# same app password already used to send the digest. No new secret, and
+# imaplib/email are both standard library.
+# ══════════════════════════════════════════════════════════════════════════════
+
+# Roster name -> the domain that appears in that publication's post URLs.
+PAID_SOURCES = {
+    "Lenny Rachitsky": "lennysnewsletter.com",
+    "Aakash Gupta":    "news.aakashg.com",
+}
+
+
+def fetch_paid_from_gmail(max_age_days: int = 7) -> dict:
+    """Return {roster name: [item, ...]} for paid publications, read from email.
+
+    Falls back to an empty dict on any failure, so a mail problem degrades to
+    the RSS preview rather than killing the run.
+    """
+    import imaplib, email
+    from email.header import decode_header, make_header
+
+    user     = os.environ.get("GMAIL_USER", "viviankillin@gmail.com")
+    password = os.environ.get("GMAIL_APP_PASSWORD", "")
+    if not password:
+        log.warning("GMAIL_APP_PASSWORD not set — paid posts will fall back to truncated RSS")
+        return {}
+
+    since  = (datetime.now() - timedelta(days=max_age_days)).strftime("%d-%b-%Y")
+    found  = {name: [] for name in PAID_SOURCES}
+    domains = {dom: name for name, dom in PAID_SOURCES.items()}
+
+    try:
+        with imaplib.IMAP4_SSL("imap.gmail.com") as imap:
+            imap.login(user, password)
+            # All Mail, not INBOX — newsletters are frequently auto-archived.
+            imap.select('"[Gmail]/All Mail"', readonly=True)
+            typ, data = imap.search(None, f'(SINCE "{since}")', '(FROM "substack.com")')
+            ids = data[0].split() if typ == "OK" and data and data[0] else []
+            log.info("Gmail: %d Substack message(s) since %s", len(ids), since)
+
+            for mid in ids[-80:]:                      # newest 80 is plenty for a week
+                typ, raw = imap.fetch(mid, "(RFC822)")
+                if typ != "OK" or not raw or not raw[0]:
+                    continue
+                msg = email.message_from_bytes(raw[0][1])
+
+                html = ""
+                for part in msg.walk():
+                    if part.get_content_type() == "text/html":
+                        try:
+                            html = part.get_payload(decode=True).decode(
+                                part.get_content_charset() or "utf-8", "ignore")
+                        except Exception:
+                            pass
+                        break
+                if not html:
+                    continue
+
+                # The canonical post URL identifies the publication unambiguously,
+                # where the From header varies between "lenny@substack.com" and
+                # publication-branded senders.
+                post_url, owner = "", None
+                for href in re.findall(r'href="(https?://[^"]+)"', html):
+                    for dom, name in domains.items():
+                        if dom in href and "/p/" in href:
+                            post_url = href.split("?")[0]
+                            owner = name
+                            break
+                    if owner:
+                        break
+                if not owner:
+                    continue
+
+                subject = str(make_header(decode_header(msg.get("Subject", "")))).strip()
+                try:
+                    pub = email.utils.parsedate_to_datetime(msg.get("Date", "")).replace(tzinfo=None)
+                except Exception:
+                    pub = datetime.now()
+
+                body = _strip_html(
+                    re.sub(r"(?is)<(script|style)[^>]*>.*?</\1>", " ", html))
+
+                found[owner].append({
+                    "title":      subject,
+                    "snippet":    body[:400],
+                    "body":       body[:8000],   # the judge reads this, not the URL
+                    "url":        post_url,
+                    "date":       pub.strftime("%B %d, %Y"),
+                    "feed_owner": owner,
+                    # Guest posts: the email subject often carries "| Author",
+                    # but the byline is unreliable here, so let the judge and
+                    # the writer prompt read it off the body instead.
+                    "author":     owner,
+                    "quote_post": bool(QUOTE_POST_RE.match(subject)),
+                    "roundup":    bool(ROUNDUP_RE.match(subject)),
+                    "release":    bool(RELEASE_RE.match(subject)),
+                    "_sort":      pub,
+                })
+    except Exception as e:
+        log.warning("Gmail fetch failed (%s) — paid posts fall back to truncated RSS", e)
+        return {}
+
+    for name, items in found.items():
+        items.sort(key=lambda r: r.pop("_sort"), reverse=True)
+        log.info("  Gmail %-20s — %d full-text post(s)", name, len(items))
+    return found
+
+
 MAX_ITEMS_PER_CREATOR = 3
 
 
 def gather_recent(shown_urls: list[str]) -> dict:
     log.info("Fetching recent creator content via RSS (last 7 days)...")
     shown = set(shown_urls)
+    paid = fetch_paid_from_gmail(max_age_days=7)
     findings = {}
     found_count = 0
     for name, feed_url in THOUGHT_LEADERS:
-        if feed_url:
+        if paid.get(name):
+            # Full text from email beats a paywalled RSS preview.
+            candidates = paid[name]
+        elif feed_url:
             # Over-fetch, then filter, then cap. Filtering after the cap would
             # let three quote posts crowd out a creator's one real article.
             candidates = fetch_rss(name, feed_url, max_age_days=7, max_items=12)
@@ -344,6 +469,167 @@ def gather_thought_provokers(shown_urls: list[str], recent: dict) -> list[dict]:
         log.info("Thought provoker pool (365 days): %d candidates", len(candidates))
 
     return candidates[:20]
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# SCORING PASS
+#
+# Every candidate is scored on its own before anything is selected or written.
+# Three things this buys that a prose filter inside the generation prompt did
+# not:
+#
+#   1. The judge reads the ARTICLE, not a 400-character RSS snippet. Most bad
+#      cards came from summarising something nobody had read.
+#   2. Scores are thresholded in Python, so "drop it" is a code path rather
+#      than an instruction the model can talk itself out of while it is also
+#      trying to lay out HTML.
+#   3. Every verdict is written to digests/scores-<date>.json. That file is
+#      how you tune the rubric: read the misses, adjust RUBRIC, re-run.
+#
+# To change what counts as a good article, edit RUBRIC. Nothing else.
+# ══════════════════════════════════════════════════════════════════════════════
+
+RUBRIC = """An article PASSES if a working product manager can take something away and use it.
+Exactly two kinds of article qualify:
+
+  A. AI SKILLS A PM CAN ACTUALLY IMPLEMENT
+     A practice, workflow, prompt, evaluation method, or way of working with AI
+     that a PM could apply to their own job this week. The reader should finish
+     it knowing what to DO, not merely what happened.
+
+  B. PM CRAFT: SKILLS, FRAMEWORKS AND JUDGEMENT
+     Product frameworks, prioritisation, discovery, strategy, metrics,
+     stakeholder work, org design, career craft. The classic product-management
+     canon, whether or not AI is involved.
+
+Everything else FAILS. In particular these are never a pass:
+  - Model releases, benchmarks, parameter counts, scaling laws, lab news
+  - Funding rounds, acquisitions, industry gossip, general tech news
+  - Infrastructure, harness architecture, or engineering-tooling deep dives
+    written for engineers rather than for the people who plan the work
+  - Automated news roundups and link aggregations
+  - Personal essays with no product lesson
+
+CALIBRATION — these are the anchors. Judge against them.
+
+  FAIL: "[AINews] Death of Params: Z.ai CEO Jie Tang on GLM 5.3 and the new
+        Post-training Scaling Laws" — model-scaling news. There is a PM
+        implication you could bolt on ("smaller models change build-vs-buy"),
+        and bolting it on is exactly the mistake. The article does not tell a
+        PM what to do. FAIL.
+
+  PASS: "The AI Productivity Paradox" (Marty Cagan) — teams ship faster with AI
+        while outcomes stay flat, and here is why and what to change. It speaks
+        directly to how a PM should run their team. PASS.
+
+THE DECIDING TEST: can you name a specific thing this PM could do differently
+after reading it, using only what the article itself says? If you have to
+supply the product angle yourself, the article does not have one. Fail it."""
+
+
+class ArticleVerdict(BaseModel):
+    """One judge verdict. Kept small on purpose — long rubrics score worse."""
+    category: Literal["ai-skill-a-pm-can-implement", "pm-craft-or-framework", "neither"]
+    score: int = Field(ge=0, le=5, description="0 = irrelevant, 3 = usable, 5 = the best thing this week")
+    pm_action: str = Field(description="The specific thing a PM could do differently after reading it, drawn only from the article. Empty string if there isn't one.")
+    manufactured_angle: bool = Field(description="True if you had to supply the product relevance yourself rather than finding it in the article.")
+    reason: str = Field(description="One sentence. Why this score.")
+
+
+# Keep at or above this to survive. Tune from the score log, not from a hunch.
+SCORE_THRESHOLD = 3
+
+
+def fetch_article_text(url: str, max_chars: int = 6000) -> tuple[str, str]:
+    """Best-effort full article text. Returns (text, source) where source is
+    'article' or 'snippet' so the score log records what the judge actually read."""
+    import urllib.request
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (pm-digest)"})
+        raw = urllib.request.urlopen(req, timeout=20).read().decode("utf-8", "ignore")
+        body = re.sub(r"(?is)<(script|style|nav|header|footer)[^>]*>.*?</\1>", " ", raw)
+        text = _strip_html(body)
+        if len(text) > 400:
+            return text[:max_chars], "article"
+    except Exception as e:
+        log.debug("Article fetch failed for %s: %s", url, e)
+    return "", "snippet"
+
+
+def score_item(item: dict) -> dict:
+    """Judge one article on its own. Independent calls, deliberately — scoring a
+    batch together lets the model grade on a curve against whatever else showed
+    up that week rather than against the rubric."""
+    if item.get("body"):
+        body, source = item["body"], "email"     # full paid post, already in hand
+    else:
+        body, source = fetch_article_text(item["url"])
+    if not body:
+        body, source = item.get("snippet", ""), "snippet"
+
+    prompt = f"""{RUBRIC}
+
+━━━ THE ARTICLE ━━━
+Title:  {item['title']}
+Author: {item.get('author') or item.get('feed_owner')}
+Source: {item.get('feed_owner')}
+URL:    {item['url']}
+
+{ {'article': 'Full text', 'email': 'Full text of the paid post, from email'}.get(source, 'RSS summary only (the full text could not be fetched — judge conservatively)') }:
+{body}
+
+Score it."""
+
+    try:
+        response = client.messages.parse(
+            model="claude-opus-5",
+            max_tokens=4000,
+            messages=[{"role": "user", "content": prompt}],
+            output_format=ArticleVerdict,
+        )
+        v = response.parsed_output
+        verdict = v.model_dump()
+    except Exception as e:
+        # A judge failure must not silently promote an article. Fail closed.
+        log.warning("Scoring failed for %s: %s", item["url"][:60], e)
+        verdict = {"category": "neither", "score": 0, "pm_action": "",
+                   "manufactured_angle": False, "reason": f"scoring error: {e}"}
+
+    verdict.update({"title": item["title"], "url": item["url"],
+                    "author": item.get("author"), "feed_owner": item.get("feed_owner"),
+                    "judged_on": source})
+    return verdict
+
+
+def score_pool(items: list[dict], label: str) -> tuple[list[dict], list[dict]]:
+    """Score every item, return (survivors, all verdicts)."""
+    if not items:
+        return [], []
+    log.info("Scoring %d %s candidate(s) with claude-opus-5...", len(items), label)
+    survivors, verdicts = [], []
+    for item in items:
+        v = score_item(item)
+        verdicts.append(v)
+        passed = (v["score"] >= SCORE_THRESHOLD
+                  and v["category"] != "neither"
+                  and not v["manufactured_angle"]
+                  and bool(v["pm_action"].strip()))
+        if passed:
+            item["judge"] = v
+            survivors.append(item)
+        mark = "PASS" if passed else "fail"
+        log.info("  [%s] %d/5 %-28s %s", mark, v["score"], v["category"], item["title"][:44])
+    log.info("%s: %d of %d survived", label, len(survivors), len(items))
+    return survivors, verdicts
+
+
+def save_scores(verdicts: list[dict]) -> None:
+    """Persist every verdict, kept and dropped alike. This is the tuning loop."""
+    os.makedirs("digests", exist_ok=True)
+    path = os.path.join("digests", f"scores-{datetime.now().strftime('%Y-%m-%d')}.json")
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(sorted(verdicts, key=lambda v: -v["score"]), f, indent=2, ensure_ascii=False)
+    log.info("Wrote %d verdict(s) to %s", len(verdicts), path)
 
 
 def clean_claude_output(raw: str) -> str:
@@ -812,6 +1098,16 @@ def main():
 
         recent = gather_recent(shown_urls)
         thought_provokers = gather_thought_provokers(shown_urls, recent)
+
+        # Score every candidate before anything is selected or written.
+        all_verdicts = []
+        for name, items in list(recent.items()):
+            kept, verdicts = score_pool(items, f"recent/{name}")
+            recent[name] = kept
+            all_verdicts += verdicts
+        thought_provokers, tp_verdicts = score_pool(thought_provokers, "thought provokers")
+        all_verdicts += tp_verdicts
+        save_scores(all_verdicts)
 
         digest_html = build_digest_html(recent, thought_provokers, shown_urls)
 

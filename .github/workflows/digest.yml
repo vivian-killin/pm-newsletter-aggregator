@@ -24,7 +24,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install anthropic duckduckgo-search feedparser
+        run: pip install anthropic pydantic duckduckgo-search feedparser
 
       - name: Generate digest
         env:
