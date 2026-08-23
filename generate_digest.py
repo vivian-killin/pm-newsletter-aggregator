@@ -68,7 +68,6 @@ THOUGHT_LEADERS = [
     ("Aakash Gupta",      "https://aakashgupta.substack.com/feed"),
     ("Peter Yang",        "https://creatoreconomy.so/feed"),
     ("Ethan Mollick",     "https://www.oneusefulthing.org/feed"),
-    ("Gergely Orosz",     "https://newsletter.pragmaticengineer.com/feed"),
     ("Simon Willison",    "https://simonwillison.net/atom/everything/"),
     ("Swyx",              "https://www.latent.space/feed"),
 ]
@@ -83,6 +82,12 @@ THOUGHT_LEADERS = [
 #   Claire Vo                  last post 2025-03-04 — she publishes in Lenny's
 #                              newsletter now, so the byline logic surfaces her
 #                              under her own name from Lenny's feed
+#
+# Removed 2026-08-24 on the judge's evidence rather than a dead feed:
+#   Gergely Orosz              feed is healthy and he writes well, but 0 of 3
+#                              articles cleared the rubric (mean 2.0). The
+#                              Pragmatic Engineer is written for engineers;
+#                              its PM angle is one the reader has to supply.
 
 def _feed(name: str, url: str) -> str:
     """Allow an alternate feed URL to override the one above, via env var
