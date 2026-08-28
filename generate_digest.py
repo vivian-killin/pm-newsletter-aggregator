@@ -14,7 +14,7 @@ import re
 import json
 import logging
 import sys
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Literal
 
 from anthropic import Anthropic
@@ -137,8 +137,11 @@ def load_shown_urls() -> list[str]:
 def save_shown_urls(urls: list[str]) -> None:
     """Persist the updated shown URLs list, keeping the last 200 entries."""
     os.makedirs("digests", exist_ok=True)
-    # Cap at 200 to avoid the file growing forever
-    trimmed = urls[-200:]
+    # Cap high enough that an article cannot come back round. At ~14 URLs an
+    # issue and two issues a week, 200 was only about seven weeks of memory,
+    # after which old articles quietly became eligible again. This is a list of
+    # short strings; 2000 is still a trivially small file.
+    trimmed = urls[-2000:]
     with open(SHOWN_URLS_PATH, "w") as f:
         json.dump(trimmed, f, indent=2)
 
@@ -266,7 +269,13 @@ def fetch_rss(name: str, url: str, max_age_days: int = 7, max_items: int = 3,
                         type(getattr(feed, "bozo_exception", None)).__name__)
             FEED_FAILURES.append(name)
             return []
-        now    = datetime.now()
+        # feedparser's published_parsed is UTC, so the comparison must be in
+        # UTC too. datetime.now() is local, and the workflow runs under
+        # TZ=America/Denver — six hours behind. That made "newest" six hours in
+        # the past, so anything published in the last six hours was skipped as
+        # "too new" and silently vanished. Substack sends land mid-afternoon
+        # UTC, right inside that window.
+        now    = datetime.now(timezone.utc).replace(tzinfo=None)
         oldest = now - timedelta(days=max_age_days)
         newest = now - timedelta(days=min_age_days)
 
@@ -288,7 +297,10 @@ def fetch_rss(name: str, url: str, max_age_days: int = 7, max_items: int = 3,
 
             if pub and pub < oldest:
                 continue  # too old
-            if pub and pub > newest:
+            # The ceiling exists only to enforce the evergreen floor. Applying
+            # it when min_age_days is 0 would reject anything with a slightly
+            # fast clock for no benefit.
+            if min_age_days and pub and pub > newest:
                 continue  # too new for this window
             if min_age_days and not pub:
                 continue  # undated, so we cannot prove it is old enough
@@ -386,10 +398,16 @@ def search_fallback(query: str, max_results: int = 3) -> list[dict]:
 #
 # Either way, if the mail lookup finds nothing the run falls back to RSS, so
 # adding a publication here can only help.
+# Verified against the inbox on 2026-08-28: these are the roster publications
+# Vivian actually receives by email. The rest stay on RSS, since a mail lookup
+# for a newsletter she does not subscribe to just returns nothing.
 EMAIL_SOURCES = {
     "Lenny Rachitsky": "lennysnewsletter.com",
     "Aakash Gupta":    "news.aakashg.com",
     "Kristen Berman":  "kristenberman.substack.com",
+    "Deb Liu":         "debliu.substack.com",
+    "Wes Kao":         "newsletter.weskao.com",
+    "Ethan Mollick":   "oneusefulthing.org",
 }
 
 
