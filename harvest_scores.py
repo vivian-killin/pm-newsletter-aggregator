@@ -53,13 +53,24 @@ def main():
     for v in rows:
         by_source[v.get("feed_owner") or v.get("author") or "?"].append(v)
 
-    dead  = {s: vs for s, vs in by_source.items()
-             if len(vs) >= MIN_JUDGED and not any(passed(v) for v in vs)}
+    # A source can fail for two completely different reasons, and the fix is
+    # opposite in each case. Off-topic means drop it. Paywalled means the judge
+    # only ever saw a teaser — the source may be excellent and simply unreadable
+    # over public RSS, which is a plumbing problem, not an editorial one.
+    def paywalled(v):
+        r = (v.get("reason") or "").lower()
+        return any(k in r for k in ("paywall", "teaser", "truncated", "cut off", "subscriber"))
+
+    dead_all = {s: vs for s, vs in by_source.items()
+                if len(vs) >= MIN_JUDGED and not any(passed(v) for v in vs)}
+    blocked = {s: vs for s, vs in dead_all.items()
+               if sum(paywalled(v) for v in vs) >= len(vs) / 2}
+    dead = {s: vs for s, vs in dead_all.items() if s not in blocked}
     solid = {s: vs for s, vs in by_source.items()
              if len(vs) >= MIN_JUDGED and all(passed(v) for v in vs)}
 
     print("=" * 74)
-    print("1. SOURCES THAT NEVER PASSED  — delete these from THOUGHT_LEADERS")
+    print("1. SOURCES THAT NEVER PASSED ON THE MERITS  — safe to delete")
     print("=" * 74)
     if not dead:
         print("  (none yet — every source has landed at least one article)")
@@ -69,6 +80,20 @@ def main():
         for v in vs[:3]:
             print(f"     {v['score']}/5  {v['title'][:56]}")
             print(f"          {v['reason'][:82]}")
+
+    print("\n" + "=" * 74)
+    print("1b. SOURCES BLOCKED BY A PAYWALL  — do NOT just delete these")
+    print("=" * 74)
+    if not blocked:
+        print("  (none)")
+    for s_, vs in sorted(blocked.items(), key=lambda kv: -len(kv[1])):
+        print(f"\n  {s_}  —  0 of {len(vs)} passed, and the judge only ever saw a teaser")
+        print(f"     The public RSS truncates these posts. Two options:")
+        print(f"       - You subscribe: add {s_!r} to PAID_SOURCES in generate_digest.py")
+        print(f"         with its post-URL domain, and it will be read from your Gmail.")
+        print(f"       - You do not subscribe: drop it, since it can never produce a card.")
+        for v in vs[:2]:
+            print(f"     {v['score']}/5  {v['title'][:54]}")
 
     print("\n" + "=" * 74)
     print("2. RECURRING FAIL SHAPES  — candidates for a regex in _drop_reason")

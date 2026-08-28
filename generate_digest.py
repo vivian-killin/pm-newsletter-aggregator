@@ -108,6 +108,13 @@ def _feed(name: str, url: str) -> str:
 THOUGHT_LEADERS = [(n, _feed(n, u) if u else None) for n, u in THOUGHT_LEADERS]
 
 SHOWN_URLS_PATH = os.path.join("digests", "shown_urls.json")
+SHOWN_CREATORS_PATH = os.path.join("digests", "shown_creators.json")
+
+# How many past issues a creator is barred from the evergreen slot. URL dedup
+# alone is not enough: a source with a deep archive and a high pass rate wins
+# that slot every single issue with a different article each time, which reads
+# as repetition even though no link repeats.
+TP_CREATOR_COOLDOWN = 2
 
 
 def load_shown_urls() -> list[str]:
@@ -134,6 +141,43 @@ def save_shown_urls(urls: list[str]) -> None:
 def extract_urls_from_html(html: str) -> list[str]:
     """Pull all href URLs out of generated digest HTML."""
     return re.findall(r'href="(https?://[^"]+)"', html)
+
+
+def load_shown_creators() -> list[list[str]]:
+    """Evergreen bylines from past issues, oldest first."""
+    try:
+        with open(SHOWN_CREATORS_PATH) as f:
+            data = json.load(f)
+            if isinstance(data, list):
+                return [r for r in data if isinstance(r, list)]
+    except (FileNotFoundError, ValueError):
+        pass
+    return []
+
+
+def save_shown_creators(history: list[list[str]], names: list[str]) -> None:
+    os.makedirs("digests", exist_ok=True)
+    with open(SHOWN_CREATORS_PATH, "w", encoding="utf-8") as f:
+        json.dump((history + [names])[-12:], f, indent=2, ensure_ascii=False)
+
+
+def extract_tp_creators_from_html(html: str) -> list[str]:
+    """Bylines that actually appeared in thought-provoker cards this issue.
+
+    Split on CARD boundaries only. Splitting on every "<div class=" instead
+    cuts each card open at its own <div class="creator-header">, which leaves
+    the <h2> in a different fragment and silently yields nothing.
+    """
+    names = []
+    starts = [m.start() for m in re.finditer(r'<div class="(?:creator|thought-provoker)[""\s]', html)]
+    for i, pos in enumerate(starts):
+        block = html[pos: starts[i + 1] if i + 1 < len(starts) else len(html)]
+        if not block.startswith('<div class="thought-provoker'):
+            continue
+        m = re.search(r"<h2>(.*?)</h2>", block, re.S)
+        if m:
+            names.append(re.sub(r"<[^>]+>", "", m.group(1)).strip())
+    return names
 
 
 def _strip_html(text: str) -> str:
@@ -433,7 +477,8 @@ def gather_recent(shown_urls: list[str]) -> dict:
 TP_MIN_AGE_DAYS = 30
 
 
-def gather_thought_provokers(shown_urls: list[str], recent: dict) -> list[dict]:
+def gather_thought_provokers(shown_urls: list[str], recent: dict,
+                             creator_history: list[list[str]] | None = None) -> list[dict]:
     log.info("Gathering thought provoker candidates (%d-90 days old)...", TP_MIN_AGE_DAYS)
     shown = set(shown_urls)
 
@@ -442,10 +487,16 @@ def gather_thought_provokers(shown_urls: list[str], recent: dict) -> list[dict]:
     recent_urls     = {i["url"] for items in recent.values() for i in items}
     recent_creators = {name for name, items in recent.items() if items}
 
+    # Cross-ISSUE dedup: whoever held the evergreen slot recently sits out.
+    history = creator_history or []
+    cooling = {n for issue in history[-TP_CREATOR_COOLDOWN:] for n in issue}
+    if cooling:
+        log.info("  Evergreen cooldown, sitting out: %s", ", ".join(sorted(cooling)))
+
     def collect(max_age_days: int, per_feed: int, seen: set) -> list[dict]:
         out = []
         for name, feed_url in THOUGHT_LEADERS:
-            if not feed_url or name in recent_creators:
+            if not feed_url or name in recent_creators or name in cooling:
                 continue
             kept = 0
             for item in fetch_rss(name, feed_url,
@@ -473,6 +524,15 @@ def gather_thought_provokers(shown_urls: list[str], recent: dict) -> list[dict]:
         log.info("Pool thin — widening to 365 days...")
         candidates += collect(365, 3, seen_urls)
         log.info("Thought provoker pool (365 days): %d candidates", len(candidates))
+
+    # Rotation must never starve the pool. If the cooldown emptied it, give the
+    # cooling creators back rather than ship an issue with no evergreen at all.
+    if len(candidates) < 2 and cooling:
+        log.info("Cooldown left too few candidates — lifting it for this issue")
+        cooling.clear()
+        seen_urls.clear()
+        candidates = collect(365, 2, seen_urls)
+        log.info("Thought provoker pool after lifting cooldown: %d", len(candidates))
 
     return candidates[:20]
 
@@ -805,6 +865,17 @@ OUTPUT RULES — READ CAREFULLY:
 ✗ EXCLUDE from creator cards: Off-topic results (furniture, baby names, clinics, airlines)
 ✗ EXCLUDE any URL that appears in the ALREADY SHOWN list above
 
+━━━ POOL DISCIPLINE — THE TWO LISTS ARE NOT INTERCHANGEABLE ━━━
+The two JSON blocks above are different kinds of thing and get different cards.
+- An item from RECENT RSS RESULTS is this week's news. It may ONLY become a
+  <div class="creator"> card. Never put one in a thought-provoker card, and
+  never describe it as "worth your time regardless of when it was published" —
+  it was published days ago, so that line is simply false.
+- An item from THOUGHT PROVOKER CANDIDATES is at least a month old. It may ONLY
+  become a <div class="thought-provoker"> card.
+- If the recent list has qualifying items, they MUST appear as creator cards.
+  Do not skip them and fill the issue with evergreen picks instead.
+
 ━━━ ATTRIBUTION — GET THE BYLINE RIGHT ━━━
 Every item carries "feed_owner" (whose feed it arrived on) and "author" (who actually
 wrote it). These are frequently DIFFERENT — guest posts are common.
@@ -861,7 +932,9 @@ STEP 6 — Thought provoker cards (0-2, only ones genuinely worth it; id="though
 </div>
 (Additional thought provoker cards use class="thought-provoker" without the id.)
 
-Quiet-week banner (only when nothing recent qualifies — replaces steps 2-4):
+Quiet-week banner — ONLY when you are producing ZERO creator cards. If you are
+emitting even one creator card, do NOT emit this banner: it says nothing was
+published, which contradicts the card sitting next to it. It replaces steps 2-4.
 <div class="quiet-banner"><span class="quiet-icon">💤</span><span>Quiet week — none of your thought leaders posted in the last 7 days. Here are reads worth your time regardless.</span></div>
 
 Output nothing else. No notes. No markdown. No explanations."""
@@ -884,6 +957,14 @@ Output nothing else. No notes. No markdown. No explanations."""
 
     creator_count = html.count('class="creator"')
     tp_count = html.count('class="thought-provoker"')
+
+    # A quiet-week banner next to a creator card is self-contradictory: the
+    # banner says nobody published, the card shows what they published. Asking
+    # the model not to do this was not enough, so strip it here.
+    if creator_count and 'class="quiet-banner"' in html:
+        html = re.sub(r'<div class="quiet-banner".*?</div>\s*', "", html, flags=re.S)
+        log.warning("Stripped a quiet-week banner that appeared alongside %d creator card(s)",
+                    creator_count)
     log.info("Digest contains %d creator card(s) and %d thought provoker(s)", creator_count, tp_count)
 
     # Safety net: only when the issue is completely empty. A thin issue that has
@@ -1159,8 +1240,9 @@ def main():
         shown_urls = load_shown_urls()
         log.info("Loaded %d previously shown URLs", len(shown_urls))
 
+        creator_history = load_shown_creators()
         recent = gather_recent(shown_urls)
-        thought_provokers = gather_thought_provokers(shown_urls, recent)
+        thought_provokers = gather_thought_provokers(shown_urls, recent, creator_history)
 
         # Score every candidate before anything is selected or written.
         global JUDGE_ACTIVE
@@ -1203,6 +1285,11 @@ def main():
             updated_urls = shown_urls + [u for u in new_urls if u not in shown_urls]
             save_shown_urls(updated_urls)
             log.info("Saved %d new URL(s) to shown_urls.json (%d total)", len(new_urls), len(updated_urls))
+
+        # Record who held the evergreen slot so they sit out the next issues.
+        tp_names = extract_tp_creators_from_html(digest_html)
+        save_shown_creators(creator_history, tp_names)
+        log.info("Evergreen slot this issue: %s", ", ".join(tp_names) or "(none)")
 
         # Send the same HTML as an email
         send_email(page, date_display)
