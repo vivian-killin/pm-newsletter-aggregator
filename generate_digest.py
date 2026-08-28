@@ -59,8 +59,6 @@ THOUGHT_LEADERS = [
     ("Deb Liu",           "https://debliu.substack.com/feed"),
 
     # ── Growth, PLG and behavioural design ─────────────────────────────────
-    ("Elena Verna",       "https://www.elenaverna.com/feed"),
-    ("Leah Tharin",       "https://www.leahtharin.com/feed"),
     ("Kristen Berman",    "https://kristenberman.substack.com/feed"),
     ("Karo Zieminski",    "https://karozieminski.substack.com/feed"),
 
@@ -69,7 +67,6 @@ THOUGHT_LEADERS = [
     ("Aakash Gupta",      "https://aakashgupta.substack.com/feed"),
     ("Peter Yang",        "https://creatoreconomy.so/feed"),
     ("Ethan Mollick",     "https://www.oneusefulthing.org/feed"),
-    ("Simon Willison",    "https://simonwillison.net/atom/everything/"),
     ("Swyx",              "https://www.latent.space/feed"),
 ]
 
@@ -85,6 +82,14 @@ THOUGHT_LEADERS = [
 #                              under her own name from Lenny's feed
 #
 # Removed 2026-08-24 on the judge's evidence rather than a dead feed:
+# Removed 2026-08-28 after two judged runs (see digests/scores-*.json):
+#   Simon Willison             0 of 6 passed, mean 0.2 — engineering notes,
+#                              SQLite tricks and industry news, not PM craft
+#   Elena Verna                0 of 4, every post a paywalled teaser
+#   Leah Tharin                0 of 4, same — Vivian does not subscribe, so
+#                              these two can never produce a readable card
+# Julie Zhuo also scored 0 of 4, but is deliberately KEPT at Vivian's call.
+#
 #   Gergely Orosz              feed is healthy and he writes well, but 0 of 3
 #                              articles cleared the rubric (mean 2.0). The
 #                              Pragmatic Engineer is written for engineers;
@@ -623,7 +628,11 @@ SCORE_THRESHOLD = 3
 # them read the article — so a genuinely new off-topic piece from a good source
 # will get through again. Run harvest_scores.py first to convert whatever the
 # judge learned into filters that survive turning it off.
-JUDGE_MODEL = os.environ.get("JUDGE_MODEL", "claude-sonnet-5")
+# Turned off 2026-08-28 after the two budgeted runs. The remaining API
+# credit is reserved for generation. Set JUDGE_MODEL=claude-sonnet-5 (or
+# any model id) to switch it back on; JUDGE_MAX_RUNS still caps how many
+# issues it runs for after that.
+JUDGE_MODEL = os.environ.get("JUDGE_MODEL", "off")
 JUDGE_ENABLED = JUDGE_MODEL.lower() not in ("off", "none", "0", "")
 
 # The judge runs for this many issues and then switches itself off, leaving the
