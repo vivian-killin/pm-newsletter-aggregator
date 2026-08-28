@@ -202,6 +202,44 @@ ROUNDUP_RE = re.compile(r"^\s*[\[(]?\s*(ainews|ai news|community wisdom|weekly r
 RELEASE_RE = re.compile(r"^\s*[\w.-]+\s+v?\d+\.\d+", re.I)
 
 
+# Feeds that failed to fetch this run, as opposed to creators who simply had
+# nothing new. Before this existed the two were indistinguishable: fetch_rss
+# swallowed every error into a warning and returned [], so a rate-limited
+# Substack looked exactly like a quiet week and the digest silently went thin.
+FEED_FAILURES: list[str] = []
+
+
+def _http_get(url: str, attempts: int = 3) -> bytes | None:
+    """Fetch a feed, with a browser User-Agent and backoff on transient errors.
+
+    feedparser.parse(url) does its own fetch with a feedparser User-Agent and
+    no retry. Substack and friends rate-limit datacenter IPs hard, and GitHub
+    Actions runners are about as datacenter as it gets, so a bare parse loses
+    feeds that work perfectly from a laptop.
+    """
+    import urllib.request, urllib.error, time
+    req = urllib.request.Request(url, headers={
+        "User-Agent": ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                       "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36"),
+        "Accept": "application/rss+xml, application/atom+xml, application/xml;q=0.9, */*;q=0.8",
+    })
+    for attempt in range(1, attempts + 1):
+        try:
+            return urllib.request.urlopen(req, timeout=25).read()
+        except urllib.error.HTTPError as e:
+            # 4xx other than rate limiting will not improve on retry.
+            if e.code not in (408, 429) and e.code < 500:
+                log.warning("Feed fetch for %s failed: HTTP %s", url, e.code)
+                return None
+            log.info("Feed %s returned HTTP %s (attempt %d/%d)", url, e.code, attempt, attempts)
+        except Exception as e:
+            log.info("Feed %s failed: %s (attempt %d/%d)", url, type(e).__name__, attempt, attempts)
+        if attempt < attempts:
+            time.sleep(2 * attempt)
+    log.warning("Feed fetch for %s gave up after %d attempts", url, attempts)
+    return None
+
+
 def fetch_rss(name: str, url: str, max_age_days: int = 7, max_items: int = 3,
               min_age_days: int = 0) -> list[dict]:
     """Return feed items aged between min_age_days and max_age_days.
@@ -216,7 +254,18 @@ def fetch_rss(name: str, url: str, max_age_days: int = 7, max_items: int = 3,
     """
     try:
         import feedparser
-        feed = feedparser.parse(url)
+        raw = _http_get(url)
+        if raw is None:
+            FEED_FAILURES.append(name)
+            return []
+        feed = feedparser.parse(raw)
+        if not feed.entries and getattr(feed, "bozo", 0):
+            # Parsed to nothing AND flagged malformed: that is a broken fetch,
+            # not a creator who happens to have published nothing.
+            log.warning("Feed for %s parsed to zero entries (%s)", name,
+                        type(getattr(feed, "bozo_exception", None)).__name__)
+            FEED_FAILURES.append(name)
+            return []
         now    = datetime.now()
         oldest = now - timedelta(days=max_age_days)
         newest = now - timedelta(days=min_age_days)
@@ -274,7 +323,8 @@ def fetch_rss(name: str, url: str, max_age_days: int = 7, max_items: int = 3,
             r.pop("_sort", None)
         return results[:max_items]
     except Exception as e:
-        log.warning("RSS fetch failed for %s (%s): %s", name, url, e)
+        log.warning("RSS parse failed for %s (%s): %s", name, url, e)
+        FEED_FAILURES.append(name)
         return []
 
 
@@ -472,8 +522,16 @@ def gather_recent(shown_urls: list[str]) -> dict:
             why = f" ({', '.join(sorted(set(dropped)))})" if dropped else ""
             log.info("  ✗ %-22s — nothing qualifying%s", name, why)
 
+    failed = sorted(set(FEED_FAILURES))
     log.info("Gather complete: %d/%d thought leaders had qualifying content",
              found_count, len(THOUGHT_LEADERS))
+    if failed:
+        log.warning("%d feed(s) could not be fetched at all: %s",
+                    len(failed), ", ".join(failed))
+        log.warning("These are NOT quiet creators — the digest is thin because "
+                    "the fetch failed, which looks identical in the output.")
+    if len(failed) > len(THOUGHT_LEADERS) / 3:
+        log.error("Over a third of feeds failed. Treat this issue as unreliable.")
     return findings
 
 
