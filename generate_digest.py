@@ -102,7 +102,7 @@ def _feed(name: str, url: str) -> str:
     Note this does NOT solve paywalled posts. Substack's public RSS truncates
     every paid post at "Read more", and the private feed Substack documents is
     a private *podcast* feed, not a full-text post feed. For paid written
-    posts, see fetch_paid_from_gmail below — the full text arrives by email.
+    posts, see fetch_from_gmail below — the full text arrives by email.
     This override remains useful for a publication that genuinely offers a
     full-text feed, or to repoint a feed that moved.
     """
@@ -360,7 +360,7 @@ def search_fallback(query: str, max_results: int = 3) -> list[dict]:
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# PAID SUBSCRIPTIONS
+# SUBSCRIPTIONS READ FROM EMAIL
 #
 # Substack's public RSS gives a preview and cuts off at "Read more" — measured
 # on 2026-08-23, Aakash's paid posts came through at ~4-6k characters ending in
@@ -374,14 +374,27 @@ def search_fallback(query: str, max_results: int = 3) -> list[dict]:
 # ══════════════════════════════════════════════════════════════════════════════
 
 # Roster name -> the domain that appears in that publication's post URLs.
-PAID_SOURCES = {
+#
+# Two separate reasons to route a publication through email, and both apply:
+#
+#   Paywalled       Aakash's posts arrive over RSS truncated at "Read more"
+#                   (measured at ~4-6k characters). Email carries the full text.
+#   Unreachable     Kristen Berman's feed is NOT truncated — her posts come
+#                   through whole — but she had never once appeared in a digest,
+#                   because the feed fetch itself kept failing from the Actions
+#                   runner. Email does not depend on reaching her feed at all.
+#
+# Either way, if the mail lookup finds nothing the run falls back to RSS, so
+# adding a publication here can only help.
+EMAIL_SOURCES = {
     "Lenny Rachitsky": "lennysnewsletter.com",
     "Aakash Gupta":    "news.aakashg.com",
+    "Kristen Berman":  "kristenberman.substack.com",
 }
 
 
-def fetch_paid_from_gmail(max_age_days: int = 7) -> dict:
-    """Return {roster name: [item, ...]} for paid publications, read from email.
+def fetch_from_gmail(max_age_days: int = 7) -> dict:
+    """Return {roster name: [item, ...]} for EMAIL_SOURCES, read from the inbox.
 
     Falls back to an empty dict on any failure, so a mail problem degrades to
     the RSS preview rather than killing the run.
@@ -396,8 +409,8 @@ def fetch_paid_from_gmail(max_age_days: int = 7) -> dict:
         return {}
 
     since  = (datetime.now() - timedelta(days=max_age_days)).strftime("%d-%b-%Y")
-    found  = {name: [] for name in PAID_SOURCES}
-    domains = {dom: name for name, dom in PAID_SOURCES.items()}
+    found  = {name: [] for name in EMAIL_SOURCES}
+    domains = {dom: name for name, dom in EMAIL_SOURCES.items()}
 
     try:
         with imaplib.IMAP4_SSL("imap.gmail.com") as imap:
@@ -429,14 +442,23 @@ def fetch_paid_from_gmail(max_age_days: int = 7) -> dict:
                 # The canonical post URL identifies the publication unambiguously,
                 # where the From header varies between "lenny@substack.com" and
                 # publication-branded senders.
+                # Substack wraps most links in tracking redirects, so the
+                # canonical post URL is frequently only present percent-encoded
+                # inside a redirect target. Decode a copy before searching, and
+                # scan the whole body rather than only href attributes.
+                from urllib.parse import unquote
+                haystack = html + "\n" + unquote(html)
                 post_url, owner = "", None
-                for href in re.findall(r'href="(https?://[^"]+)"', html):
-                    for dom, name in domains.items():
-                        if dom in href and "/p/" in href:
-                            post_url = href.split("?")[0]
-                            owner = name
-                            break
-                    if owner:
+                for dom, name in domains.items():
+                    # Anchor the scheme directly to the host. Allowing any
+                    # path between them lets the match start at Substack's
+                    # redirect wrapper and swallow it, so the URL comes back as
+                    # substack.com/redirect/... instead of the real post.
+                    m = re.search(r"https?://(?:[\w-]+\.)*" + re.escape(dom)
+                                  + r"/p/[A-Za-z0-9._~%-]+", haystack)
+                    if m:
+                        post_url = m.group(0).split("?")[0].rstrip(".,);")
+                        owner = name
                         break
                 if not owner:
                     continue
@@ -482,12 +504,13 @@ MAX_ITEMS_PER_CREATOR = 3
 def gather_recent(shown_urls: list[str]) -> dict:
     log.info("Fetching recent creator content via RSS (last 7 days)...")
     shown = set(shown_urls)
-    paid = fetch_paid_from_gmail(max_age_days=7)
+    paid = fetch_from_gmail(max_age_days=7)
     findings = {}
     found_count = 0
     for name, feed_url in THOUGHT_LEADERS:
         if paid.get(name):
-            # Full text from email beats a paywalled RSS preview.
+            # Email beats RSS: full text where RSS truncates, and it does not
+            # depend on the feed fetch succeeding from the runner.
             candidates = paid[name]
         elif feed_url:
             # Over-fetch, then filter, then cap. Filtering after the cap would
