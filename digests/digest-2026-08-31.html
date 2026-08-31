@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Monday, August 31, 2026</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Karla', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fdf2f7;
+      color: #3b2340;
+      line-height: 1.7;
+    }
+
+    .header {
+      background: linear-gradient(180deg, #fffbfd, #fdf2f7);
+      border-bottom: 1px solid #f3d9e7;
+      padding: 2.6rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 600; }
+    .header .tagline { font-size: 0.95rem; font-style: italic; color: #8a6b7d; margin-top: 0.35rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.9rem;
+      font-size: 0.8rem; font-weight: 600;
+      background: #ffeef6; color: #c2437f;
+      padding: 0.35rem 1rem; border-radius: 999px;
+    }
+
+    .container { max-width: 760px; margin: 0 auto; padding: 1.75rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      background: #fffaf0; border: 1px solid #f0e0bd; border-radius: 16px;
+      padding: 1rem 1.25rem; margin-bottom: 1.25rem;
+      font-size: 0.9rem; color: #7a5f14; line-height: 1.6;
+    }
+    .quiet-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta { font-size: 0.82rem; color: #a68a99; text-align: center; margin-bottom: 1rem; }
+
+    /* ── Jump nav ── */
+    .digest-nav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 1.5rem; }
+    .digest-nav a {
+      display: inline-block; padding: 7px 15px;
+      font-size: 0.79rem; font-weight: 600; color: #8a5f7a;
+      background: #fffbfd; border: 1px solid #f0d3e3;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .digest-nav a:hover { background: #e0559a; color: #fff; border-color: #e0559a; }
+    .digest-nav a.tp-nav { background: #f6f0ff; border-color: #ddd0f5; color: #7a5fbd; }
+    .digest-nav a.tp-nav:hover { background: #7a5fbd; color: #fff; border-color: #7a5fbd; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fffdfb; border: 1px solid #f3d9e7;
+      border-radius: 18px; padding: 1.4rem 1.5rem; margin-bottom: 0.9rem;
+      box-shadow: 0 8px 22px rgba(224, 85, 154, 0.07);
+    }
+    .thought-provoker { background: #fffaf0; border-color: #f0e0bd; box-shadow: none; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.2rem;
+    }
+    .creator-header h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 600; line-height: 1.3; }
+    .thought-provoker .creator-header h2 { color: #4a3a1a; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 600;
+      color: #c2437f; background: #ffeef6;
+      padding: 4px 11px; border-radius: 999px; white-space: nowrap;
+    }
+    .thought-provoker .date-badge { color: #a07800; background: #fdf0d3; }
+    .badge-hot {
+      display: inline-block; background: #e0559a; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 2px 8px;
+      border-radius: 999px; margin-left: 6px; vertical-align: middle;
+    }
+    .creator-headline { font-size: 0.86rem; color: #9a7a8b; font-style: italic; margin-bottom: 0.85rem; }
+    .thought-provoker .creator-headline { color: #9a875f; }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f7f2ff; border-left: 4px solid #9a86d6;
+      border-radius: 0 12px 12px 0; padding: 0.75rem 0.95rem;
+      font-size: 0.86rem; color: #3b2340; line-height: 1.68;
+      margin-bottom: 0.7rem;
+    }
+    .tldr-label {
+      font-size: 0.66rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: #7a5fbd; display: block; margin-bottom: 5px;
+    }
+    .thought-provoker .tldr { background: #fffdf6; border-color: #d9b154; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 4px; }
+    summary {
+      cursor: pointer; font-size: 0.79rem; font-weight: 700; color: #e0559a;
+      list-style: none; display: inline-flex; align-items: center; gap: 4px;
+      user-select: none; padding: 4px 0;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.7rem; }
+    .thought-provoker summary { color: #a07800; }
+
+    .detail-body p { font-size: 0.875rem; color: #5c4a55; line-height: 1.75; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol { font-size: 0.875rem; color: #5c4a55; padding-left: 1.2rem; margin-bottom: 0.7rem; }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #f0d3e3; padding: 0.3rem 0.9rem;
+      color: #8a6b7d; font-style: italic; font-size: 0.86rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.9rem; }
+    .creator-links a {
+      display: inline-block; background: #e0559a; color: #fff;
+      text-decoration: none; font-size: 0.79rem; font-weight: 700;
+      padding: 9px 18px; border-radius: 999px;
+    }
+    .creator-links a:hover { background: #c2437f; }
+    .thought-provoker .creator-links a { background: #a07800; }
+    .thought-provoker .creator-links a:hover { background: #856300; }
+    .creator-links span { color: #e8cbdb; margin: 0 6px; }
+
+    /* ── Top pick ── */
+    .top-pick {
+      background: linear-gradient(135deg, #ffc2dd, #d9c8f5 55%, #bcd8f8);
+      border: none; border-radius: 20px;
+      padding: 1.5rem 1.6rem; margin-bottom: 1.25rem;
+      color: #3b2340;
+    }
+    .top-pick-label {
+      font-family: 'Playfair Display', serif; font-size: 0.88rem; font-style: italic;
+      letter-spacing: 0.04em; margin-bottom: 0.6rem;
+    }
+    .top-pick-content { font-size: 0.98rem; line-height: 1.68; }
+
+    /* ── No updates fallback ── */
+    .no-updates { text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #bfa3b3; }
+
+    .footer {
+      text-align: center; padding: 1.6rem;
+      font-size: 0.8rem; color: #bfa3b3; border-top: 1px solid #f3d9e7;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.6rem 1rem 1.3rem; }
+      .header h1 { font-size: 1.35rem; }
+      .container { padding: 1rem 0.9rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1.05rem 1.05rem; border-radius: 16px; }
+      .creator-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+      .creator-header h2 { font-size: 1.2rem; }
+      .digest-nav { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding-bottom: 4px; }
+      .digest-nav a { flex-shrink: 0; padding: 10px 15px; }
+      .creator-links a { display: block; text-align: center; padding: 13px 18px; }
+      summary { padding: 9px 0; font-size: 0.85rem; }
+      .quiet-banner { font-size: 0.87rem; padding: 0.9rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Monday, August 31, 2026</div>
+  </div>
+
+  <div class="container">
+    <div class="top-pick">
+  <div class="top-pick-label">🔥 Top pick this issue</div>
+  <div class="top-pick-content">Tara Seshan, head of Codex and ChatGPT Work at OpenAI, explains why the next era of AI requires PMs to shift from "rowing" (execution) to "steering" (judgment). Her key insight: as AI handles more execution, ambition and human judgment become the real differentiators, making it your job to elevate what your team thinks is possible.</div>
+</div>
+
+<div class="digest-meta">20 thought leaders tracked &nbsp;·&nbsp; 4 had updates this issue</div>
+
+<nav class="digest-nav">
+  <a href="#lenny">Lenny Rachitsky</a>
+  <a href="#yang">Peter Yang</a>
+  <a href="#mollick">Ethan Mollick</a>
+  <a href="#swyx">Swyx</a>
+  <a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+</nav>
+
+<div class="creator" id="lenny">
+  <div class="creator-header"><h2>Tara Seshan</h2><span class="date-badge">Aug 30</span></div>
+  <div class="creator-headline">AI's third era: the rise of persistent AI coworkers</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Stop optimizing for execution; start optimizing for ambition. As AI takes over the rowing, your leverage as a PM shifts entirely to steering—having the judgment to ask better questions and the credibility to push teams to attempt things that feel impossible. Build for where models will be in 2–3 months, not where they are today.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Seshan, who spent six years at Stripe before joining OpenAI, describes a fundamental reshaping of the PM role. The traditional PM playbook—breaking down problems, sequencing work, managing tradeoffs—works best when execution is hard. When AI makes execution easy, the bottleneck moves upstream to human judgment and vision.</p><p>She highlights how OpenAI's internal culture reflects this shift with mantras like "Is this maximally accelerated?" and "Are you mainlining it yet?"—shorthand for pushing teams to think bigger than they naturally would. The PM job becomes less about writing detailed specs and more about writing as thinking: using narrative and ambition to expand what the team believes is possible.</p><p>For building AI-native products, she stresses that model capabilities improve dramatically every few months, so teams that build for current model limits will be constrained by obsolete assumptions within a quarter. The PM role requires forward vision about what the model will enable, not just what it does today.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.lennysnewsletter.com/p/meet-your-lennys-newsletter-fellows" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="yang">
+  <div class="creator-header"><h2>Peter Yang</h2><span class="date-badge">Aug 30</span></div>
+  <div class="creator-headline">How Non-Coders Are Vibe Coding $100K+ Businesses With AI</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>The barrier to shipping AI products just collapsed. Non-technical founders are reaching six figures by combining AI generation with light technical lift (publishing, payments, security, distribution). If you're building an AI product, your competitive advantage is no longer code quality—it's distribution, positioning, and the judgment to ship fast and iterate.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Amol Jain documents three real case studies of non-programmers who built functional AI applications without traditional coding skills. The pattern is consistent: use AI code generation to create the core app, then focus engineering effort on the 10% that matters most—how users discover it, how payments work, how it stays secure.</p><p>This shifts the PM role. Where you once needed deep technical founders or could hide behind code moats, the new competitive surface is product-market fit speed. The four-step sequence—prototype (vibe code it), publish (make it discoverable), secure it (payment/auth), and distribute it—maps directly to product priorities that shouldn't require deep technical depth to understand.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://creatoreconomy.so/p/how-non-coders-are-vibe-coding-100k-businesses-with-ai-amol-jain-replit" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="mollick">
+  <div class="creator-header"><h2>Ethan Mollick</h2><span class="date-badge">Aug 31</span></div>
+  <div class="creator-headline">Agency and Agents</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>As AI agents become capable enough to take independent action, the question for product builders shifts from "What should this agent do?" to "What should this agent be allowed to do?" The real PM work is defining guardrails, not just capabilities—and designing products where humans retain meaningful agency even when AI is doing most of the work.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Mollick explores the recent Hugging Face incident and the broader pattern of AI agents acting in ways their creators didn't explicitly instruct. As systems become more autonomous, the failure mode isn't lack of capability—it's capability without clear human intent or oversight. This reframes the PM challenge: moving from "What can we make AI do?" to "What should we allow it to do, and how do we stay in control?"</p><p>He introduces the concept of "Twilight Factories"—systems where humans and AI collaborate so tightly that it becomes hard to know who decided what. For PMs building agent-first products, this is both opportunity and hazard. The opportunity is unlocking productivity. The hazard is accidentally designing systems where users can't audit or override what the AI chose to do on their behalf.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.oneusefulthing.org/p/agency-and-agents" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="swyx">
+  <div class="creator-header"><h2>Fabian Hedin (via Swyx)</h2><span class="date-badge">Aug 26</span></div>
+  <div class="creator-headline">Lovable CTO: The Future of SaaS Is Apps That Agents Can Use</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>The next wave of SaaS is being built not for humans first, but for agents. If your product isn't designed as a capability that AI agents can invoke and chain together, you're optimizing for yesterday's interface. The PM job is rethinking your API surface, documentation, and decision trees as if they're being read by AI, not just humans.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Lovable is expanding beyond AI-powered web app creation into what Hedin describes as MCP-powered "capabilities"—building blocks that AI agents can understand and use without human translation. This is a subtle but profound shift in product thinking. Where traditional SaaS is designed around a UI for humans, agent-native products need to be designed around an API contract that's intelligible to both humans and AI systems.</p><p>For PMs, this means your product roadmap needs to include a section on "agent usability." Can an AI system understand what your product does from your documentation? Can it make errors safely? Can it understand when to ask for human confirmation vs. when it has enough signal to act? These become as important as traditional UX questions.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.latent.space/p/lovable-future-of-saas" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker" id="thought-provokers">
+  <div class="creator-header"><h2>Itamar Gilad</h2><span class="date-badge">Jul 16</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>A survey of 1,500+ Chief Product Officers concluded the PM role will be obsolete by 2030. Rather than dismiss this, Gilad unpacks why—and what PMs should actually do about it. His answer reframes the career conversation in the AI era: the role doesn't die, but the PM who doesn't evolve into a judgment-maker and strategist will.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Gilad examines the CPO Insights Report finding that AI will eliminate or drastically change PM roles, then asks the harder question: why would that be true? His argument hinges on the observation that much of today's PM work is synthesis, research, and roadmap sequencing—tasks AI is already good at. If your competitive edge is "I research the market well" or "I write good PRDs," AI commoditizes that.</p><p>The way forward, he argues, is not to fight this but to lean into the uniquely human parts of the role: setting organizational ambition, making judgment calls under uncertainty, and building conviction in people. This aligns with Seshan's point about steering vs. rowing—the PM role survives by moving upmarket into strategy and vision, leaving execution and research to AI.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://itamargilad.com/ai-pm-jobs/" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker">
+  <div class="creator-header"><h2>Rich Mironov</h2><span class="date-badge">Jul 28</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>Mironov observes that many AI engineers and cofounders build sophisticated technology but fail to find buyers because they skip the PM basics—clear audience definition and crisp problem statements. In the rush to deploy AI, it's easy to forget that elegant technology solves nothing if it doesn't solve a problem someone cares about enough to pay for.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Mironov describes conversations with talented engineers who've built interesting systems but gotten zero traction because they never grounded their work in a specific customer pain. The "barbell" structure he proposes—combining deep technical depth with ruthless customer focus—is an antidote to the common AI startup trap: building a solution and hoping a problem finds it.</p><p>For AI-native product teams, this is a useful check: How clearly can you articulate who benefits and what problem you solve? If you can't answer that in two sentences, you're probably still in the technology-first mindset, not the product-first one that AI-era success requires.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.mironov.com/barbell/" target="_blank">Read →</a></div>
+</div>
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 20 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
