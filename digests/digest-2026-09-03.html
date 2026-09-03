@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Thursday, September 03, 2026</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Karla', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fdf2f7;
+      color: #3b2340;
+      line-height: 1.7;
+    }
+
+    .header {
+      background: linear-gradient(180deg, #fffbfd, #fdf2f7);
+      border-bottom: 1px solid #f3d9e7;
+      padding: 2.6rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 600; }
+    .header .tagline { font-size: 0.95rem; font-style: italic; color: #8a6b7d; margin-top: 0.35rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.9rem;
+      font-size: 0.8rem; font-weight: 600;
+      background: #ffeef6; color: #c2437f;
+      padding: 0.35rem 1rem; border-radius: 999px;
+    }
+
+    .container { max-width: 760px; margin: 0 auto; padding: 1.75rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      background: #fffaf0; border: 1px solid #f0e0bd; border-radius: 16px;
+      padding: 1rem 1.25rem; margin-bottom: 1.25rem;
+      font-size: 0.9rem; color: #7a5f14; line-height: 1.6;
+    }
+    .quiet-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta { font-size: 0.82rem; color: #a68a99; text-align: center; margin-bottom: 1rem; }
+
+    /* ── Jump nav ── */
+    .digest-nav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 1.5rem; }
+    .digest-nav a {
+      display: inline-block; padding: 7px 15px;
+      font-size: 0.79rem; font-weight: 600; color: #8a5f7a;
+      background: #fffbfd; border: 1px solid #f0d3e3;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .digest-nav a:hover { background: #e0559a; color: #fff; border-color: #e0559a; }
+    .digest-nav a.tp-nav { background: #f6f0ff; border-color: #ddd0f5; color: #7a5fbd; }
+    .digest-nav a.tp-nav:hover { background: #7a5fbd; color: #fff; border-color: #7a5fbd; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fffdfb; border: 1px solid #f3d9e7;
+      border-radius: 18px; padding: 1.4rem 1.5rem; margin-bottom: 0.9rem;
+      box-shadow: 0 8px 22px rgba(224, 85, 154, 0.07);
+    }
+    .thought-provoker { background: #fffaf0; border-color: #f0e0bd; box-shadow: none; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.2rem;
+    }
+    .creator-header h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 600; line-height: 1.3; }
+    .thought-provoker .creator-header h2 { color: #4a3a1a; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 600;
+      color: #c2437f; background: #ffeef6;
+      padding: 4px 11px; border-radius: 999px; white-space: nowrap;
+    }
+    .thought-provoker .date-badge { color: #a07800; background: #fdf0d3; }
+    .badge-hot {
+      display: inline-block; background: #e0559a; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 2px 8px;
+      border-radius: 999px; margin-left: 6px; vertical-align: middle;
+    }
+    .creator-headline { font-size: 0.86rem; color: #9a7a8b; font-style: italic; margin-bottom: 0.85rem; }
+    .thought-provoker .creator-headline { color: #9a875f; }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f7f2ff; border-left: 4px solid #9a86d6;
+      border-radius: 0 12px 12px 0; padding: 0.75rem 0.95rem;
+      font-size: 0.86rem; color: #3b2340; line-height: 1.68;
+      margin-bottom: 0.7rem;
+    }
+    .tldr-label {
+      font-size: 0.66rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: #7a5fbd; display: block; margin-bottom: 5px;
+    }
+    .thought-provoker .tldr { background: #fffdf6; border-color: #d9b154; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 4px; }
+    summary {
+      cursor: pointer; font-size: 0.79rem; font-weight: 700; color: #e0559a;
+      list-style: none; display: inline-flex; align-items: center; gap: 4px;
+      user-select: none; padding: 4px 0;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.7rem; }
+    .thought-provoker summary { color: #a07800; }
+
+    .detail-body p { font-size: 0.875rem; color: #5c4a55; line-height: 1.75; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol { font-size: 0.875rem; color: #5c4a55; padding-left: 1.2rem; margin-bottom: 0.7rem; }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #f0d3e3; padding: 0.3rem 0.9rem;
+      color: #8a6b7d; font-style: italic; font-size: 0.86rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.9rem; }
+    .creator-links a {
+      display: inline-block; background: #e0559a; color: #fff;
+      text-decoration: none; font-size: 0.79rem; font-weight: 700;
+      padding: 9px 18px; border-radius: 999px;
+    }
+    .creator-links a:hover { background: #c2437f; }
+    .thought-provoker .creator-links a { background: #a07800; }
+    .thought-provoker .creator-links a:hover { background: #856300; }
+    .creator-links span { color: #e8cbdb; margin: 0 6px; }
+
+    /* ── Top pick ── */
+    .top-pick {
+      background: linear-gradient(135deg, #ffc2dd, #d9c8f5 55%, #bcd8f8);
+      border: none; border-radius: 20px;
+      padding: 1.5rem 1.6rem; margin-bottom: 1.25rem;
+      color: #3b2340;
+    }
+    .top-pick-label {
+      font-family: 'Playfair Display', serif; font-size: 0.88rem; font-style: italic;
+      letter-spacing: 0.04em; margin-bottom: 0.6rem;
+    }
+    .top-pick-content { font-size: 0.98rem; line-height: 1.68; }
+
+    /* ── No updates fallback ── */
+    .no-updates { text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #bfa3b3; }
+
+    .footer {
+      text-align: center; padding: 1.6rem;
+      font-size: 0.8rem; color: #bfa3b3; border-top: 1px solid #f3d9e7;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.6rem 1rem 1.3rem; }
+      .header h1 { font-size: 1.35rem; }
+      .container { padding: 1rem 0.9rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1.05rem 1.05rem; border-radius: 16px; }
+      .creator-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+      .creator-header h2 { font-size: 1.2rem; }
+      .digest-nav { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding-bottom: 4px; }
+      .digest-nav a { flex-shrink: 0; padding: 10px 15px; }
+      .creator-links a { display: block; text-align: center; padding: 13px 18px; }
+      summary { padding: 9px 0; font-size: 0.85rem; }
+      .quiet-banner { font-size: 0.87rem; padding: 0.9rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Thursday, September 03, 2026</div>
+  </div>
+
+  <div class="container">
+    <div class="top-pick">
+  <div class="top-pick-label">🔥 Top pick this issue</div>
+  <div class="top-pick-content">Teresa Torres has published a hands-on guide to AI evals with a practical test harness you can run immediately. For PMs building AI products, this is the most actionable framework this week—Torres walks you through error analysis, four eval types, and how to establish a performance baseline before shipping.</div>
+</div>
+
+<div class="digest-meta">20 thought leaders tracked &nbsp;·&nbsp; 6 had updates this issue</div>
+
+<nav class="digest-nav">
+  <a href="#torres">Teresa Torres</a>
+  <a href="#zhuo">Julie Zhuo</a>
+  <a href="#kao">Wes Kao</a>
+  <a href="#yang">Peter Yang</a>
+  <a href="#swyx">Swyx</a>
+  <a href="#lenny">Lenny Rachitsky</a>
+  <a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+</nav>
+
+<div class="creator" id="torres">
+  <div class="creator-header"><h2>Teresa Torres</h2><span class="date-badge">Sep 02</span></div>
+  <div class="creator-headline">AI Evals: A Hands-On Guide for Product Teams</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Before shipping any AI feature, run evals to measure whether it actually works. Torres provides a test harness and walks through error analysis, four eval types (factuality, retrieval, output quality, user preference), and how to design your first experiment—essential rigor for AI-native product teams.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Torres addresses the core PM problem: how do you know if your AI product is any good? She breaks evals into four categories. Factuality evals check if the model is making things up. Retrieval evals validate that your RAG pipeline is finding the right sources. Output quality evals measure coherence, relevance, and completeness. User preference evals let you compare two approaches by having real users judge which is better.</p><p>She then provides a practical test harness you can drop into your own workflow today. The key insight: establish a baseline by running every input through your current prompt, save the outputs, then measure how a new prompt or model compares. This removes guesswork from shipping AI features and gives you confidence that changes are actually improvements.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.producttalk.org/ai-evals/" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="zhuo">
+  <div class="creator-header"><h2>Julie Zhuo</h2><span class="date-badge">Sep 01</span></div>
+  <div class="creator-headline">You Cannot Mandate an AI Transformation</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Top-down AI mandates from executives fail because they ignore adoption friction and human agency. Zhuo's 10-step guide emphasizes starting small, building internal champions, letting teams experiment, and treating AI transformation as a cultural shift—not a directive.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Zhuo observes that many organizations are racing to "AI transform" because markets expect it and competitors are. But executives who simply mandate AI adoption without understanding workflow friction and team readiness see low engagement and wasted budget. The mistake is treating AI as a technology rollout rather than a human adoption challenge.</p><p>Her approach: start with one small, high-impact workflow. Identify internal champions within teams who see value. Let them experiment and share learnings. Celebrate wins publicly. Build confidence incrementally. This respects that different teams have different readiness and different pain points—some need AI for customer-facing features, others for internal operations. Transformation happens when teams pull toward AI, not when executives push it down.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://joulee.medium.com/you-cannot-mandate-an-ai-transformation-e2513cc3bbcc" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="kao">
+  <div class="creator-header"><h2>Wes Kao</h2><span class="date-badge">Sep 02</span></div>
+  <div class="creator-headline">The rise of the end-to-end operator</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>The most valuable operators in 2026 combine vision, strategy, and execution—they own the full product journey from idea through ship. Kao argues this skill set is now table stakes for senior PMs and founders, especially in an AI-accelerated world where one person can move faster than ever before.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Kao distinguishes between three types of people: those with vision but no strategy or execution (dreamers), those with strategy and execution but no vision (operators), and those with all three (end-to-end operators). In 2026, the third type is winning. They can see an opportunity, design a strategy to capture it, and then actually build and ship it—sometimes solo or with a tiny team.</p><p>This rise is accelerated by AI tooling. Code, design, and content can be generated with better prompts. AI agents handle repetitive work. One senior engineer plus AI can do what took three before. This means PMs who can also direct strategy and ship features become disproportionately valuable. It's not about being a polymath—it's about owning the full loop from insight to impact.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://newsletter.weskao.com/p/end-to-end-operator" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="yang">
+  <div class="creator-header"><h2>Peter Yang</h2><span class="date-badge">Sep 02</span></div>
+  <div class="creator-headline">Which AI Personal Agents Can You Trust With Your Data?</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Yang benchmarked four AI agents (Instinct, Grok Bot, ChatGPT, Hermes) on data access, privacy, and failure modes. For PMs building agent-based products, this reveals the security and trust questions you need to answer before users will adopt agents that touch their personal data.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>As AI agents move from toys to tools that users trust with calendar, email, and financial data, the security model matters. Yang's comparison shows that different agents have different threat surfaces: some can access third-party APIs, others can't; some store conversation history, others don't; some can be jailbroken more easily. The gap between "can do X" and "should do X" is where product judgment lives.</p><p>The insight for PMs: agent adoption will stall if users don't understand or trust the data model. You need to be explicit about what data the agent can see, how long it's retained, whether it's used to train other models, and what happens if the agent is compromised. Marketing the power of agents is easy. Earning permission to access sensitive data is the harder product problem.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://creatoreconomy.so/p/instinct-vs-grok-bot-vs-chatgpt-vs-hermes-which-ai-agent-can-you-trust" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="swyx">
+  <div class="creator-header"><h2>Swyx</h2><span class="date-badge">Sep 03</span></div>
+  <div class="creator-headline">GPT-6 Astra: an automated AI Engineer you can hire for &lt;$6 an hour</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Latent.Space explored GPT-6 Astra as a deployed agent and mapped its strengths (full-stack problem solving, code generation, debugging) and failure modes (complex reasoning, requirement parsing). For PMs considering AI agents in product workflows, this is a real-world stress test revealing where agents still need human oversight.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Astra is positioned as an "AI engineer" that can be hired cheaply at scale. Latent.Space spent 20B+ tokens exploring what it can and cannot do in practice. The agent excels at well-scoped tasks: write boilerplate, fix a syntax error, refactor a function. It struggles with ambiguous requirements, multi-step reasoning that requires domain context, and understanding why a particular design choice matters long-term.</p><p>The implication for product: AI agents are best used as acceleration layers for well-defined tasks, not as replacements for judgment. If your workflow has clear inputs and measurable outputs, agent automation works. If it requires fluency with unstated business context or balancing trade-offs, you still need a human in the loop. Successful AI products will be those that map agent capabilities to the right tasks, not those that try to replace all human work.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.latent.space/p/astra" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="lenny">
+  <div class="creator-header"><h2>Anshu Chimala (guest on Lenny Rachitsky)</h2><span class="date-badge">Sep 01</span></div>
+  <div class="creator-headline">How to turn your AI into a world-class designer</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Chimala, who led design research at Apple for 12 years, shows that AI models are capable of far more creativity than most users get because people prompt like they're asking a chatbot, not briefing a designer. He provides a framework for getting AI to explore novel design directions by treating the model as a collaborative partner with specific constraints and iteration cycles.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>The gap between "generic slop" and "world-class design output" isn't the model—it's the prompting approach. LLMs are trained to predict next tokens, which teaches them to produce safe, average outputs. Most users unknowingly reinforce this by asking vague questions or accepting the first output. Chimala's method is different: give the AI a clear design problem, specific constraints, a target user, and then iterate rapidly on outputs, steering each version toward bolder directions.</p><p>The key is treating AI like a design partner, not a vending machine. Give it feedback on what to keep and what to push further. Ask it to explore extreme interpretations before narrowing. This works for interface design, data visualization, interaction patterns—any design problem with a clear brief. For PMs, this means your design workflows should change when AI is involved; the tool enables faster exploration, but only if you ask it the right way.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.lennysnewsletter.com/p/how-to-turn-your-ai-into-a-world" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker" id="thought-provokers">
+  <div class="creator-header"><h2>Marty Cagan</h2><span class="date-badge">Feb 04</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>Cagan argues that AI has fundamentally changed how we coach product teams. The old model of teaching frameworks in isolation doesn't work anymore when AI can accelerate output but can also hide gaps in thinking. His reframing of product coaching around AI-native discovery is essential for anyone managing PMs in 2026.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>For two decades, Cagan's advice on coaching product teams was consistent: teach frameworks, reinforce discipline, hold people accountable to customer insights. AI changes this equation. When a PM can generate wireframes, user research synthesis, and roadmap decks in hours instead of weeks, the constraint is no longer execution speed—it's decision quality. Are they asking the right questions? Do they understand the customer deeply enough? Will their choices survive contact with reality?</p><p>Cagan's shift is toward coaching that emphasizes discovery rigor and critical thinking, not delivery mechanics. This means PMs need to work more closely with leadership on problem framing, not less. The coaching becomes about sharpening intuition and skepticism, because the tools will no longer forgive fuzzy thinking with a time buffer. It's a significant evolution in what "good PM work" looks like in an AI-native organization.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.svpg.com/product-coaching-and-ai/" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker">
+  <div class="creator-header"><h2>Ethan Mollick</h2><span class="date-badge">Mar 31</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>Mollick explores how the right interface can unlock AI capabilities that the model itself already possesses. This is a critical insight for PMs: great AI products aren't always about better models, but about UX that lets the model's actual power shine through.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Claude Dispatch and similar tools show that models often can do far more than their default interface suggests. The issue is discoverability and friction. A model might be capable of complex multi-step reasoning, but a simple chat box discourages users from trying it. Better structure—clear input fields, step-by-step workflows, examples—makes users confident in trying more ambitious requests and the model rises to the occasion.</p><p>For PMs building AI products, this reframes the roadmap. Before investing in model fine-tuning or custom training, ask: is our interface holding back the existing model's capabilities? Often the answer is yes. Small UX changes—better prompting in the background, clearer affordances, structured workflows—can unlock 20-30% more value from the same underlying model. This is a cheaper, faster product win than the alternative.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.oneusefulthing.org/p/claude-dispatch-and-the-power-of" target="_blank">Read →</a></div>
+</div>
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 20 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
