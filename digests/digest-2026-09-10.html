@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Thursday, September 10, 2026</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Karla', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fdf2f7;
+      color: #3b2340;
+      line-height: 1.7;
+    }
+
+    .header {
+      background: linear-gradient(180deg, #fffbfd, #fdf2f7);
+      border-bottom: 1px solid #f3d9e7;
+      padding: 2.6rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 600; }
+    .header .tagline { font-size: 0.95rem; font-style: italic; color: #8a6b7d; margin-top: 0.35rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.9rem;
+      font-size: 0.8rem; font-weight: 600;
+      background: #ffeef6; color: #c2437f;
+      padding: 0.35rem 1rem; border-radius: 999px;
+    }
+
+    .container { max-width: 760px; margin: 0 auto; padding: 1.75rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      background: #fffaf0; border: 1px solid #f0e0bd; border-radius: 16px;
+      padding: 1rem 1.25rem; margin-bottom: 1.25rem;
+      font-size: 0.9rem; color: #7a5f14; line-height: 1.6;
+    }
+    .quiet-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta { font-size: 0.82rem; color: #a68a99; text-align: center; margin-bottom: 1rem; }
+
+    /* ── Jump nav ── */
+    .digest-nav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 1.5rem; }
+    .digest-nav a {
+      display: inline-block; padding: 7px 15px;
+      font-size: 0.79rem; font-weight: 600; color: #8a5f7a;
+      background: #fffbfd; border: 1px solid #f0d3e3;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .digest-nav a:hover { background: #e0559a; color: #fff; border-color: #e0559a; }
+    .digest-nav a.tp-nav { background: #f6f0ff; border-color: #ddd0f5; color: #7a5fbd; }
+    .digest-nav a.tp-nav:hover { background: #7a5fbd; color: #fff; border-color: #7a5fbd; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fffdfb; border: 1px solid #f3d9e7;
+      border-radius: 18px; padding: 1.4rem 1.5rem; margin-bottom: 0.9rem;
+      box-shadow: 0 8px 22px rgba(224, 85, 154, 0.07);
+    }
+    .thought-provoker { background: #fffaf0; border-color: #f0e0bd; box-shadow: none; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.2rem;
+    }
+    .creator-header h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 600; line-height: 1.3; }
+    .thought-provoker .creator-header h2 { color: #4a3a1a; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 600;
+      color: #c2437f; background: #ffeef6;
+      padding: 4px 11px; border-radius: 999px; white-space: nowrap;
+    }
+    .thought-provoker .date-badge { color: #a07800; background: #fdf0d3; }
+    .badge-hot {
+      display: inline-block; background: #e0559a; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 2px 8px;
+      border-radius: 999px; margin-left: 6px; vertical-align: middle;
+    }
+    .creator-headline { font-size: 0.86rem; color: #9a7a8b; font-style: italic; margin-bottom: 0.85rem; }
+    .thought-provoker .creator-headline { color: #9a875f; }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f7f2ff; border-left: 4px solid #9a86d6;
+      border-radius: 0 12px 12px 0; padding: 0.75rem 0.95rem;
+      font-size: 0.86rem; color: #3b2340; line-height: 1.68;
+      margin-bottom: 0.7rem;
+    }
+    .tldr-label {
+      font-size: 0.66rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: #7a5fbd; display: block; margin-bottom: 5px;
+    }
+    .thought-provoker .tldr { background: #fffdf6; border-color: #d9b154; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 4px; }
+    summary {
+      cursor: pointer; font-size: 0.79rem; font-weight: 700; color: #e0559a;
+      list-style: none; display: inline-flex; align-items: center; gap: 4px;
+      user-select: none; padding: 4px 0;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.7rem; }
+    .thought-provoker summary { color: #a07800; }
+
+    .detail-body p { font-size: 0.875rem; color: #5c4a55; line-height: 1.75; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol { font-size: 0.875rem; color: #5c4a55; padding-left: 1.2rem; margin-bottom: 0.7rem; }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #f0d3e3; padding: 0.3rem 0.9rem;
+      color: #8a6b7d; font-style: italic; font-size: 0.86rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.9rem; }
+    .creator-links a {
+      display: inline-block; background: #e0559a; color: #fff;
+      text-decoration: none; font-size: 0.79rem; font-weight: 700;
+      padding: 9px 18px; border-radius: 999px;
+    }
+    .creator-links a:hover { background: #c2437f; }
+    .thought-provoker .creator-links a { background: #a07800; }
+    .thought-provoker .creator-links a:hover { background: #856300; }
+    .creator-links span { color: #e8cbdb; margin: 0 6px; }
+
+    /* ── Top pick ── */
+    .top-pick {
+      background: linear-gradient(135deg, #ffc2dd, #d9c8f5 55%, #bcd8f8);
+      border: none; border-radius: 20px;
+      padding: 1.5rem 1.6rem; margin-bottom: 1.25rem;
+      color: #3b2340;
+    }
+    .top-pick-label {
+      font-family: 'Playfair Display', serif; font-size: 0.88rem; font-style: italic;
+      letter-spacing: 0.04em; margin-bottom: 0.6rem;
+    }
+    .top-pick-content { font-size: 0.98rem; line-height: 1.68; }
+
+    /* ── No updates fallback ── */
+    .no-updates { text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #bfa3b3; }
+
+    .footer {
+      text-align: center; padding: 1.6rem;
+      font-size: 0.8rem; color: #bfa3b3; border-top: 1px solid #f3d9e7;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.6rem 1rem 1.3rem; }
+      .header h1 { font-size: 1.35rem; }
+      .container { padding: 1rem 0.9rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1.05rem 1.05rem; border-radius: 16px; }
+      .creator-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+      .creator-header h2 { font-size: 1.2rem; }
+      .digest-nav { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding-bottom: 4px; }
+      .digest-nav a { flex-shrink: 0; padding: 10px 15px; }
+      .creator-links a { display: block; text-align: center; padding: 13px 18px; }
+      summary { padding: 9px 0; font-size: 0.85rem; }
+      .quiet-banner { font-size: 0.87rem; padding: 0.9rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Thursday, September 10, 2026</div>
+  </div>
+
+  <div class="container">
+    <div class="top-pick">
+  <div class="top-pick-label">🔥 Top pick this issue</div>
+  <div class="top-pick-content">Teresa Torres explores what product trios should actually do when conflict surfaces—and why the absence of it is the real warning sign. For PMs navigating cross-functional dynamics in an AI-accelerated environment, this reframes conflict as a diagnostic tool rather than a failure.</div>
+</div>
+
+<div class="digest-meta">20 thought leaders tracked &nbsp;·&nbsp; 4 had updates this issue</div>
+
+<nav class="digest-nav">
+  <a href="#torres">Teresa Torres</a>
+  <a href="#zhuo">Julie Zhuo</a>
+  <a href="#yang">Peter Yang</a>
+  <a href="#swyx">Swyx</a>
+  <a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+</nav>
+
+<div class="creator" id="torres">
+  <div class="creator-header"><h2>Teresa Torres</h2><span class="date-badge">Sep 8</span></div>
+  <div class="creator-headline">Conflict on a product team isn't a warning sign — the absence of it usually is.</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Healthy product trios need productive conflict to surface different perspectives on discovery, prioritization, and trade-offs. Create facilitation structures that normalize disagreement rather than suppress it.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Torres and co-host Petra Wille tackle a question product leaders hear constantly: what should a product trio actually do when perspectives collide? The episode centers on facilitation skills as the missing layer in most PM training. Teams that avoid conflict often ship the wrong thing; teams that fight poorly waste cycles without learning.</p><p>The core insight: conflict signals that your trio is thinking critically. The skill is channeling that tension into better decisions without damaging trust. Torres emphasizes structured approaches to disagreement—making space for engineering constraints, design intent, and business goals to be heard equally.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.producttalk.org/facilitation-skills-all-things-product-with-teresa-torres-petra-wille/" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="zhuo">
+  <div class="creator-header"><h2>Julie Zhuo</h2><span class="date-badge">Sep 9</span></div>
+  <div class="creator-headline">The era of digital hyperpersonalization is here—and it's changing what customers expect from software.</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>As AI makes personalized experiences cheaper to build, customer tolerance for generic, one-size-fits-all software is evaporating. PMs must now think of customization and adaptation not as premium features but as table stakes.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Zhuo revisits Andy Warhol's 1975 observation that all Coke bottles are equal, regardless of price—a statement Marc Andreessen updated in 2023 to include browsers, smartphones, and chatbots. But Zhuo argues that moment is ending. AI-driven personalization is making it economically viable for software to adapt to individual users, preferences, and workflows at scale.</p><p>The practical implication for product teams: customers increasingly resent software that treats them like average users. They expect the interface, recommendations, and workflows to bend to them. This shifts the PM role from designing a universal experience to designing adaptive systems that learn and adjust.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://joulee.medium.com/i-never-want-to-use-third-party-software-again-6309d6aea5de?source=rss-b8a4e5ae7490------2" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="yang">
+  <div class="creator-header"><h2>Peter Yang</h2><span class="date-badge">Sep 9</span></div>
+  <div class="creator-headline">What OpenAI's new Astra model does well, where it falls short, and how product teams should use it.</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Astra shows real multimodal reasoning but has gaps in reliability and edge-case handling. For PMs building with frontier models, this is a signal to stress-test vision + reasoning workflows and design fallback patterns into product logic.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Yang provides an early hands-on assessment of GPT-6 Astra, OpenAI's latest model. He emphasizes what the model enables—genuine cross-modal understanding of images, video, and text in a single reasoning context—alongside realistic constraints on consistency, hallucination patterns, and task reliability.</p><p>The product angle: as multimodal models mature, PMs face new design decisions. Do you expose raw model outputs or wrap them in verification loops? How do you handle the 5-10% failure rate on edge cases? Yang's review points to the emerging PM skillset: not just knowing what models can do, but architecting products that degrade gracefully when they don't.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://creatoreconomy.so/p/gpt-6-astra-is-both-incredible-and" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="swyx">
+  <div class="creator-header"><h2>Dan McAteer (Swyx)</h2><span class="date-badge">Sep 5</span></div>
+  <div class="creator-headline">SpaceXAI's Grok Bot has OpenClaw power but at a different level of abstraction.</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>When rival agent systems offer similar raw capability but different abstraction layers, the product differentiation lives in usability and workflow integration, not the model. PMs should evaluate agents by asking: who can I actually build products with this week?</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>McAteer compares Grok Bot's programming and agentic power to OpenClaw, noting both are capable but operate at different levels. Grok Bot prioritizes accessibility on consumer hardware (MacBook simplicity) while OpenClaw offers deeper, more explicit control for complex workflows. Both solve similar classes of problems; the trade-off is ease vs. precision.</p><p>For product teams choosing which agent framework or model to build on, McAteer's framing clarifies the real decision: capability parity no longer determines winners. Instead, it's the abstraction layer, developer experience, and speed to first working prototype that separate winners from also-rans in the crowded agent space.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.latent.space/p/grok-bot" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker" id="thought-provokers">
+  <div class="creator-header"><h2>Ken Norton</h2><span class="date-badge">Aug 11</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>Norton's essay on intentional working relationships cuts deeper than most leadership writing. In an era of AI automation and async-first teams, the human dynamics between PMs, engineers, and designers remain the hardest bottleneck to remove—and the most neglected.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Norton uses a real coaching example (the "Jacob" scenario) to show how peer conflicts derail product decisions when left unaddressed. But rather than typical conflict-resolution templates, he argues for designing working relationships the way you'd design a product: intentionally, with explicit norms around feedback, decision rights, and how disagreement gets surfaced and resolved.</p><p>The PM takeaway applies regardless of org stage: when you inherit a dysfunctional trio or a siloed team, the fix isn't process or tools. It's naming the relationship breakdown and rebuilding trust through small, deliberate interactions. This matters even more as AI tools reduce the cost of building—the team dynamics become the real constraint.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.bringthedonuts.com/essays/designing-better-working-relationships/" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker">
+  <div class="creator-header"><h2>Rich Mironov</h2><span class="date-badge">May 31</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>Mironov's thesis—that AI shifts the bottleneck from code-writing to discovery and customer activation—has only become more urgent. PMs who still think their constraint is engineering velocity are building the wrong mental model for 2026.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Mironov argues that for the past 20 years, development speed was the binding constraint: the faster you could ship features, the better. AI changes this. Code is now cheap. The real bottleneck moves upstream (Do we know what to build?) and downstream (Can customers understand and adopt it?). PMs who don't shift their mental model will optimize for the wrong things.</p><p>The implication: your roadmap, discovery process, and go-to-market strategy matter far more than your sprint velocity. Hiring more engineers or using AI coding tools solves the wrong problem. The edge goes to teams that excel at identifying high-leverage problems and communicating solutions to users.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.mironov.com/code/" target="_blank">Read →</a></div>
+</div>
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 20 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
