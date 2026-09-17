@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Thursday, September 17, 2026</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Karla', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fdf2f7;
+      color: #3b2340;
+      line-height: 1.7;
+    }
+
+    .header {
+      background: linear-gradient(180deg, #fffbfd, #fdf2f7);
+      border-bottom: 1px solid #f3d9e7;
+      padding: 2.6rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 600; }
+    .header .tagline { font-size: 0.95rem; font-style: italic; color: #8a6b7d; margin-top: 0.35rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.9rem;
+      font-size: 0.8rem; font-weight: 600;
+      background: #ffeef6; color: #c2437f;
+      padding: 0.35rem 1rem; border-radius: 999px;
+    }
+
+    .container { max-width: 760px; margin: 0 auto; padding: 1.75rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      background: #fffaf0; border: 1px solid #f0e0bd; border-radius: 16px;
+      padding: 1rem 1.25rem; margin-bottom: 1.25rem;
+      font-size: 0.9rem; color: #7a5f14; line-height: 1.6;
+    }
+    .quiet-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta { font-size: 0.82rem; color: #a68a99; text-align: center; margin-bottom: 1rem; }
+
+    /* ── Jump nav ── */
+    .digest-nav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 1.5rem; }
+    .digest-nav a {
+      display: inline-block; padding: 7px 15px;
+      font-size: 0.79rem; font-weight: 600; color: #8a5f7a;
+      background: #fffbfd; border: 1px solid #f0d3e3;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .digest-nav a:hover { background: #e0559a; color: #fff; border-color: #e0559a; }
+    .digest-nav a.tp-nav { background: #f6f0ff; border-color: #ddd0f5; color: #7a5fbd; }
+    .digest-nav a.tp-nav:hover { background: #7a5fbd; color: #fff; border-color: #7a5fbd; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fffdfb; border: 1px solid #f3d9e7;
+      border-radius: 18px; padding: 1.4rem 1.5rem; margin-bottom: 0.9rem;
+      box-shadow: 0 8px 22px rgba(224, 85, 154, 0.07);
+    }
+    .thought-provoker { background: #fffaf0; border-color: #f0e0bd; box-shadow: none; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.2rem;
+    }
+    .creator-header h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 600; line-height: 1.3; }
+    .thought-provoker .creator-header h2 { color: #4a3a1a; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 600;
+      color: #c2437f; background: #ffeef6;
+      padding: 4px 11px; border-radius: 999px; white-space: nowrap;
+    }
+    .thought-provoker .date-badge { color: #a07800; background: #fdf0d3; }
+    .badge-hot {
+      display: inline-block; background: #e0559a; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 2px 8px;
+      border-radius: 999px; margin-left: 6px; vertical-align: middle;
+    }
+    .creator-headline { font-size: 0.86rem; color: #9a7a8b; font-style: italic; margin-bottom: 0.85rem; }
+    .thought-provoker .creator-headline { color: #9a875f; }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f7f2ff; border-left: 4px solid #9a86d6;
+      border-radius: 0 12px 12px 0; padding: 0.75rem 0.95rem;
+      font-size: 0.86rem; color: #3b2340; line-height: 1.68;
+      margin-bottom: 0.7rem;
+    }
+    .tldr-label {
+      font-size: 0.66rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: #7a5fbd; display: block; margin-bottom: 5px;
+    }
+    .thought-provoker .tldr { background: #fffdf6; border-color: #d9b154; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 4px; }
+    summary {
+      cursor: pointer; font-size: 0.79rem; font-weight: 700; color: #e0559a;
+      list-style: none; display: inline-flex; align-items: center; gap: 4px;
+      user-select: none; padding: 4px 0;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.7rem; }
+    .thought-provoker summary { color: #a07800; }
+
+    .detail-body p { font-size: 0.875rem; color: #5c4a55; line-height: 1.75; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol { font-size: 0.875rem; color: #5c4a55; padding-left: 1.2rem; margin-bottom: 0.7rem; }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #f0d3e3; padding: 0.3rem 0.9rem;
+      color: #8a6b7d; font-style: italic; font-size: 0.86rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.9rem; }
+    .creator-links a {
+      display: inline-block; background: #e0559a; color: #fff;
+      text-decoration: none; font-size: 0.79rem; font-weight: 700;
+      padding: 9px 18px; border-radius: 999px;
+    }
+    .creator-links a:hover { background: #c2437f; }
+    .thought-provoker .creator-links a { background: #a07800; }
+    .thought-provoker .creator-links a:hover { background: #856300; }
+    .creator-links span { color: #e8cbdb; margin: 0 6px; }
+
+    /* ── Top pick ── */
+    .top-pick {
+      background: linear-gradient(135deg, #ffc2dd, #d9c8f5 55%, #bcd8f8);
+      border: none; border-radius: 20px;
+      padding: 1.5rem 1.6rem; margin-bottom: 1.25rem;
+      color: #3b2340;
+    }
+    .top-pick-label {
+      font-family: 'Playfair Display', serif; font-size: 0.88rem; font-style: italic;
+      letter-spacing: 0.04em; margin-bottom: 0.6rem;
+    }
+    .top-pick-content { font-size: 0.98rem; line-height: 1.68; }
+
+    /* ── No updates fallback ── */
+    .no-updates { text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #bfa3b3; }
+
+    .footer {
+      text-align: center; padding: 1.6rem;
+      font-size: 0.8rem; color: #bfa3b3; border-top: 1px solid #f3d9e7;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.6rem 1rem 1.3rem; }
+      .header h1 { font-size: 1.35rem; }
+      .container { padding: 1rem 0.9rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1.05rem 1.05rem; border-radius: 16px; }
+      .creator-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+      .creator-header h2 { font-size: 1.2rem; }
+      .digest-nav { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding-bottom: 4px; }
+      .digest-nav a { flex-shrink: 0; padding: 10px 15px; }
+      .creator-links a { display: block; text-align: center; padding: 13px 18px; }
+      summary { padding: 9px 0; font-size: 0.85rem; }
+      .quiet-banner { font-size: 0.87rem; padding: 0.9rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Thursday, September 17, 2026</div>
+  </div>
+
+  <div class="container">
+    <div class="top-pick">
+  <div class="top-pick-label">🔥 Top pick this issue</div>
+  <div class="top-pick-content">Teresa Torres examines whether "delivery is free" now that AI exists—and argues the opposite. For PMs betting their roadmaps on AI-powered shortcuts, this is a reality check on the hidden costs of quality, iteration, and evals that AI-generated solutions demand.</div>
+</div>
+
+<div class="digest-meta">20 thought leaders tracked &nbsp;·&nbsp; 6 had updates this issue</div>
+
+<nav class="digest-nav">
+  <a href="#torres">Teresa Torres</a>
+  <a href="#lenny">Lenny Rachitsky</a>
+  <a href="#swyx">Swyx</a>
+  <a href="#yang">Peter Yang</a>
+  <a href="#kao">Wes Kao</a>
+  <a href="#zhuo">Julie Zhuo</a>
+  <a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+</nav>
+
+<div class="creator" id="torres">
+  <div class="creator-header"><h2>Teresa Torres</h2><span class="date-badge">Sep 15</span></div>
+  <div class="creator-headline">Delivery isn't free—all things product podcast with Teresa Torres &amp; Petra Wille</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>The industry refrain "AI makes delivery free" masks real costs: quality assurance, evals, iteration cycles, and human judgment all still require investment. Don't let the speed of AI generation trick you into underestimating the work required to ship a quality product.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Torres and Petra Wille deconstruct one of the most repeated claims in product management right now—that AI has eliminated the cost of delivery. They argue this oversimplifies how AI-powered products actually work in practice.</p><p>The core insight: fast generation is not the same as fast shipping. AI can produce candidate solutions, copy, code, or designs in seconds, but validating, editing, testing, and refining those outputs still demands human time and attention. Teams that treat AI output as final are setting themselves up for quality issues and rework.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.producttalk.org/delivery-isnt-free-all-things-product-podcast-with-teresa-torres-petra-wille/" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="torres">
+  <div class="creator-header"><h2>Teresa Torres</h2><span class="date-badge">Sep 16</span></div>
+  <div class="creator-headline">4 new evals and 16 experiment variants to fix 1 customer complaint</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>AI-generated opportunity trees can overwhelm PMs with noise. Focus your evals on the highest-confidence, actionable opportunities rather than surfacing every possible variant—otherwise your team spends cycles sorting signal from AI-generated static.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>A Vistaly customer using AI-generated opportunity solution trees ran into a practical problem: the tool surfaced 4 new evals and 16 experiment variants from a single customer complaint. The volume of options was paralyzing, not helpful.</p><p>The lesson for PMs: AI can generate alternatives at scale, but that doesn't mean all of them deserve equal weight in your roadmap decision-making. Build evals that filter for quality and strategic fit, not just comprehensiveness. Your team's capacity to act is still finite.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.producttalk.org/4-new-evals-and-16-experiment-variants/" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="torres">
+  <div class="creator-header"><h2>Teresa Torres</h2><span class="date-badge">Sep 17</span></div>
+  <div class="creator-headline">Creating Aha! Builder: Concept to code, no engineers required</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Torres interviews the CEO of Aha! on building an AI app builder explicitly for product managers, not engineers. The conversation explores how to design tools that lower the bar for non-technical users to ship custom functionality without adding risk or technical debt.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Brian De Haaff and Chris Lema discuss the approach behind Aha! Builder, a tool designed to let PMs go from concept directly to working product without requiring engineering bandwidth. In a crowded market of no-code and AI builders, their differentiation is putting product managers' workflows and constraints at the center of the design.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.producttalk.org/creating-aha-builder-concept-to-code-no-engineers-required/" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="lenny">
+  <div class="creator-header"><h2>Claire Vo</h2><span class="date-badge">Sep 16</span></div>
+  <div class="creator-headline">Muse review: The personal AI agent that gets consumer UX right</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Vo tests Meta's Muse, a personal AI agent that handles calendar, email, and family coordination—and ships beautiful, usable output in a single pass. For PMs building AI agents, this is a masterclass in constraint-driven design: focus on a narrow, high-value job and do it with taste and polish rather than breadth.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Vo gave Muse access to her calendar, email, and her children's schedules, and it produced a single-shot family PDF of higher quality than anything she'd made manually with Claude or Codex. The review highlights how Muse succeeds where many AI agents fail: it assumes the user has limited time and attention, and it delivers a finished artifact rather than a conversation.</p><p>The product lesson: personal AI agents don't need to be fully general-purpose. They win by picking a specific outcome (a beautifully formatted family calendar), accepting the user's context as input, and shipping something the user can use immediately without editing.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.lennysnewsletter.com/p/muse-review-the-personal-ai-agent" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="lenny">
+  <div class="creator-header"><h2>Lenny Rachitsky</h2><span class="date-badge">Sep 14</span></div>
+  <div class="creator-headline">How two SpaceXAI designers use Grok Bot to do their jobs</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Two real designers share exactly how they integrate Grok Bot into their day-to-day work—from ideation through critique and polish. Worth listening for concrete examples of where AI agents speed up workflows versus where human judgment still dominates.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Part of Lenny's How I AI podcast series, this episode documents two SpaceXAI designers explaining their actual workflows with Grok Bot. The conversation focuses on when and how they reach for the agent, what kinds of tasks benefit most, and where the tool breaks down or requires human override.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.lennysnewsletter.com/p/how-i-ai-how-two-spacexai-designers" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="swyx">
+  <div class="creator-header"><h2>Latent.Space</h2><span class="date-badge">Sep 16</span></div>
+  <div class="creator-headline">Underwriting superintelligence: Backing agents you can sue—Rune Kvist, AIUC</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>AIUC's CEO discusses how to build insurance and accountability structures around AI agents. For PMs shipping agentic products to enterprise customers, liability and trust are now product requirements, not legal afterthoughts.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>As AI agents move into autonomous decision-making roles—especially in finance and operations—the question of accountability becomes urgent. AIUC is building insurance products specifically for AI agents, which requires a fundamentally different approach to underwriting than traditional software.</p><p>The implication for product teams: customers want to ship agents but need contractual and financial mechanisms to protect themselves if the agent fails. Understanding the insurance and risk model around your agent isn't a nice-to-have; it's a go-to-market requirement.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.latent.space/p/aiuc" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="swyx">
+  <div class="creator-header"><h2>Richard MacManus</h2><span class="date-badge">Sep 15</span></div>
+  <div class="creator-headline">Can skills learned in games transfer to real-world work?</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Good Start Labs trained an AI model on a railroad game and found one training approach improved financial research performance. The insight: the structure and feedback loops in your AI training environment directly shape which skills transfer to real work.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>This piece explores an experiment where different training designs on the same game produced agents with different real-world capabilities. One version trained on careful decision-making and feedback loops performed better on financial research tasks than a version trained only on game completion.</p><p>For PMs: how you train your agents—what feedback they receive, what constraints they operate under—determines what they'll be good at in production. Games and simulations aren't just for fun; they're a design tool for shaping agent behavior.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.latent.space/p/good-start-labs" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="yang">
+  <div class="creator-header"><h2>Peter Yang</h2><span class="date-badge">Sep 16</span></div>
+  <div class="creator-headline">My 3-step system to automate 90% of my content workflow with AI</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Yang converted a 15-step manual content process into 8 reusable AI skills, saving 5+ hours per week. The framework—decompose, skill-ify, orchestrate—is directly applicable to how PMs should architect AI workflows for their teams.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Rather than replacing humans wholesale, Yang broke his workflow into discrete skills (research, outline, draft, edit, etc.) and assigned each to an AI tool or prompt-based agent. The result is a system that's faster and more predictable than doing everything manually, but also more controllable and auditable than a single black-box solution.</p><p>The PM lesson: the highest leverage automation isn't about finding a tool that does everything. It's about mapping your workflow, identifying which steps are repeatable and rules-based, and building a skill stack that lets humans focus on judgment calls while AI handles the mechanical work.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://creatoreconomy.so/p/my-3-step-system-to-automate-90-of" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="kao">
+  <div class="creator-header"><h2>Wes Kao</h2><span class="date-badge">Sep 16</span></div>
+  <div class="creator-headline">My top posts [bookmark this]</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Kao curated her most popular posts by topic—managing up, presenting to leadership, sharing your point of view—into a single reference guide. A quick way to find frameworks on influence and communication when you need them most.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>This is a curated index of Kao's most useful posts organized by category. It's designed as a bookmark-worthy reference for PMs navigating common challenges like how to present ideas to leadership or how to build credibility when your view differs from consensus.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://newsletter.weskao.com/p/top-posts" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="zhuo">
+  <div class="creator-header"><h2>Julie Zhuo</h2><span class="date-badge">Sep 17</span></div>
+  <div class="creator-headline">AI for no good reason</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Zhuo explores creative, whimsical uses of AI—from a rotary phone that talks to you to games centered on your family. Reminder: AI products don't need to be "productive" to be valuable. Sometimes delight and play are the real use case.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>This essay celebrates AI projects built purely for joy or curiosity—not productivity. Examples include The Veil of History (where you discover what life you would've lived in a random time period) and other playful applications that have no business case but real emotional impact.</p><p>For PMs: as AI commoditizes, differentiation increasingly comes from taste, delight, and human connection rather than raw capability. The products that win won't always be the most efficient ones.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://joulee.medium.com/a-bird-wall-a-talking-rotary-phone-and-a-game-starring-your-cousins-17ddf8e448ad?source=rss-b8a4e5ae7490------2" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker" id="thought-provokers">
+  <div class="creator-header"><h2>Ethan Mollick</h2><span class="date-badge">Feb 18, 2026</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>A guide to choosing the right AI tool for different tasks in the agentic era. As the AI landscape fragments beyond chatbots into specialized agents and models, this framework helps PMs make intentional tool choices rather than defaulting to the latest large model.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Mollick maps the landscape of AI tools and use cases as agents become more specialized. The core question: which tool is right for which job? The answer isn't always "the most capable one" or "the newest release."</p><p>
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 20 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
