@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Monday, September 21, 2026</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Karla', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fdf2f7;
+      color: #3b2340;
+      line-height: 1.7;
+    }
+
+    .header {
+      background: linear-gradient(180deg, #fffbfd, #fdf2f7);
+      border-bottom: 1px solid #f3d9e7;
+      padding: 2.6rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 600; }
+    .header .tagline { font-size: 0.95rem; font-style: italic; color: #8a6b7d; margin-top: 0.35rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.9rem;
+      font-size: 0.8rem; font-weight: 600;
+      background: #ffeef6; color: #c2437f;
+      padding: 0.35rem 1rem; border-radius: 999px;
+    }
+
+    .container { max-width: 760px; margin: 0 auto; padding: 1.75rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      background: #fffaf0; border: 1px solid #f0e0bd; border-radius: 16px;
+      padding: 1rem 1.25rem; margin-bottom: 1.25rem;
+      font-size: 0.9rem; color: #7a5f14; line-height: 1.6;
+    }
+    .quiet-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta { font-size: 0.82rem; color: #a68a99; text-align: center; margin-bottom: 1rem; }
+
+    /* ── Jump nav ── */
+    .digest-nav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 1.5rem; }
+    .digest-nav a {
+      display: inline-block; padding: 7px 15px;
+      font-size: 0.79rem; font-weight: 600; color: #8a5f7a;
+      background: #fffbfd; border: 1px solid #f0d3e3;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .digest-nav a:hover { background: #e0559a; color: #fff; border-color: #e0559a; }
+    .digest-nav a.tp-nav { background: #f6f0ff; border-color: #ddd0f5; color: #7a5fbd; }
+    .digest-nav a.tp-nav:hover { background: #7a5fbd; color: #fff; border-color: #7a5fbd; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fffdfb; border: 1px solid #f3d9e7;
+      border-radius: 18px; padding: 1.4rem 1.5rem; margin-bottom: 0.9rem;
+      box-shadow: 0 8px 22px rgba(224, 85, 154, 0.07);
+    }
+    .thought-provoker { background: #fffaf0; border-color: #f0e0bd; box-shadow: none; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.2rem;
+    }
+    .creator-header h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 600; line-height: 1.3; }
+    .thought-provoker .creator-header h2 { color: #4a3a1a; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 600;
+      color: #c2437f; background: #ffeef6;
+      padding: 4px 11px; border-radius: 999px; white-space: nowrap;
+    }
+    .thought-provoker .date-badge { color: #a07800; background: #fdf0d3; }
+    .badge-hot {
+      display: inline-block; background: #e0559a; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 2px 8px;
+      border-radius: 999px; margin-left: 6px; vertical-align: middle;
+    }
+    .creator-headline { font-size: 0.86rem; color: #9a7a8b; font-style: italic; margin-bottom: 0.85rem; }
+    .thought-provoker .creator-headline { color: #9a875f; }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f7f2ff; border-left: 4px solid #9a86d6;
+      border-radius: 0 12px 12px 0; padding: 0.75rem 0.95rem;
+      font-size: 0.86rem; color: #3b2340; line-height: 1.68;
+      margin-bottom: 0.7rem;
+    }
+    .tldr-label {
+      font-size: 0.66rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: #7a5fbd; display: block; margin-bottom: 5px;
+    }
+    .thought-provoker .tldr { background: #fffdf6; border-color: #d9b154; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 4px; }
+    summary {
+      cursor: pointer; font-size: 0.79rem; font-weight: 700; color: #e0559a;
+      list-style: none; display: inline-flex; align-items: center; gap: 4px;
+      user-select: none; padding: 4px 0;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.7rem; }
+    .thought-provoker summary { color: #a07800; }
+
+    .detail-body p { font-size: 0.875rem; color: #5c4a55; line-height: 1.75; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol { font-size: 0.875rem; color: #5c4a55; padding-left: 1.2rem; margin-bottom: 0.7rem; }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #f0d3e3; padding: 0.3rem 0.9rem;
+      color: #8a6b7d; font-style: italic; font-size: 0.86rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.9rem; }
+    .creator-links a {
+      display: inline-block; background: #e0559a; color: #fff;
+      text-decoration: none; font-size: 0.79rem; font-weight: 700;
+      padding: 9px 18px; border-radius: 999px;
+    }
+    .creator-links a:hover { background: #c2437f; }
+    .thought-provoker .creator-links a { background: #a07800; }
+    .thought-provoker .creator-links a:hover { background: #856300; }
+    .creator-links span { color: #e8cbdb; margin: 0 6px; }
+
+    /* ── Top pick ── */
+    .top-pick {
+      background: linear-gradient(135deg, #ffc2dd, #d9c8f5 55%, #bcd8f8);
+      border: none; border-radius: 20px;
+      padding: 1.5rem 1.6rem; margin-bottom: 1.25rem;
+      color: #3b2340;
+    }
+    .top-pick-label {
+      font-family: 'Playfair Display', serif; font-size: 0.88rem; font-style: italic;
+      letter-spacing: 0.04em; margin-bottom: 0.6rem;
+    }
+    .top-pick-content { font-size: 0.98rem; line-height: 1.68; }
+
+    /* ── No updates fallback ── */
+    .no-updates { text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #bfa3b3; }
+
+    .footer {
+      text-align: center; padding: 1.6rem;
+      font-size: 0.8rem; color: #bfa3b3; border-top: 1px solid #f3d9e7;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.6rem 1rem 1.3rem; }
+      .header h1 { font-size: 1.35rem; }
+      .container { padding: 1rem 0.9rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1.05rem 1.05rem; border-radius: 16px; }
+      .creator-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+      .creator-header h2 { font-size: 1.2rem; }
+      .digest-nav { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding-bottom: 4px; }
+      .digest-nav a { flex-shrink: 0; padding: 10px 15px; }
+      .creator-links a { display: block; text-align: center; padding: 13px 18px; }
+      summary { padding: 9px 0; font-size: 0.85rem; }
+      .quiet-banner { font-size: 0.87rem; padding: 0.9rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Monday, September 21, 2026</div>
+  </div>
+
+  <div class="container">
+    <div class="top-pick">
+  <div class="top-pick-label">🔥 Top pick this issue</div>
+  <div class="top-pick-content">Peter Sellis, former first PM at Snapchat and ex-Head of Product at Discord, shares unfiltered lessons on team design, talent management, and the three core tensions that separate great PMs from the median ones. Essential listening for anyone building consumer products or managing high-velocity teams.</div>
+</div>
+
+<div class="digest-meta">20 thought leaders tracked &nbsp;·&nbsp; 5 had updates this issue</div>
+
+<nav class="digest-nav">
+  <a href="#lenny">Lenny Rachitsky</a>
+  <a href="#teresa">Teresa Torres</a>
+  <a href="#peter">Peter Yang</a>
+  <a href="#ethan">Ethan Mollick</a>
+  <a href="#swyx">Swyx</a>
+  <a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+</nav>
+
+<div class="creator" id="lenny">
+  <div class="creator-header"><h2>Lenny Rachitsky</h2><span class="date-badge">Sep 20</span></div>
+  <div class="creator-headline">90 minutes of unfiltered product advice from Snap and Discord's product chief | Peter Sellis</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Peter Sellis breaks down why median PMs fail: they optimize for defensibility instead of impact, misunderstand how growth actually happens (hint: it's rarely from new features), and lack the psychological resilience to push great people hard. His framework of three "oxymorons" of great product management offers a concrete model for thinking about your own leadership gaps.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Sellis draws from seven years building Snapchat's core product and leading product at Discord during explosive growth phases. He discusses why he designs teams like "terrorist organizations"—small, autonomous, mission-driven units—and why managing exceptional talent (he cites his experience with Nikita Bier) requires pushing people harder than they expect, not lighter.</p><p>The conversation covers why Snapchat's ads business never reached its potential despite early advantages, what separates the top 5% of PMs from everyone else, and the counterintuitive insight that growth almost always comes from making the core product irresistible, not from adding new features. Sellis emphasizes the importance of being unfiltered and willing to make unpopular calls based on evidence rather than consensus.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.lennysnewsletter.com/p/90-minutes-of-unfiltered-product-advice-from-snap-and-discords-product-chief-peter-sellis" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="teresa">
+  <div class="creator-header"><h2>Teresa Torres</h2><span class="date-badge">Sep 21</span></div>
+  <div class="creator-headline">Ch. 10: Testing Assumptions</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Teresa's five-year celebration of *Continuous Discovery Habits* includes an in-depth reading guide for Chapter 10 on testing assumptions—a critical PM skill for validating hypotheses before building. The structured approach keeps discovery from becoming expensive guesswork.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>As part of a monthly book club, Teresa is releasing deep-dive guides for each chapter of her flagship methodology. Chapter 10 focuses on how PMs and teams should approach assumption testing: identifying which assumptions are riskiest, designing low-cost tests, and iterating based on what you learn rather than what you hoped.</p><p>The guide includes video content and frameworks that translate assumption-testing into practice, making it directly applicable to discovery rituals and how you structure conversations with stakeholders and users.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.producttalk.org/ch-10-testing-assumptions/" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="peter">
+  <div class="creator-header"><h2>Peter Yang</h2><span class="date-badge">Sep 20</span></div>
+  <div class="creator-headline">How to Save Money Now with ChatGPT Finances (6 Real Use Cases) | Ethan Bloch</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Ethan Bloch walks through concrete ChatGPT Finance use cases and the 6 core prompts that unlock personal finance automation—showing how your users are already building custom workflows on top of LLMs. Learning these patterns helps PMs understand where AI-native products create real value vs. theater.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>The piece breaks down 6 real-world prompts users are successfully running to save money and time: from budget analysis to investment tracking to expense categorization. Each use case reveals how users layer multiple models together and where friction still exists in the AI→action loop.</p><p>Bloch also shares 4 lessons from how his team built the product, offering insight into discovery, feature prioritization, and the gap between what LLMs *can* do and what users actually want to do with them. Useful for PMs building in fintech or consumer AI.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://creatoreconomy.so/p/how-to-save-money-now-with-chatgpt-finances-ethan-boch" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="ethan">
+  <div class="creator-header"><h2>Ethan Mollick</h2><span class="date-badge">Sep 18</span></div>
+  <div class="creator-headline">The Overhang</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Mollick argues that knowledge workers—especially PMs—are sitting on untapped potential because they haven't yet learned to combine deep expertise with AI agents in ways that create disproportionate impact. The "overhang" is the gap between what you *could* ship and what you're currently shipping; closing it requires taste, agency, and willingness to fail.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Mollick explores how the arrival of capable AI agents has created an unusual moment: people with real domain knowledge can now leverage AI to operate at a scale and speed that wasn't possible before. But most aren't doing it yet—either because they don't believe they can, or because they're waiting for permission or perfect tools.</p><p>For PMs, the insight is personal: your understanding of your product, your users, and your market is an asset that AI can amplify dramatically if you actually use it to make decisions and ship experiments faster. The overhang isn't a product problem; it's a mindset problem about what you're capable of now.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.oneusefulthing.org/p/the-overhang" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="swyx">
+  <div class="creator-header"><h2>Swyx</h2><span class="date-badge">Sep 21</span></div>
+  <div class="creator-headline">Jev: System One models for Prod, not God — with Diogo Almeida, CEO, TypeSafe AI</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Diogo Almeida, lead creator of Jev, explains why smaller, purpose-built language models trained for specific product use cases outperform giant foundation models for most real applications. The shift from "one model to rule them all" to "the right model for your job" changes how PMs should think about AI architecture and cost.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Jev represents a new direction in AI product strategy: moving away from the assumption that bigger, more general models are always better. Instead, TypeSafe AI is building models tuned for specific production tasks—better latency, lower cost, higher accuracy on domain-specific problems.</p><p>For PMs building AI products, this is a critical signal that the era of "just use GPT-4" is ending. The next generation of competitive advantage comes from training and deploying models that solve your specific problem better than off-the-shelf solutions, which has implications for roadmapping, vendor strategy, and where to invest engineering effort.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.latent.space/p/jev" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker" id="thought-provokers">
+  <div class="creator-header"><h2>Wes Kao</h2><span class="date-badge">Aug 19</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>Kao's framework for turning bugs into features—reframing constraints as selling points—is a powerful tool for managing stakeholder expectations and finding product leverage in what looked like failure.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>When something goes wrong in your product, the instinct is usually to fix it or apologize. Kao argues that the best product thinkers sometimes flip the frame: what looks like a limitation or constraint might actually become a core part of your brand or value prop if positioned correctly. The key is having the taste to recognize which "bugs" are actually features waiting to be claimed.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://newsletter.weskao.com/p/turn-bugs-into-features" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker">
+  <div class="creator-header"><h2>Rich Mironov</h2><span class="date-badge">Aug 18</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>Mironov's reflection on corporate politics and how product leaders must master reading the room—especially the c-suite—remains urgently relevant as PMs navigate AI budgets and competing strategic bets.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>On the Product Opscast, Mironov discusses why product leaders who ignore corporate politics or fail to understand how decisions actually get made are systematically outmaneuvered by peers who do. He emphasizes that "reading the room" and understanding stakeholder incentives isn't cynical—it's the foundation of effective influence. In an AI-heavy environment with uncertain ROI, this skill becomes even more critical.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.mironov.com/product-opscast-money-stories-and-organizational-realities/" target="_blank">Read →</a></div>
+</div>
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 20 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
