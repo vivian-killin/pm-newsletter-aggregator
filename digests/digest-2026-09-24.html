@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Thursday, September 24, 2026</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Karla', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fdf2f7;
+      color: #3b2340;
+      line-height: 1.7;
+    }
+
+    .header {
+      background: linear-gradient(180deg, #fffbfd, #fdf2f7);
+      border-bottom: 1px solid #f3d9e7;
+      padding: 2.6rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 600; }
+    .header .tagline { font-size: 0.95rem; font-style: italic; color: #8a6b7d; margin-top: 0.35rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.9rem;
+      font-size: 0.8rem; font-weight: 600;
+      background: #ffeef6; color: #c2437f;
+      padding: 0.35rem 1rem; border-radius: 999px;
+    }
+
+    .container { max-width: 760px; margin: 0 auto; padding: 1.75rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      background: #fffaf0; border: 1px solid #f0e0bd; border-radius: 16px;
+      padding: 1rem 1.25rem; margin-bottom: 1.25rem;
+      font-size: 0.9rem; color: #7a5f14; line-height: 1.6;
+    }
+    .quiet-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta { font-size: 0.82rem; color: #a68a99; text-align: center; margin-bottom: 1rem; }
+
+    /* ── Jump nav ── */
+    .digest-nav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 1.5rem; }
+    .digest-nav a {
+      display: inline-block; padding: 7px 15px;
+      font-size: 0.79rem; font-weight: 600; color: #8a5f7a;
+      background: #fffbfd; border: 1px solid #f0d3e3;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .digest-nav a:hover { background: #e0559a; color: #fff; border-color: #e0559a; }
+    .digest-nav a.tp-nav { background: #f6f0ff; border-color: #ddd0f5; color: #7a5fbd; }
+    .digest-nav a.tp-nav:hover { background: #7a5fbd; color: #fff; border-color: #7a5fbd; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fffdfb; border: 1px solid #f3d9e7;
+      border-radius: 18px; padding: 1.4rem 1.5rem; margin-bottom: 0.9rem;
+      box-shadow: 0 8px 22px rgba(224, 85, 154, 0.07);
+    }
+    .thought-provoker { background: #fffaf0; border-color: #f0e0bd; box-shadow: none; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.2rem;
+    }
+    .creator-header h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 600; line-height: 1.3; }
+    .thought-provoker .creator-header h2 { color: #4a3a1a; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 600;
+      color: #c2437f; background: #ffeef6;
+      padding: 4px 11px; border-radius: 999px; white-space: nowrap;
+    }
+    .thought-provoker .date-badge { color: #a07800; background: #fdf0d3; }
+    .badge-hot {
+      display: inline-block; background: #e0559a; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 2px 8px;
+      border-radius: 999px; margin-left: 6px; vertical-align: middle;
+    }
+    .creator-headline { font-size: 0.86rem; color: #9a7a8b; font-style: italic; margin-bottom: 0.85rem; }
+    .thought-provoker .creator-headline { color: #9a875f; }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f7f2ff; border-left: 4px solid #9a86d6;
+      border-radius: 0 12px 12px 0; padding: 0.75rem 0.95rem;
+      font-size: 0.86rem; color: #3b2340; line-height: 1.68;
+      margin-bottom: 0.7rem;
+    }
+    .tldr-label {
+      font-size: 0.66rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: #7a5fbd; display: block; margin-bottom: 5px;
+    }
+    .thought-provoker .tldr { background: #fffdf6; border-color: #d9b154; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 4px; }
+    summary {
+      cursor: pointer; font-size: 0.79rem; font-weight: 700; color: #e0559a;
+      list-style: none; display: inline-flex; align-items: center; gap: 4px;
+      user-select: none; padding: 4px 0;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.7rem; }
+    .thought-provoker summary { color: #a07800; }
+
+    .detail-body p { font-size: 0.875rem; color: #5c4a55; line-height: 1.75; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol { font-size: 0.875rem; color: #5c4a55; padding-left: 1.2rem; margin-bottom: 0.7rem; }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #f0d3e3; padding: 0.3rem 0.9rem;
+      color: #8a6b7d; font-style: italic; font-size: 0.86rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.9rem; }
+    .creator-links a {
+      display: inline-block; background: #e0559a; color: #fff;
+      text-decoration: none; font-size: 0.79rem; font-weight: 700;
+      padding: 9px 18px; border-radius: 999px;
+    }
+    .creator-links a:hover { background: #c2437f; }
+    .thought-provoker .creator-links a { background: #a07800; }
+    .thought-provoker .creator-links a:hover { background: #856300; }
+    .creator-links span { color: #e8cbdb; margin: 0 6px; }
+
+    /* ── Top pick ── */
+    .top-pick {
+      background: linear-gradient(135deg, #ffc2dd, #d9c8f5 55%, #bcd8f8);
+      border: none; border-radius: 20px;
+      padding: 1.5rem 1.6rem; margin-bottom: 1.25rem;
+      color: #3b2340;
+    }
+    .top-pick-label {
+      font-family: 'Playfair Display', serif; font-size: 0.88rem; font-style: italic;
+      letter-spacing: 0.04em; margin-bottom: 0.6rem;
+    }
+    .top-pick-content { font-size: 0.98rem; line-height: 1.68; }
+
+    /* ── No updates fallback ── */
+    .no-updates { text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #bfa3b3; }
+
+    .footer {
+      text-align: center; padding: 1.6rem;
+      font-size: 0.8rem; color: #bfa3b3; border-top: 1px solid #f3d9e7;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.6rem 1rem 1.3rem; }
+      .header h1 { font-size: 1.35rem; }
+      .container { padding: 1rem 0.9rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1.05rem 1.05rem; border-radius: 16px; }
+      .creator-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+      .creator-header h2 { font-size: 1.2rem; }
+      .digest-nav { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding-bottom: 4px; }
+      .digest-nav a { flex-shrink: 0; padding: 10px 15px; }
+      .creator-links a { display: block; text-align: center; padding: 13px 18px; }
+      summary { padding: 9px 0; font-size: 0.85rem; }
+      .quiet-banner { font-size: 0.87rem; padding: 0.9rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Thursday, September 24, 2026</div>
+  </div>
+
+  <div class="container">
+    <div class="top-pick">
+  <div class="top-pick-label">🔥 Top pick this issue</div>
+  <div class="top-pick-content">Itamar Gilad examines why even high-quality product ideas fail to survive in organizations. For AI-era PMs, this is essential reading: understanding the organizational immune system that kills good ideas is as critical as generating them, especially when shipping velocity has accelerated.</div>
+</div>
+
+<div class="digest-meta">20 thought leaders tracked &nbsp;·&nbsp; 6 had updates this issue</div>
+
+<nav class="digest-nav">
+  <a href="#itamar">Itamar Gilad</a>
+  <a href="#teresa">Teresa Torres</a>
+  <a href="#julie">Julie Zhuo</a>
+  <a href="#peter">Peter Yang</a>
+  <a href="#swyx">Swyx</a>
+  <a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+</nav>
+
+<div class="creator" id="itamar">
+  <div class="creator-header"><h2>Itamar Gilad</h2><span class="date-badge">Sep 24</span></div>
+  <div class="creator-headline">Why Good Product Ideas Don't Survive</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Great product ideas are rare, but they're killed by organizational dynamics—not by poor initial quality. Map the invisible forces in your org (politics, competing priorities, misaligned incentives) that doom strong concepts, then design explicit defense mechanisms into your discovery and roadmap processes.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Gilad argues that the best product ideas—those creating measurable value for users and business alike—are regularly abandoned not because they were bad, but because organizational friction, shifting priorities, and stakeholder misalignment systematically eliminate them. The ideas that survive tend to be politically safe or loudly championed by senior leaders, not necessarily the strongest ones.</p>
+<p>For PMs, the implication is clear: protecting good ideas requires as much skill as identifying them. This means documenting why an idea was rejected (not just that it was), socializing concepts early across functions, and building the case for reconsideration as conditions change. In the AI era, where speed-to-ship has compressed, the risk of accidentally killing evergreen concepts because they didn't fit this quarter's narrative is higher than ever.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://itamargilad.com/good-ideas/" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="teresa">
+  <div class="creator-header"><h2>Teresa Torres</h2><span class="date-badge">Sep 22</span></div>
+  <div class="creator-headline">Trash Can Tracking – All Things Product Podcast</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Track what ideas your team rejects and why—your trash can is a leading indicator of product process health, not your shipped features. This simple metric reveals whether you're exploring enough options, killing ideas too fast, or stuck in groupthink.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>In this episode of All Things Product, Torres and Petra Wille introduce trash can tracking: a lightweight diagnostic for evaluating how many concepts your team explores before shipping. The premise is counterintuitive—a large "trash can" of rejected ideas often signals a healthy discovery process, while a tiny one suggests premature convergence or fear-driven decision-making.</p>
+<p>For discovery-stage teams especially, this is a concrete way to measure whether you're truly exploring the solution space or narrowing too quickly. The metric also surfaces organizational problems: teams that never say no may lack decision criteria; teams that kill everything may be risk-averse or trapped by a dominant opinion.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.producttalk.org/trash-can-tracking-all-things-product-podcast-with-teresa-torres-petra-wille/" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="julie">
+  <div class="creator-header"><h2>Julie Zhuo</h2><span class="date-badge">Sep 24</span></div>
+  <div class="creator-headline">What will make personal AI go big? Four design principles behind Muse's appeal</div>
+  <div class="tldr"><span class="tldr-label">TL;PR — PM Takeaway</span>Zhuo reverse-engineers why Muse succeeds where most AI apps fail: specificity over generality, genuine scarcity (it solves a real problem), habit formation by solving friction in an existing flow, and a narrow interface that reduces decision paralysis. Apply these four principles to any AI product roadmap.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Zhuo analyzes Muse—an AI note-taking and thought-organizing agent that launched this month to rare consumer enthusiasm—and distills four design principles that separate working AI products from the noise. First, it's deeply specific to a single job (organizing thoughts) rather than pretending to be a general assistant. Second, it solves a problem users actually felt acutely (thought capture feels scattered across tools). Third, it integrates into an existing behavior (note-taking) so adoption doesn't require new habits. Fourth, it has a simple, focused interface—no settings to debate, no endless options.</p>
+<p>For PMs building AI-native products, this is a counterintuitive roadmap: the temptation is to add generality and optionality, but Zhuo's analysis suggests the opposite. Narrow beats broad, specific beats configurable, and friction reduction in an existing workflow beats a new mode of working.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://joulee.medium.com/what-will-make-personal-ai-go-big-e92fbb10aba9" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="peter">
+  <div class="creator-header"><h2>Peter Yang</h2><span class="date-badge">Sep 23</span></div>
+  <div class="creator-headline">My Personal AI Course Is Live! Copy My AI System to Take Work Off Your Plate</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Yang has productized his own AI workflows into a 25-lesson course. This is less about the course itself and more a signal: the value PMs unlock by mastering prompting and agentic automation is now packageable and teachable. Consider what workflows in your org could move from manual-tribal-knowledge to documented playbook.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Yang has launched a course that codifies his personal AI workflows—the exact systems he uses to automate busywork and decision support. The approach is hands-on: copy templates, adapt them, integrate them into your existing toolchain. This reflects a broader trend in AI adoption: the gap between awareness ("AI can help us") and execution ("here's exactly how we use it") is still wide, and the PMs who can shrink that gap for their teams win.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://creatoreconomy.so/p/my-personal-ai-course-is-live-now" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="swyx">
+  <div class="creator-header"><h2>Swyx</h2><span class="date-badge">Sep 24</span></div>
+  <div class="creator-headline">Foundries vs Navigators: Lowering the Cost of Science</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Adrian Sanborn argues that AI has made thinking cheap but doing expensive in R&D. This shapes product strategy for any PM in life sciences, climate, or biotech: the bottleneck is no longer ideation—it's execution bandwidth and experimental validation. Build products that absorb the "doing," not just the thinking.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Sanborn explores how AI has inverted the cost structure of scientific research. Traditionally, thinking was expensive (requires elite talent) and doing was cheap (run an experiment). AI flipped it: generating hypotheses and design ideas is now nearly free, but the actual work of building, testing, and validating remains labor-intensive and capital-heavy. This asymmetry is reshaping how biotech and applied science companies operate.</p>
+<p>For PMs in science-adjacent domains (biotech, climate tech, materials science), this is a critical insight: your moat isn't in idea generation—it's in execution infrastructure. Products that lower the cost of validation, parallelization, or feedback loops will outcompete those that just help teams brainstorm faster.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.latent.space/p/foundries-vs-navigators-lowering" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker" id="thought-provokers">
+  <div class="creator-header"><h2>Marty Cagan</h2><span class="date-badge">Apr 27, 2026</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>Cagan's Build to Learn FAQ unpacks the rising distinction between building to discover (product discovery) and building to ship (product delivery). As AI makes delivery cheaper and faster, the PM's leverage has shifted—the bottleneck is no longer speed, it's knowing what to build. This reframes the entire job.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Cagan argues that as the cost of product delivery drops—accelerated by AI-assisted engineering—the competitive advantage shifts from speed-to-ship to speed-to-insight. A PM's time is better spent on ruthless discovery, user interviews, and prototyping to learn than on being a delivery coordinator. In an age where AI can execute, the question "are we building the right thing?" matters more than "can we build it fast?"</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.svpg.com/build-to-learn-faq/" target="_blank">Read →</a></div>
+</div>
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 20 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
