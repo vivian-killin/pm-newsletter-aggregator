@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Thursday, October 01, 2026</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Karla', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fdf2f7;
+      color: #3b2340;
+      line-height: 1.7;
+    }
+
+    .header {
+      background: linear-gradient(180deg, #fffbfd, #fdf2f7);
+      border-bottom: 1px solid #f3d9e7;
+      padding: 2.6rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 600; }
+    .header .tagline { font-size: 0.95rem; font-style: italic; color: #8a6b7d; margin-top: 0.35rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.9rem;
+      font-size: 0.8rem; font-weight: 600;
+      background: #ffeef6; color: #c2437f;
+      padding: 0.35rem 1rem; border-radius: 999px;
+    }
+
+    .container { max-width: 760px; margin: 0 auto; padding: 1.75rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      background: #fffaf0; border: 1px solid #f0e0bd; border-radius: 16px;
+      padding: 1rem 1.25rem; margin-bottom: 1.25rem;
+      font-size: 0.9rem; color: #7a5f14; line-height: 1.6;
+    }
+    .quiet-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta { font-size: 0.82rem; color: #a68a99; text-align: center; margin-bottom: 1rem; }
+
+    /* ── Jump nav ── */
+    .digest-nav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 1.5rem; }
+    .digest-nav a {
+      display: inline-block; padding: 7px 15px;
+      font-size: 0.79rem; font-weight: 600; color: #8a5f7a;
+      background: #fffbfd; border: 1px solid #f0d3e3;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .digest-nav a:hover { background: #e0559a; color: #fff; border-color: #e0559a; }
+    .digest-nav a.tp-nav { background: #f6f0ff; border-color: #ddd0f5; color: #7a5fbd; }
+    .digest-nav a.tp-nav:hover { background: #7a5fbd; color: #fff; border-color: #7a5fbd; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fffdfb; border: 1px solid #f3d9e7;
+      border-radius: 18px; padding: 1.4rem 1.5rem; margin-bottom: 0.9rem;
+      box-shadow: 0 8px 22px rgba(224, 85, 154, 0.07);
+    }
+    .thought-provoker { background: #fffaf0; border-color: #f0e0bd; box-shadow: none; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.2rem;
+    }
+    .creator-header h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 600; line-height: 1.3; }
+    .thought-provoker .creator-header h2 { color: #4a3a1a; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 600;
+      color: #c2437f; background: #ffeef6;
+      padding: 4px 11px; border-radius: 999px; white-space: nowrap;
+    }
+    .thought-provoker .date-badge { color: #a07800; background: #fdf0d3; }
+    .badge-hot {
+      display: inline-block; background: #e0559a; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 2px 8px;
+      border-radius: 999px; margin-left: 6px; vertical-align: middle;
+    }
+    .creator-headline { font-size: 0.86rem; color: #9a7a8b; font-style: italic; margin-bottom: 0.85rem; }
+    .thought-provoker .creator-headline { color: #9a875f; }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f7f2ff; border-left: 4px solid #9a86d6;
+      border-radius: 0 12px 12px 0; padding: 0.75rem 0.95rem;
+      font-size: 0.86rem; color: #3b2340; line-height: 1.68;
+      margin-bottom: 0.7rem;
+    }
+    .tldr-label {
+      font-size: 0.66rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: #7a5fbd; display: block; margin-bottom: 5px;
+    }
+    .thought-provoker .tldr { background: #fffdf6; border-color: #d9b154; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 4px; }
+    summary {
+      cursor: pointer; font-size: 0.79rem; font-weight: 700; color: #e0559a;
+      list-style: none; display: inline-flex; align-items: center; gap: 4px;
+      user-select: none; padding: 4px 0;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.7rem; }
+    .thought-provoker summary { color: #a07800; }
+
+    .detail-body p { font-size: 0.875rem; color: #5c4a55; line-height: 1.75; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol { font-size: 0.875rem; color: #5c4a55; padding-left: 1.2rem; margin-bottom: 0.7rem; }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #f0d3e3; padding: 0.3rem 0.9rem;
+      color: #8a6b7d; font-style: italic; font-size: 0.86rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.9rem; }
+    .creator-links a {
+      display: inline-block; background: #e0559a; color: #fff;
+      text-decoration: none; font-size: 0.79rem; font-weight: 700;
+      padding: 9px 18px; border-radius: 999px;
+    }
+    .creator-links a:hover { background: #c2437f; }
+    .thought-provoker .creator-links a { background: #a07800; }
+    .thought-provoker .creator-links a:hover { background: #856300; }
+    .creator-links span { color: #e8cbdb; margin: 0 6px; }
+
+    /* ── Top pick ── */
+    .top-pick {
+      background: linear-gradient(135deg, #ffc2dd, #d9c8f5 55%, #bcd8f8);
+      border: none; border-radius: 20px;
+      padding: 1.5rem 1.6rem; margin-bottom: 1.25rem;
+      color: #3b2340;
+    }
+    .top-pick-label {
+      font-family: 'Playfair Display', serif; font-size: 0.88rem; font-style: italic;
+      letter-spacing: 0.04em; margin-bottom: 0.6rem;
+    }
+    .top-pick-content { font-size: 0.98rem; line-height: 1.68; }
+
+    /* ── No updates fallback ── */
+    .no-updates { text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #bfa3b3; }
+
+    .footer {
+      text-align: center; padding: 1.6rem;
+      font-size: 0.8rem; color: #bfa3b3; border-top: 1px solid #f3d9e7;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.6rem 1rem 1.3rem; }
+      .header h1 { font-size: 1.35rem; }
+      .container { padding: 1rem 0.9rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1.05rem 1.05rem; border-radius: 16px; }
+      .creator-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+      .creator-header h2 { font-size: 1.2rem; }
+      .digest-nav { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding-bottom: 4px; }
+      .digest-nav a { flex-shrink: 0; padding: 10px 15px; }
+      .creator-links a { display: block; text-align: center; padding: 13px 18px; }
+      summary { padding: 9px 0; font-size: 0.85rem; }
+      .quiet-banner { font-size: 0.87rem; padding: 0.9rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Thursday, October 01, 2026</div>
+  </div>
+
+  <div class="container">
+    <div class="top-pick">
+  <div class="top-pick-label">🔥 Top pick this issue</div>
+  <div class="top-pick-content">Teresa Torres shows how Vistaly rebuilt its entire product around AI-driven opportunity solution trees, moving beyond agents to focus on interview synthesis, evaluation loops, and repair mechanisms. For PMs shipping AI features, this is essential: it reveals the scaffolding that turns raw AI capability into structured customer insight.</div>
+</div>
+
+<div class="digest-meta">20 thought leaders tracked &nbsp;·&nbsp; 3 had updates this issue</div>
+
+<nav class="digest-nav">
+  <a href="#torres">Teresa Torres</a>
+  <a href="#mollick">Ethan Mollick</a>
+  <a href="#swyx">Swyx</a>
+  <a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+</nav>
+
+<div class="creator" id="torres">
+  <div class="creator-header"><h2>Teresa Torres</h2><span class="date-badge">Oct 1</span></div>
+  <div class="creator-headline">Generating Opportunity Solution Trees with AI: How Vistaly Rebuilt Its Product Around Interview Synthesis, Evals, and Repair Loops</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>AI's real power for product discovery isn't automation—it's synthesis. Vistaly redesigned its product to let AI extract patterns from customer interviews, then built repair loops so teams could validate and correct the output. This shift from "AI does the work" to "AI structures the thinking" is a template for AI-native product architecture.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>In this episode, Torres and Matt O'Neill discuss how Vistaly moved beyond using AI as a simple tool and instead made AI-driven synthesis central to how the product organizes customer research. The key insight: opportunity solution trees (a core PM framework) become more powerful when AI processes raw interview data and surfaces patterns humans would miss.</p>
+<p>The critical move was adding evaluation and repair loops. AI generates candidate trees, but humans decide which insights are valid. This creates a feedback mechanism that trains both the AI and the team's intuition. For PMs, this reframes AI not as a replacement for thinking, but as a partner that speeds up the grind of qualitative analysis.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.producttalk.org/generating-opportunity-solution-trees-with-ai-how-vistaly-rebuilt-its-product-around-interview-synthesis-evals-and-repair-loops/" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="mollick">
+  <div class="creator-header"><h2>Ethan Mollick</h2><span class="date-badge">Oct 1</span></div>
+  <div class="creator-headline">The Dot and the Swarm</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Mollick revisits the "bitter lesson" from AI research: systems that leverage scale and simple rules outperform hand-crafted, expert-driven designs. For product teams, this suggests that AI-native architectures should favor broad data, iterative feedback, and emergent behavior over rigid control.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>This piece examines how the most successful AI systems have typically won by scaling simple algorithms rather than encoding expert knowledge. The "dot" represents narrow, optimized expertise; the "swarm" represents distributed, data-driven learning at scale. The lesson for PMs: systems that seem less intelligent upfront often outperform bespoke solutions as volume grows.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.oneusefulthing.org/p/the-dot-and-the-swarm" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="swyx">
+  <div class="creator-header"><h2>Latent.Space</h2><span class="date-badge">Sep 30</span></div>
+  <div class="creator-headline">Why Dwarkesh is Wrong about Computer Use + How OpenAI shipped its Jev competitor in 1 Week</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Swyx's DevDay coverage breaks down OpenAI's computer-use API and the speed at which they shipped a competitor to a standalone tool. For PMs building agent products, the speed and API-first approach signal where the market is moving: capability as infrastructure, not as standalone apps.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>This episode dives into the technical and product strategy behind OpenAI's computer-use API launch and the rapid response to emerging competitors. The framing reveals OpenAI's bet: computer use as a primitive that platforms and developers build on, not as a finished product.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.latent.space/p/devday-2026" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker" id="thought-provokers">
+  <div class="creator-header"><h2>Julie Zhuo</h2><span class="date-badge">Sep 1</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>Zhuo's 10-step guide to AI transformation cuts through hype and settles the hard truth: you cannot mandate culture change from the top. For PMs driving AI adoption inside their orgs, this is required reading on where mandate fails and trust-building works.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Zhuo walks through why top-down AI mandates backfire and what actually drives successful transformation: early wins, human agency, and genuine problem-solving rather than technology-first thinking. The piece is grounded in organizational psychology and real deployment patterns, not theory.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://joulee.medium.com/you-cannot-mandate-an-ai-transformation-e2513cc3bbcc?source=rss-b8a4e5ae7490------2" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker">
+  <div class="creator-header"><h2>Wes Kao</h2><span class="date-badge">Jul 22</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>A sharp, short piece on the difference between defensible and good decisions. For PMs under pressure to justify choices, this is a corrective: a decision can pass all stakeholder objections and still be wrong. The question to ask: not "Can I defend this?" but "Is this actually good?"</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Kao's core insight applies everywhere PMs live: in roadmap reviews, prioritization debates, and scope decisions. Many defensible choices (safe, well-reasoned, hard to argue against) are bad for users or the product. Learning to separate those two judgments is a mark of mature PM thinking.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://newsletter.weskao.com/p/defensible-but-not-good" target="_blank">Read →</a></div>
+</div>
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 20 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
