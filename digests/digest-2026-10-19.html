@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Monday, October 19, 2026</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Karla', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fdf2f7;
+      color: #3b2340;
+      line-height: 1.7;
+    }
+
+    .header {
+      background: linear-gradient(180deg, #fffbfd, #fdf2f7);
+      border-bottom: 1px solid #f3d9e7;
+      padding: 2.6rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 600; }
+    .header .tagline { font-size: 0.95rem; font-style: italic; color: #8a6b7d; margin-top: 0.35rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.9rem;
+      font-size: 0.8rem; font-weight: 600;
+      background: #ffeef6; color: #c2437f;
+      padding: 0.35rem 1rem; border-radius: 999px;
+    }
+
+    .container { max-width: 760px; margin: 0 auto; padding: 1.75rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      background: #fffaf0; border: 1px solid #f0e0bd; border-radius: 16px;
+      padding: 1rem 1.25rem; margin-bottom: 1.25rem;
+      font-size: 0.9rem; color: #7a5f14; line-height: 1.6;
+    }
+    .quiet-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta { font-size: 0.82rem; color: #a68a99; text-align: center; margin-bottom: 1rem; }
+
+    /* ── Jump nav ── */
+    .digest-nav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 1.5rem; }
+    .digest-nav a {
+      display: inline-block; padding: 7px 15px;
+      font-size: 0.79rem; font-weight: 600; color: #8a5f7a;
+      background: #fffbfd; border: 1px solid #f0d3e3;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .digest-nav a:hover { background: #e0559a; color: #fff; border-color: #e0559a; }
+    .digest-nav a.tp-nav { background: #f6f0ff; border-color: #ddd0f5; color: #7a5fbd; }
+    .digest-nav a.tp-nav:hover { background: #7a5fbd; color: #fff; border-color: #7a5fbd; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fffdfb; border: 1px solid #f3d9e7;
+      border-radius: 18px; padding: 1.4rem 1.5rem; margin-bottom: 0.9rem;
+      box-shadow: 0 8px 22px rgba(224, 85, 154, 0.07);
+    }
+    .thought-provoker { background: #fffaf0; border-color: #f0e0bd; box-shadow: none; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.2rem;
+    }
+    .creator-header h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 600; line-height: 1.3; }
+    .thought-provoker .creator-header h2 { color: #4a3a1a; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 600;
+      color: #c2437f; background: #ffeef6;
+      padding: 4px 11px; border-radius: 999px; white-space: nowrap;
+    }
+    .thought-provoker .date-badge { color: #a07800; background: #fdf0d3; }
+    .badge-hot {
+      display: inline-block; background: #e0559a; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 2px 8px;
+      border-radius: 999px; margin-left: 6px; vertical-align: middle;
+    }
+    .creator-headline { font-size: 0.86rem; color: #9a7a8b; font-style: italic; margin-bottom: 0.85rem; }
+    .thought-provoker .creator-headline { color: #9a875f; }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f7f2ff; border-left: 4px solid #9a86d6;
+      border-radius: 0 12px 12px 0; padding: 0.75rem 0.95rem;
+      font-size: 0.86rem; color: #3b2340; line-height: 1.68;
+      margin-bottom: 0.7rem;
+    }
+    .tldr-label {
+      font-size: 0.66rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: #7a5fbd; display: block; margin-bottom: 5px;
+    }
+    .thought-provoker .tldr { background: #fffdf6; border-color: #d9b154; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 4px; }
+    summary {
+      cursor: pointer; font-size: 0.79rem; font-weight: 700; color: #e0559a;
+      list-style: none; display: inline-flex; align-items: center; gap: 4px;
+      user-select: none; padding: 4px 0;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.7rem; }
+    .thought-provoker summary { color: #a07800; }
+
+    .detail-body p { font-size: 0.875rem; color: #5c4a55; line-height: 1.75; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol { font-size: 0.875rem; color: #5c4a55; padding-left: 1.2rem; margin-bottom: 0.7rem; }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #f0d3e3; padding: 0.3rem 0.9rem;
+      color: #8a6b7d; font-style: italic; font-size: 0.86rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.9rem; }
+    .creator-links a {
+      display: inline-block; background: #e0559a; color: #fff;
+      text-decoration: none; font-size: 0.79rem; font-weight: 700;
+      padding: 9px 18px; border-radius: 999px;
+    }
+    .creator-links a:hover { background: #c2437f; }
+    .thought-provoker .creator-links a { background: #a07800; }
+    .thought-provoker .creator-links a:hover { background: #856300; }
+    .creator-links span { color: #e8cbdb; margin: 0 6px; }
+
+    /* ── Top pick ── */
+    .top-pick {
+      background: linear-gradient(135deg, #ffc2dd, #d9c8f5 55%, #bcd8f8);
+      border: none; border-radius: 20px;
+      padding: 1.5rem 1.6rem; margin-bottom: 1.25rem;
+      color: #3b2340;
+    }
+    .top-pick-label {
+      font-family: 'Playfair Display', serif; font-size: 0.88rem; font-style: italic;
+      letter-spacing: 0.04em; margin-bottom: 0.6rem;
+    }
+    .top-pick-content { font-size: 0.98rem; line-height: 1.68; }
+
+    /* ── No updates fallback ── */
+    .no-updates { text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #bfa3b3; }
+
+    .footer {
+      text-align: center; padding: 1.6rem;
+      font-size: 0.8rem; color: #bfa3b3; border-top: 1px solid #f3d9e7;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.6rem 1rem 1.3rem; }
+      .header h1 { font-size: 1.35rem; }
+      .container { padding: 1rem 0.9rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1.05rem 1.05rem; border-radius: 16px; }
+      .creator-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+      .creator-header h2 { font-size: 1.2rem; }
+      .digest-nav { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding-bottom: 4px; }
+      .digest-nav a { flex-shrink: 0; padding: 10px 15px; }
+      .creator-links a { display: block; text-align: center; padding: 13px 18px; }
+      summary { padding: 9px 0; font-size: 0.85rem; }
+      .quiet-banner { font-size: 0.87rem; padding: 0.9rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Monday, October 19, 2026</div>
+  </div>
+
+  <div class="container">
+    <div class="top-pick">
+  <div class="top-pick-label">🔥 Top pick this issue</div>
+  <div class="top-pick-content">Emmanuel Ameisen's deep dive into how AI models actually think reveals that language models plan many tokens ahead without stating those plans explicitly, and may exhibit something structurally similar to conscious vs. unconscious processing. For PMs building AI products, this reframes the "next-token predictor" narrative and opens new questions about how to design interfaces and workflows that align with model reasoning patterns.</div>
+</div>
+
+<div class="digest-meta">20 thought leaders tracked &nbsp;·&nbsp; 4 had updates this issue</div>
+
+<nav class="digest-nav">
+  <a href="#lenny">Lenny Rachitsky</a>
+  <a href="#teresa">Teresa Torres</a>
+  <a href="#peter">Peter Yang</a>
+  <a href="#swyx">Swyx</a>
+  <a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+</nav>
+
+<div class="creator" id="lenny">
+  <div class="creator-header"><h2>Emmanuel Ameisen</h2><span class="date-badge">Oct 18</span></div>
+  <div class="creator-headline">Inside the black box of AI: How AI models actually think</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Models perform sophisticated planning several tokens ahead without explicitly stating reasoning, and exhibit structures analogous to conscious/unconscious cognition. This changes how you should think about prompt design, error recovery, and building workflows that work with—not against—how models actually reason.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Ameisen, an interpretability researcher at Anthropic, shares findings from looking inside Claude and other LLMs. The key insight is that models form general concept representations and plan ahead in ways that the simple "next-token predictor" framing completely misses. Models have an internal "J space" that reveals something akin to self-awareness, and smooth scaling curves underlie what appear to be sudden capability jumps.</p><p>For product people, this matters because it suggests models aren't black boxes doing word completion—they're doing structured reasoning that can sometimes be audited and directed. Understanding this opens design space around how to build interfaces that make that reasoning visible or steerable, and how to design for failure modes that emerge from model planning rather than token randomness.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.lennysnewsletter.com/p/head-of-claude-code-what-happens" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="teresa">
+  <div class="creator-header"><h2>Teresa Torres</h2><span class="date-badge">Oct 13</span></div>
+  <div class="creator-headline">Training Expectations: Can one hour teach your team continuous discovery?</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>A flat no—you cannot build a discovery practice in a single offsite session. Continuous discovery is a habit and team muscle that requires sustained, repeated practice over weeks and months. If you're planning a quick workshop, expect it to motivate but not transform behavior.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Torres and co-host Petra Wille discuss why the common approach of booking a one-hour training slot during an offsite doesn't work. Discovery isn't a concept you learn once; it's a practiced skill that only embeds when teams do it repeatedly in their actual work rhythms.</p><p>The implication for PMs: if you want your team to truly adopt discovery, budget for ongoing coaching and normalize it as part of sprint cadence, not a one-time training event. Short sessions can raise awareness, but behavioral change requires sustained repetition.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.producttalk.org/training-expectations-all-things-product-podcast-with-teresa-torres-petra-wille/" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="peter">
+  <div class="creator-header"><h2>Anthony Pompliano</h2><span class="date-badge">Oct 18</span></div>
+  <div class="creator-headline">We Built an AI CFO to Help You Grow Your Net Worth</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Pompliano demonstrates that a tiny team can compete with AI labs in specialized domains (personal finance) by deeply understanding user needs and building a focused product. The bet is that domain expertise + small, nimble teams beat generalist scale in vertical applications.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Pompliano shares how he built a career without a traditional plan, and why he's now betting that a small team can outmaneuver larger AI labs in the personal finance space. The episode covers how he carved a niche, the product strategy behind his AI CFO, and why he believes specialization is the competitive advantage for AI startups in 2026.</p><p>For PMs: this is a case study in why "use a general LLM" rarely wins against a thoughtfully designed agent that understands a specific vertical deeply. It's also a reminder that product differentiation in AI often comes from problem selection and domain knowledge, not model size.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://creatoreconomy.so/p/we-built-an-ai-cfo-to-help-you-grow-net-worth-anthony-pompliano" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="swyx">
+  <div class="creator-header"><h2>Swyx & Guests</h2><span class="date-badge">Oct 14–13</span></div>
+  <div class="creator-headline">Two new episodes: Lab-in-the-loop biology + hour-long autonomous robotics</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Both episodes show how AI agents are moving from conversational tools into embodied, multi-step workflows—one in wet-lab biotech, one in physical robotics. PMs should watch for the shift from "AI as copilot" to "AI as autonomous worker," which changes product metrics, safety requirements, and feedback loops entirely.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p><strong>Lab-in-the-Loop (Leash Bio):</strong> Ian Quigley explains how they tamed DEL (display library) assays—notoriously noisy data—and used it to catch model hallucinations, then fed that data back to train AI agents to think like chemists. The feedback loop between data, model evaluation, and agent training is the real product.</p><p><strong>Dyna Robotics:</strong> Jason Ma's team is betting on World Action Models—learned representations of how the physical world responds to actions—as the foundation for general-purpose robots with hour-long autonomy. This is the embodied cousin of language models: learning to reason over time in a continuous domain.</p><p>Both point to a design pattern: successful AI products in science and robotics aren't shipping one-shot predictions; they're building tight loops where agent actions, real-world feedback, and model updates form a continuous cycle.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.latent.space/p/lab-in-the-loop-at-compute-speed" target="_blank">Leash Bio →</a><span style="margin: 0 8px;">·</span><a href="https://www.latent.space/p/dyna" target="_blank">Dyna Robotics →</a></div>
+</div>
+
+<div class="thought-provoker" id="thought-provokers">
+  <div class="creator-header"><h2>Julie Zhuo</h2><span class="date-badge">Aug 5</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>A meditation on the value of trying when AI makes things so easy. Zhuo writes to her 11-year-old daughter about why the journey of learning to draw or write matters more than the perfect output—and why her generation will need to redefine what effort and mastery mean.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Zhuo reflects on how AI commoditizes the output: anyone can generate a passable essay or image. But the act of trying—the struggle to translate thought into hand, eye, or word—builds something in the maker that the finished product alone never could. She anchors this in her own experience trying to become a novelist in college, and how that failure taught her more than success could have.</p><p>For PMs: this touches on a design question that will only deepen: if AI can do the thing, why does the human doing it still matter? How do you build products that honor both the efficiency AI brings and the deeper human need to create, learn, and struggle? Some products will lean into "let AI do it faster," but others will need to design around why the human process matters—and that's a harder, more durable product thesis.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://joulee.medium.com/eye-hand-ai-a-letter-to-my-daughter-91780b37ff6c?source=rss-b8a4e5ae7490------2" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker">
+  <div class="creator-header"><h2>Itamar Gilad</h2><span class="date-badge">Feb 1</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>A clear-eyed assessment of whether AI has actually disrupted product development—or whether we're just adding hype to the same old problems. Worth reading before you restructure your org around AI.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Gilad cuts through the narrative that AI fundamentally changes how we develop and sell tech products. He examines whether the old patterns—discovery, validation, shipping—are still the bottleneck, and asks whether AI actually removes friction or just makes it more seductive to skip it. The piece is a corrective to anyone who believes AI is a shortcut to better products without deeper discovery work.</p><p>This matters now because teams are increasingly tempted to treat AI-first as a substitute for product rigor. Gilad's framing helps you stay grounded: AI is a powerful tool, but it doesn't eliminate the need to understand users, test assumptions, or iterate. If anything, it makes discovery harder because it's easier to convince yourself you don't need it.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://itamargilad.com/ai-disruption/" target="_blank">Read →</a></div>
+</div>
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 20 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
