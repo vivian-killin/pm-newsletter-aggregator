@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Thursday, October 22, 2026</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Karla', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fdf2f7;
+      color: #3b2340;
+      line-height: 1.7;
+    }
+
+    .header {
+      background: linear-gradient(180deg, #fffbfd, #fdf2f7);
+      border-bottom: 1px solid #f3d9e7;
+      padding: 2.6rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 600; }
+    .header .tagline { font-size: 0.95rem; font-style: italic; color: #8a6b7d; margin-top: 0.35rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.9rem;
+      font-size: 0.8rem; font-weight: 600;
+      background: #ffeef6; color: #c2437f;
+      padding: 0.35rem 1rem; border-radius: 999px;
+    }
+
+    .container { max-width: 760px; margin: 0 auto; padding: 1.75rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      background: #fffaf0; border: 1px solid #f0e0bd; border-radius: 16px;
+      padding: 1rem 1.25rem; margin-bottom: 1.25rem;
+      font-size: 0.9rem; color: #7a5f14; line-height: 1.6;
+    }
+    .quiet-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta { font-size: 0.82rem; color: #a68a99; text-align: center; margin-bottom: 1rem; }
+
+    /* ── Jump nav ── */
+    .digest-nav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 1.5rem; }
+    .digest-nav a {
+      display: inline-block; padding: 7px 15px;
+      font-size: 0.79rem; font-weight: 600; color: #8a5f7a;
+      background: #fffbfd; border: 1px solid #f0d3e3;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .digest-nav a:hover { background: #e0559a; color: #fff; border-color: #e0559a; }
+    .digest-nav a.tp-nav { background: #f6f0ff; border-color: #ddd0f5; color: #7a5fbd; }
+    .digest-nav a.tp-nav:hover { background: #7a5fbd; color: #fff; border-color: #7a5fbd; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fffdfb; border: 1px solid #f3d9e7;
+      border-radius: 18px; padding: 1.4rem 1.5rem; margin-bottom: 0.9rem;
+      box-shadow: 0 8px 22px rgba(224, 85, 154, 0.07);
+    }
+    .thought-provoker { background: #fffaf0; border-color: #f0e0bd; box-shadow: none; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.2rem;
+    }
+    .creator-header h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 600; line-height: 1.3; }
+    .thought-provoker .creator-header h2 { color: #4a3a1a; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 600;
+      color: #c2437f; background: #ffeef6;
+      padding: 4px 11px; border-radius: 999px; white-space: nowrap;
+    }
+    .thought-provoker .date-badge { color: #a07800; background: #fdf0d3; }
+    .badge-hot {
+      display: inline-block; background: #e0559a; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 2px 8px;
+      border-radius: 999px; margin-left: 6px; vertical-align: middle;
+    }
+    .creator-headline { font-size: 0.86rem; color: #9a7a8b; font-style: italic; margin-bottom: 0.85rem; }
+    .thought-provoker .creator-headline { color: #9a875f; }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f7f2ff; border-left: 4px solid #9a86d6;
+      border-radius: 0 12px 12px 0; padding: 0.75rem 0.95rem;
+      font-size: 0.86rem; color: #3b2340; line-height: 1.68;
+      margin-bottom: 0.7rem;
+    }
+    .tldr-label {
+      font-size: 0.66rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: #7a5fbd; display: block; margin-bottom: 5px;
+    }
+    .thought-provoker .tldr { background: #fffdf6; border-color: #d9b154; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 4px; }
+    summary {
+      cursor: pointer; font-size: 0.79rem; font-weight: 700; color: #e0559a;
+      list-style: none; display: inline-flex; align-items: center; gap: 4px;
+      user-select: none; padding: 4px 0;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.7rem; }
+    .thought-provoker summary { color: #a07800; }
+
+    .detail-body p { font-size: 0.875rem; color: #5c4a55; line-height: 1.75; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol { font-size: 0.875rem; color: #5c4a55; padding-left: 1.2rem; margin-bottom: 0.7rem; }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #f0d3e3; padding: 0.3rem 0.9rem;
+      color: #8a6b7d; font-style: italic; font-size: 0.86rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.9rem; }
+    .creator-links a {
+      display: inline-block; background: #e0559a; color: #fff;
+      text-decoration: none; font-size: 0.79rem; font-weight: 700;
+      padding: 9px 18px; border-radius: 999px;
+    }
+    .creator-links a:hover { background: #c2437f; }
+    .thought-provoker .creator-links a { background: #a07800; }
+    .thought-provoker .creator-links a:hover { background: #856300; }
+    .creator-links span { color: #e8cbdb; margin: 0 6px; }
+
+    /* ── Top pick ── */
+    .top-pick {
+      background: linear-gradient(135deg, #ffc2dd, #d9c8f5 55%, #bcd8f8);
+      border: none; border-radius: 20px;
+      padding: 1.5rem 1.6rem; margin-bottom: 1.25rem;
+      color: #3b2340;
+    }
+    .top-pick-label {
+      font-family: 'Playfair Display', serif; font-size: 0.88rem; font-style: italic;
+      letter-spacing: 0.04em; margin-bottom: 0.6rem;
+    }
+    .top-pick-content { font-size: 0.98rem; line-height: 1.68; }
+
+    /* ── No updates fallback ── */
+    .no-updates { text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #bfa3b3; }
+
+    .footer {
+      text-align: center; padding: 1.6rem;
+      font-size: 0.8rem; color: #bfa3b3; border-top: 1px solid #f3d9e7;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.6rem 1rem 1.3rem; }
+      .header h1 { font-size: 1.35rem; }
+      .container { padding: 1rem 0.9rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1.05rem 1.05rem; border-radius: 16px; }
+      .creator-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+      .creator-header h2 { font-size: 1.2rem; }
+      .digest-nav { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding-bottom: 4px; }
+      .digest-nav a { flex-shrink: 0; padding: 10px 15px; }
+      .creator-links a { display: block; text-align: center; padding: 13px 18px; }
+      summary { padding: 9px 0; font-size: 0.85rem; }
+      .quiet-banner { font-size: 0.87rem; padding: 0.9rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Thursday, October 22, 2026</div>
+  </div>
+
+  <div class="container">
+    <div class="top-pick">
+  <div class="top-pick-label">🔥 Top pick this issue</div>
+  <div class="top-pick-content">Marty Cagan connects experimentation to AI's role in reshaping how product organizations operate. This is essential reading for PMs navigating the shift from traditional hypothesis testing to AI-augmented discovery and decision-making at scale.</div>
+</div>
+
+<div class="digest-meta">20 thought leaders tracked &nbsp;·&nbsp; 5 had updates this issue</div>
+
+<nav class="digest-nav">
+  <a href="#marty">Marty Cagan</a>
+  <a href="#teresa">Teresa Torres</a>
+  <a href="#ethan">Ethan Mollick</a>
+  <a href="#swyx">Swyx</a>
+  <a href="#peter">Peter Yang</a>
+  <a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+</nav>
+
+<div class="creator" id="marty">
+  <div class="creator-header"><h2>Marty Cagan</h2><span class="date-badge">Oct 21</span></div>
+  <div class="creator-headline">How AI transforms experimentation and product model assumptions</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>AI is reshaping how product teams run experiments and validate assumptions. Understand how to integrate AI into your experimentation framework to accelerate learning while maintaining rigor in your product model.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Cagan presents this piece as a narrative from his keynote at the Circus Austin Experimentation Conference, focusing on product organizations and the people responsible for building products companies sell. The talk weaves together how experimentation—traditionally housed in product or marketing—intersects with AI capabilities and product model thinking.</p><p>For product teams, this addresses the core tension: AI tools enable faster iteration and hypothesis testing, but also risk replacing disciplined discovery with automation theater. The framing challenges PMs to reconsider what experimentation means when AI can generate, run, and synthesize experiments at machine speed.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.svpg.com/experimentation-ai-and-the-product-model/" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="teresa">
+  <div class="creator-header"><h2>Teresa Torres</h2><span class="date-badge">Oct 20</span></div>
+  <div class="creator-headline">Why teams are seeking mind-bending experiences and what PMs can learn from the trend</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Team experiences are making a comeback post-remote work era, but companies are moving beyond standard offsites toward deliberately uncomfortable, mind-bending events. As a PM, consider how psychological safety and collective discomfort shape how teams think together.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Torres and co-host Petra Wille explore the resurgence of in-person team events and the shift toward experiences designed to be strange and uncomfortable rather than relaxing. The conversation touches on why companies are investing in these moments and what organizers hope to achieve.</p><p>The PM angle: distributed teams that have worked remotely need new contexts for building shared mental models and creative problem-solving. The structure of how you bring a product team together—and what kinds of thinking you encourage in those spaces—directly influences discovery, alignment, and innovation velocity.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.producttalk.org/mind-bending-experiences-all-things-product-podcast-with-teresa-torres-petra-wille/" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="ethan">
+  <div class="creator-header"><h2>Ethan Mollick</h2><span class="date-badge">Oct 20</span></div>
+  <div class="creator-headline">30 months of AI progress tracked in charts from a new book release</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Mollick's new book documents the exponential arc of AI capability gains over the last 30 months. Use these charts and data as a grounding reference to pressure-test your product roadmap assumptions about AI timelines, capabilities, and market readiness.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Mollick releases a new book tracking the exponential progress in AI over the last 2.5 years, presented primarily through charts and visualization. The book captures the acceleration from GPT-3 through current models, benchmarks, adoption patterns, and capability explosions.</p><p>For PMs, this is a reality check: if your AI strategy or roadmap assumes stable capability levels or gradual improvement, you are likely underestimating both the ceiling and the speed. Mollick's charts help you calibrate what is actually happening in the space versus what felt possible 18 or 24 months ago.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.oneusefulthing.org/p/30-months-on-the-exponential-in-charts" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="swyx">
+  <div class="creator-header"><h2>Swyx</h2><span class="date-badge">Oct 22</span></div>
+  <div class="creator-headline">Three new deep dives: elastic compute, trader workflows, and the Claude Mods paradigm shift</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>This week's three pieces address compute efficiency (why agents run in rectangles), workflow fit (how AI must adapt to expert users, not the reverse), and interface design (the shift from machine-facing to human-facing agent harnesses). Core patterns for building AI products that ship.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p><strong>Why AI Compute Comes in Rectangles:</strong> Erik Bernhardsson (Modal CEO) explains elastic GPU economics and why agent clouds optimize around predictable shapes. Takeaway for PMs: understand the compute footprint your product imposes; it directly affects margin and speed-to-market.</p><p><strong>You are the Team:</strong> Anekha Sokhal (Moshi) shows how market data tools must fit the trader's workflow, not force traders to adapt. Lesson: AI features fail when they ignore domain expertise. Your power users will accept automation that respects their mental model; they will reject systems that demand they learn a new one.</p><p><strong>Claude Mods:</strong> Dan McAteer frames Claude Mods as an inversion of the agent harness—shifting from machine-centric to human-centric design. This is a paradigm shift in how interface layers work with AI. PMs should study this closely.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.latent.space/p/modal-d" target="_blank">Read (Modal) →</a> <a href="https://www.latent.space/p/moshi" target="_blank">Read (Moshi) →</a> <a href="https://www.latent.space/p/claude-mods" target="_blank">Read (Claude Mods) →</a></div>
+</div>
+
+<div class="creator" id="peter">
+  <div class="creator-header"><h2>Peter Yang</h2><span class="date-badge">Oct 21</span></div>
+  <div class="creator-headline">A free AI skill that turns raw video into polished shorts with interactive feedback loops</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Yang built a video-to-short converter that adds B-roll, motion graphics, captions, and music—then lets users give frame-level feedback to refine output. This is a working example of human-in-the-loop AI product design: automation that preserves editorial control.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Yang released a free AI skill (available now) that handles the tedious parts of short-form video production: adding visual elements, graphics, captions, and music to raw recordings. The key design choice is the feedback loop—users can comment on any frame, creating an iterative refinement cycle rather than a one-shot transformation.</p><p>This is a PM case study in how to layer AI with human judgment. Instead of asking users to trust an end-to-end system, Yang gives them control knobs at the point they care most: the final output. The product respects the creator's intent while automating the labor.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://creatoreconomy.so/p/use-my-video-short-skill-to-create-compelling-shorts" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker" id="thought-provokers">
+  <div class="creator-header"><h2>Rich Mironov</h2><span class="date-badge">Jun 7, 2026</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>Mironov critiques one-shot project funding models and explains why organizations that treat software as discrete, ship-and-move-on initiatives will inevitably fail. This applies directly to AI-first product orgs funding agent or automation projects as isolated projects rather than continuous platforms.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>The piece argues that funding software as one-time projects—"ship v1.0, move the team to the next thing"—creates structural failure: teams can't iterate, outcomes don't compound, and spending balloons without delivery. The cure is to fund products as ongoing platforms with persistent teams and learning cycles.</p><p>In the AI era, this becomes sharper: teams building AI agents or automation as time-limited projects will ship brittle systems that can't adapt as models improve or user needs clarify. The products that win are those with continuous investment and feedback loops baked in from day one.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.mironov.com/inevitable/" target="_blank">Read →</a></div>
+</div>
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 20 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
