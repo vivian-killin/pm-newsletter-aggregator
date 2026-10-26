@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Monday, October 26, 2026</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Karla', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fdf2f7;
+      color: #3b2340;
+      line-height: 1.7;
+    }
+
+    .header {
+      background: linear-gradient(180deg, #fffbfd, #fdf2f7);
+      border-bottom: 1px solid #f3d9e7;
+      padding: 2.6rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 600; }
+    .header .tagline { font-size: 0.95rem; font-style: italic; color: #8a6b7d; margin-top: 0.35rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.9rem;
+      font-size: 0.8rem; font-weight: 600;
+      background: #ffeef6; color: #c2437f;
+      padding: 0.35rem 1rem; border-radius: 999px;
+    }
+
+    .container { max-width: 760px; margin: 0 auto; padding: 1.75rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      background: #fffaf0; border: 1px solid #f0e0bd; border-radius: 16px;
+      padding: 1rem 1.25rem; margin-bottom: 1.25rem;
+      font-size: 0.9rem; color: #7a5f14; line-height: 1.6;
+    }
+    .quiet-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta { font-size: 0.82rem; color: #a68a99; text-align: center; margin-bottom: 1rem; }
+
+    /* ── Jump nav ── */
+    .digest-nav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 1.5rem; }
+    .digest-nav a {
+      display: inline-block; padding: 7px 15px;
+      font-size: 0.79rem; font-weight: 600; color: #8a5f7a;
+      background: #fffbfd; border: 1px solid #f0d3e3;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .digest-nav a:hover { background: #e0559a; color: #fff; border-color: #e0559a; }
+    .digest-nav a.tp-nav { background: #f6f0ff; border-color: #ddd0f5; color: #7a5fbd; }
+    .digest-nav a.tp-nav:hover { background: #7a5fbd; color: #fff; border-color: #7a5fbd; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fffdfb; border: 1px solid #f3d9e7;
+      border-radius: 18px; padding: 1.4rem 1.5rem; margin-bottom: 0.9rem;
+      box-shadow: 0 8px 22px rgba(224, 85, 154, 0.07);
+    }
+    .thought-provoker { background: #fffaf0; border-color: #f0e0bd; box-shadow: none; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.2rem;
+    }
+    .creator-header h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 600; line-height: 1.3; }
+    .thought-provoker .creator-header h2 { color: #4a3a1a; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 600;
+      color: #c2437f; background: #ffeef6;
+      padding: 4px 11px; border-radius: 999px; white-space: nowrap;
+    }
+    .thought-provoker .date-badge { color: #a07800; background: #fdf0d3; }
+    .badge-hot {
+      display: inline-block; background: #e0559a; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 2px 8px;
+      border-radius: 999px; margin-left: 6px; vertical-align: middle;
+    }
+    .creator-headline { font-size: 0.86rem; color: #9a7a8b; font-style: italic; margin-bottom: 0.85rem; }
+    .thought-provoker .creator-headline { color: #9a875f; }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f7f2ff; border-left: 4px solid #9a86d6;
+      border-radius: 0 12px 12px 0; padding: 0.75rem 0.95rem;
+      font-size: 0.86rem; color: #3b2340; line-height: 1.68;
+      margin-bottom: 0.7rem;
+    }
+    .tldr-label {
+      font-size: 0.66rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: #7a5fbd; display: block; margin-bottom: 5px;
+    }
+    .thought-provoker .tldr { background: #fffdf6; border-color: #d9b154; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 4px; }
+    summary {
+      cursor: pointer; font-size: 0.79rem; font-weight: 700; color: #e0559a;
+      list-style: none; display: inline-flex; align-items: center; gap: 4px;
+      user-select: none; padding: 4px 0;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.7rem; }
+    .thought-provoker summary { color: #a07800; }
+
+    .detail-body p { font-size: 0.875rem; color: #5c4a55; line-height: 1.75; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol { font-size: 0.875rem; color: #5c4a55; padding-left: 1.2rem; margin-bottom: 0.7rem; }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #f0d3e3; padding: 0.3rem 0.9rem;
+      color: #8a6b7d; font-style: italic; font-size: 0.86rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.9rem; }
+    .creator-links a {
+      display: inline-block; background: #e0559a; color: #fff;
+      text-decoration: none; font-size: 0.79rem; font-weight: 700;
+      padding: 9px 18px; border-radius: 999px;
+    }
+    .creator-links a:hover { background: #c2437f; }
+    .thought-provoker .creator-links a { background: #a07800; }
+    .thought-provoker .creator-links a:hover { background: #856300; }
+    .creator-links span { color: #e8cbdb; margin: 0 6px; }
+
+    /* ── Top pick ── */
+    .top-pick {
+      background: linear-gradient(135deg, #ffc2dd, #d9c8f5 55%, #bcd8f8);
+      border: none; border-radius: 20px;
+      padding: 1.5rem 1.6rem; margin-bottom: 1.25rem;
+      color: #3b2340;
+    }
+    .top-pick-label {
+      font-family: 'Playfair Display', serif; font-size: 0.88rem; font-style: italic;
+      letter-spacing: 0.04em; margin-bottom: 0.6rem;
+    }
+    .top-pick-content { font-size: 0.98rem; line-height: 1.68; }
+
+    /* ── No updates fallback ── */
+    .no-updates { text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #bfa3b3; }
+
+    .footer {
+      text-align: center; padding: 1.6rem;
+      font-size: 0.8rem; color: #bfa3b3; border-top: 1px solid #f3d9e7;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.6rem 1rem 1.3rem; }
+      .header h1 { font-size: 1.35rem; }
+      .container { padding: 1rem 0.9rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1.05rem 1.05rem; border-radius: 16px; }
+      .creator-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+      .creator-header h2 { font-size: 1.2rem; }
+      .digest-nav { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding-bottom: 4px; }
+      .digest-nav a { flex-shrink: 0; padding: 10px 15px; }
+      .creator-links a { display: block; text-align: center; padding: 13px 18px; }
+      summary { padding: 9px 0; font-size: 0.85rem; }
+      .quiet-banner { font-size: 0.87rem; padding: 0.9rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Monday, October 26, 2026</div>
+  </div>
+
+  <div class="container">
+    <div class="creator" id="lenny">
+  <div class="creator-header"><h2>Lenny Rachitsky</h2><span class="date-badge">Oct 25</span></div>
+  <div class="creator-headline">An 86-minute guide to finding PMF | Rob Snyder (Author, The Power of Pull)</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Rob Snyder's PULL framework—Project, Unavoidable, List of options, Limitations—cuts through the noise of finding product-market fit by grounding discovery in real customer constraints rather than designer preferences. PMs can apply this inside larger companies by reframing how they approach problem validation and sales conversations.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Rob Snyder, who has advised 50+ startups to $1M ARR, walks through a repeatable framework for moving from idea to validated product-market fit. The PULL method starts by identifying a specific project (what the customer is trying to accomplish), then determining what makes it unavoidable (why they must solve it now), building a list of alternative solutions they might consider, and finally understanding their constraints (budget, timeline, technical limits).</p><p>The framework flips traditional product thinking: instead of asking "What would customers want?" Snyder emphasizes cold outreach, running first sales calls, and entering what he calls "goblin mode"—scrappy, willing-to-fail iteration when nothing works. He also cautions against design partners early on, since they rarely represent the broader market. For PMs in larger organizations, the PULL framework translates to how product teams validate problems before committing engineering resources.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.lennysnewsletter.com/p/the-ultimate-guide-to-jtbd-bob-moesta" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="peter">
+  <div class="creator-header"><h2>Jake Moran</h2><span class="date-badge">Oct 25</span></div>
+  <div class="creator-headline">Full Tutorial: How to Make Amazing Videos with Claude and HyperFrames</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Jake Moran reveals the specific prompting patterns and editing commands that unlock Claude's ability to produce launch videos, YouTube edits, and shorts—showing PMs how to operationalize AI as a content production tool by understanding the exact interface between natural language instruction and output quality.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Moran walks through a 42-minute tutorial on using Claude alongside HyperFrames to generate video content at scale. The core insight is that video editing, like code generation, responds to precise, structured prompts; vague requests produce mediocre cuts, but specific editing vocabulary—shot type, pacing, transitions, music cues—yields professional results. This is particularly relevant for product teams launching features or building marketing workflows.</p><p>The tutorial demonstrates that AI video generation isn't a black box: it's a learnable skill where PMs and non-technical team members can produce assets previously requiring editors. This workflow pattern—validate the prompt structure, iterate on quality, then scale—applies to any creative output from AI tools that accept natural language input.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://creatoreconomy.so/p/how-to-make-amazing-videos-with-claude-and-hyperframes-jake-moran" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="swyx">
+  <div class="creator-header"><h2>Ankit Maloo</h2><span class="date-badge">Oct 23</span></div>
+  <div class="creator-headline">AI Is Getting Good at Math. Here's Why.</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Ankit Maloo identifies a pattern in how AI models succeed at mathematical problems—revealing which problem categories are becoming solvable next—so PMs building AI-native products can more confidently predict which domains (finance, supply chain, scientific computing) will first see AI unlock real value.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Maloo documents an emerging capability curve: recent AI models are solving increasingly complex mathematical problems, and the nature of their successes reveals a pattern. Rather than random improvement, the model shows that specific problem structures yield first; understanding this pattern lets product teams predict which application domains will next become AI-viable without waiting for new model releases.</p><p>For PMs considering where to apply AI reasoning capabilities, this pattern recognition is more actionable than benchmark scores. It shifts the question from "Can AI do math?" to "What class of problems is AI solving this quarter?" This informs roadmap sequencing and feature prioritization in products that rely on reasoning or optimization.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://latent.space/p/ai-is-getting-good-at-math/" target="_blank">Read →</a></div>
+</div>
+
+<div class="digest-meta">20 thought leaders tracked &nbsp;·&nbsp; 3 had updates this issue</div>
+
+<nav class="digest-nav">
+  <a href="#lenny">Lenny Rachitsky</a>
+  <a href="#peter">Peter Yang</a>
+  <a href="#swyx">Swyx</a>
+  <a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+</nav>
+
+<div class="thought-provoker" id="thought-provokers">
+  <div class="creator-header"><h2>Marty Cagan</h2><span class="date-badge">Dec 19, 2025</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>Cagan maps how Google's product model differs from Spotify and Amazon—a rare look at scaled, outcome-driven PM in a company where distribution and discovery remain core product decisions. This clarifies how product models must adapt to organizational structure.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Marty Cagan and Elias Lieberich examine how Google's product model manifests differently than at other tech giants. The piece reveals how organizational constraints, incentive structures, and platform dynamics shape which PM practices stick and which need reimagining. For PMs joining large companies or building scaled product organizations, understanding these variations prevents applying one-size-fits-all product models to contexts where they'll fail.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.svpg.com/the-product-model-at-google/" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker">
+  <div class="creator-header"><h2>Ethan Mollick</h2><span class="date-badge">Jan 7, 2026</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>Mollick breaks down what became possible when Claude Code arrived—showing PMs how the right tool unlocks AI capabilities previously trapped behind friction. A foundational read for understanding how product choices compound AI's usefulness.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Mollick demonstrates that Claude Code didn't just add a feature; it fundamentally changed what the model could accomplish by removing the friction of context-switching between chat and IDE. For PMs building AI-powered products, this illustrates a crucial principle: capability and usability are not separate concerns. The same reasoning power locked behind bad UX is worthless. This piece shows how the most impactful AI products often succeed not by breakthrough models, but by breakthrough interface design.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.oneusefulthing.org/p/claude-code-and-what-comes-next" target="_blank">Read →</a></div>
+</div>
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 20 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
