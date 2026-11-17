@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Monday, November 16, 2026</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Karla', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fdf2f7;
+      color: #3b2340;
+      line-height: 1.7;
+    }
+
+    .header {
+      background: linear-gradient(180deg, #fffbfd, #fdf2f7);
+      border-bottom: 1px solid #f3d9e7;
+      padding: 2.6rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 600; }
+    .header .tagline { font-size: 0.95rem; font-style: italic; color: #8a6b7d; margin-top: 0.35rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.9rem;
+      font-size: 0.8rem; font-weight: 600;
+      background: #ffeef6; color: #c2437f;
+      padding: 0.35rem 1rem; border-radius: 999px;
+    }
+
+    .container { max-width: 760px; margin: 0 auto; padding: 1.75rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      background: #fffaf0; border: 1px solid #f0e0bd; border-radius: 16px;
+      padding: 1rem 1.25rem; margin-bottom: 1.25rem;
+      font-size: 0.9rem; color: #7a5f14; line-height: 1.6;
+    }
+    .quiet-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta { font-size: 0.82rem; color: #a68a99; text-align: center; margin-bottom: 1rem; }
+
+    /* ── Jump nav ── */
+    .digest-nav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 1.5rem; }
+    .digest-nav a {
+      display: inline-block; padding: 7px 15px;
+      font-size: 0.79rem; font-weight: 600; color: #8a5f7a;
+      background: #fffbfd; border: 1px solid #f0d3e3;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .digest-nav a:hover { background: #e0559a; color: #fff; border-color: #e0559a; }
+    .digest-nav a.tp-nav { background: #f6f0ff; border-color: #ddd0f5; color: #7a5fbd; }
+    .digest-nav a.tp-nav:hover { background: #7a5fbd; color: #fff; border-color: #7a5fbd; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fffdfb; border: 1px solid #f3d9e7;
+      border-radius: 18px; padding: 1.4rem 1.5rem; margin-bottom: 0.9rem;
+      box-shadow: 0 8px 22px rgba(224, 85, 154, 0.07);
+    }
+    .thought-provoker { background: #fffaf0; border-color: #f0e0bd; box-shadow: none; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.2rem;
+    }
+    .creator-header h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 600; line-height: 1.3; }
+    .thought-provoker .creator-header h2 { color: #4a3a1a; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 600;
+      color: #c2437f; background: #ffeef6;
+      padding: 4px 11px; border-radius: 999px; white-space: nowrap;
+    }
+    .thought-provoker .date-badge { color: #a07800; background: #fdf0d3; }
+    .badge-hot {
+      display: inline-block; background: #e0559a; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 2px 8px;
+      border-radius: 999px; margin-left: 6px; vertical-align: middle;
+    }
+    .creator-headline { font-size: 0.86rem; color: #9a7a8b; font-style: italic; margin-bottom: 0.85rem; }
+    .thought-provoker .creator-headline { color: #9a875f; }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f7f2ff; border-left: 4px solid #9a86d6;
+      border-radius: 0 12px 12px 0; padding: 0.75rem 0.95rem;
+      font-size: 0.86rem; color: #3b2340; line-height: 1.68;
+      margin-bottom: 0.7rem;
+    }
+    .tldr-label {
+      font-size: 0.66rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: #7a5fbd; display: block; margin-bottom: 5px;
+    }
+    .thought-provoker .tldr { background: #fffdf6; border-color: #d9b154; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 4px; }
+    summary {
+      cursor: pointer; font-size: 0.79rem; font-weight: 700; color: #e0559a;
+      list-style: none; display: inline-flex; align-items: center; gap: 4px;
+      user-select: none; padding: 4px 0;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.7rem; }
+    .thought-provoker summary { color: #a07800; }
+
+    .detail-body p { font-size: 0.875rem; color: #5c4a55; line-height: 1.75; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol { font-size: 0.875rem; color: #5c4a55; padding-left: 1.2rem; margin-bottom: 0.7rem; }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #f0d3e3; padding: 0.3rem 0.9rem;
+      color: #8a6b7d; font-style: italic; font-size: 0.86rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.9rem; }
+    .creator-links a {
+      display: inline-block; background: #e0559a; color: #fff;
+      text-decoration: none; font-size: 0.79rem; font-weight: 700;
+      padding: 9px 18px; border-radius: 999px;
+    }
+    .creator-links a:hover { background: #c2437f; }
+    .thought-provoker .creator-links a { background: #a07800; }
+    .thought-provoker .creator-links a:hover { background: #856300; }
+    .creator-links span { color: #e8cbdb; margin: 0 6px; }
+
+    /* ── Top pick ── */
+    .top-pick {
+      background: linear-gradient(135deg, #ffc2dd, #d9c8f5 55%, #bcd8f8);
+      border: none; border-radius: 20px;
+      padding: 1.5rem 1.6rem; margin-bottom: 1.25rem;
+      color: #3b2340;
+    }
+    .top-pick-label {
+      font-family: 'Playfair Display', serif; font-size: 0.88rem; font-style: italic;
+      letter-spacing: 0.04em; margin-bottom: 0.6rem;
+    }
+    .top-pick-content { font-size: 0.98rem; line-height: 1.68; }
+
+    /* ── No updates fallback ── */
+    .no-updates { text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #bfa3b3; }
+
+    .footer {
+      text-align: center; padding: 1.6rem;
+      font-size: 0.8rem; color: #bfa3b3; border-top: 1px solid #f3d9e7;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.6rem 1rem 1.3rem; }
+      .header h1 { font-size: 1.35rem; }
+      .container { padding: 1rem 0.9rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1.05rem 1.05rem; border-radius: 16px; }
+      .creator-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+      .creator-header h2 { font-size: 1.2rem; }
+      .digest-nav { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding-bottom: 4px; }
+      .digest-nav a { flex-shrink: 0; padding: 10px 15px; }
+      .creator-links a { display: block; text-align: center; padding: 13px 18px; }
+      summary { padding: 9px 0; font-size: 0.85rem; }
+      .quiet-banner { font-size: 0.87rem; padding: 0.9rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Monday, November 16, 2026</div>
+  </div>
+
+  <div class="container">
+    <div class="top-pick">
+  <div class="top-pick-label">🔥 Top pick this issue</div>
+  <div class="top-pick-content">Mona Sarantakos, VP of Product at Meta Superintelligence Labs, breaks down how Meta shipped Muse—the fastest-growing consumer AI product in history—from weekend prototype to #1 app. Her insights on agent swarms for user research, the two activation levers that actually move adoption, and what she looks for in PMs today are essential for anyone building AI products at scale.</div>
+</div>
+
+<div class="digest-meta">20 thought leaders tracked &nbsp;·&nbsp; 5 had updates this issue</div>
+
+<nav class="digest-nav">
+  <a href="#teresa">Teresa Torres</a>
+  <a href="#lenny">Lenny Rachitsky</a>
+  <a href="#aakash">Aakash Gupta</a>
+  <a href="#peter">Peter Yang</a>
+  <a href="#swyx">Swyx</a>
+  <a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+</nav>
+
+<div class="creator" id="teresa">
+  <div class="creator-header"><h2>Teresa Torres</h2><span class="date-badge">Nov 16</span></div>
+  <div class="creator-headline">Reading guide for Continuous Discovery Habits anniversary series, plus 2027 conference list</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Torres is building out in-depth reading guides for her book's fifth anniversary, starting with Chapter 11 on measuring impact—a timely reminder that discovery is only valuable if you close the loop and prove causation, especially critical when AI tools promise faster iteration.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Torres released two items this week: a chapter-by-chapter reading guide for Continuous Discovery Habits, her seminal book on research and experimentation, now in its fifth year. The first guide covers Chapter 11 on measuring impact, with video content and key concepts highlighted. She also published a curated list of 2027 product conferences, inviting community additions to keep the resource comprehensive.</p><p>For PMs in the AI era, the timing of an impact measurement guide is particularly relevant—when agents and automation tempt teams to ship faster, the discipline of actually measuring what moves the needle becomes even more essential.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.producttalk.org/ch-11-measuring-impact/" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="lenny">
+  <div class="creator-header"><h2>Lenny Rachitsky</h2><span class="date-badge">Nov 15</span></div>
+  <div class="creator-headline">How Meta shipped the fastest-growing consumer AI product in history</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Mona Sarantakos reveals that Muse's success came from two core levers: identifying the right activation moment and using "agent swarms" to systematically surface user insights at scale—a model for how PMs should think about research and onboarding in AI-native products.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Muse started as a weekend experiment with OpenClaw on a Raspberry Pi, but Meta waited seven months before launch—a disciplined approach that contrasts with the AI race mentality. Sarantakos, VP of Product at Meta Superintelligence Labs, walked through how the team discovered and iterated on the product, including an unexpected use case that became core to adoption.</p><p>Key insights: (1) Agent swarms—running multiple AI agents in parallel—allowed the team to reach every user and surface patterns no traditional survey could find. (2) The team identified two specific levers that move activation for an AI agent: the entry point and the first interaction quality. (3) Even placeholder elements (Jolly, the avatar) became iconic, suggesting that in early AI products, personality and approachability matter as much as capability. (4) Sarantakos looks for PMs who can hold tension between speed and rigor, especially when shipping agentic experiences where misalignment can compound.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.lennysnewsletter.com/p/how-openclaw-changed-my-life-claire-vo" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="aakash">
+  <div class="creator-header"><h2>Aakash Gupta</h2><span class="date-badge">Nov 13</span></div>
+  <div class="creator-headline">Build an AI customer research agent that emails every customer who drops off, with evals to keep it safe in production</div>
+  <div class="tldr"><span class="tldr-label">TL;PR — PM Takeaway</span>Greg Greiner (ex-CPO at Bolt, now CEO of Woven) went from talking to 7-8 customers per month to reaching every single one—using an AI agent that runs research at scale. The pattern is replicable: identify the moment of drop-off, let Claude email & synthesize responses, and add evals to prevent drift.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Aakash walks through a real case: Ancestry.com saw customers buying DNA kits but dropping after. Rather than run a traditional survey, they had an AI agent reach out via email and phone. Result: 3,470 replies that surfaced friction surveys never would have caught. The agent synthesized patterns in real time, letting the product team iterate faster on the actual problem, not the assumed one.</p><p>The tutorial covers: (1) why AI research outperforms traditional in-app surveys (it catches the moments when users are most engaged with your product), (2) the six moments in a user's funnel to reach out, (3) step-by-step Claude Code setup, and (4) how to layer evals—automated checks that keep the agent honest in production. For PMs, this is a scalability pattern: use AI to do the listening work that used to consume weeks, then apply your judgment to the insights.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.news.aakashg.com/p/ai-customer-research" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="peter">
+  <div class="creator-header"><h2>Nate Parrott</h2><span class="date-badge">Nov 15</span></div>
+  <div class="creator-headline">Five tips to avoid AI slop when designing with Claude</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Nate Parrott, the designer behind Claude Design, demos concrete techniques to get Claude to generate high-fidelity UI, motion, and dashboards without the generic, over-processed look that kills adoption—crucial for PMs who need to ship design artifacts fast but can't afford visual mediocrity.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Parrott shows how to steer Claude's design output away from defaults. The session is a 42-minute walkthrough of his design process, including live demos of features, dashboards, and motion videos. His five principles center on specificity: reference real products, constrain the tool to your brand, iterate in Claude rather than externalize early, and validate against actual usage patterns before scaling.</p><p>For PMs, the takeaway is that AI-generated design is a tool, not a replacement—but only if you know how to prompt it. Parrott demonstrates that the difference between "slop" and "shipped" is often just being explicit about constraints and then willing to refine rather than accept the first output.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://creatoreconomy.so/p/how-to-fix-ai-slop-with-claude-design-nate-parrott" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="swyx">
+  <div class="creator-header"><h2>Swyx</h2><span class="date-badge">Nov 16</span></div>
+  <div class="creator-headline">Black Forest Labs on building visual intelligence from pixels, motion, and sound</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Andreas Blattmann and Dustin Podell make the case that the next wave of AI capability comes from learning AGI from multimodal inputs—a signal for PMs building products that need spatial reasoning, motion understanding, or real-time visual feedback.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Black Forest Labs' latest work emphasizes that learning from pixels, motion, and sound—rather than text alone—is the path to more grounded, capable AI systems. The conversation touches on how video understanding and spatial reasoning unlock new product categories that text-only models can't address, and what it means to build products on top of this capability layer.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://latent.space/p/bfl/" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker" id="thought-provokers">
+  <div class="creator-header"><h2>Itamar Gilad</h2><span class="date-badge">Mar 10, 2026</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>Gilad diagnoses five structural reasons product discovery fails—even in companies that claim to value it—and argues that AI development hype is making the problem worse by enabling faster shipping without the evidence to back it up.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Gilad observes that many organizations recognize discovery is better than waterfall, yet few execute it rigorously. The failures are systematic: unclear success metrics, shallow user research, misaligned incentives, weak experimentation discipline, and executives overruling data with intuition. AI acceleration is exacerbating this—teams can now prototype and ship faster than ever, but the discovery muscle hasn't kept pace. The result is more features, less traction.</p><p>For PMs in 2026, this is especially relevant: as AI tools make iteration faster, the discipline of *actually knowing what moves the needle* becomes your competitive advantage, not your bottleneck.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://itamargilad.com/discovery-problems/" target="_blank">Read →</a></div>
+</div>
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 20 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
