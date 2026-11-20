@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Thursday, November 19, 2026</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Karla', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fdf2f7;
+      color: #3b2340;
+      line-height: 1.7;
+    }
+
+    .header {
+      background: linear-gradient(180deg, #fffbfd, #fdf2f7);
+      border-bottom: 1px solid #f3d9e7;
+      padding: 2.6rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 600; }
+    .header .tagline { font-size: 0.95rem; font-style: italic; color: #8a6b7d; margin-top: 0.35rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.9rem;
+      font-size: 0.8rem; font-weight: 600;
+      background: #ffeef6; color: #c2437f;
+      padding: 0.35rem 1rem; border-radius: 999px;
+    }
+
+    .container { max-width: 760px; margin: 0 auto; padding: 1.75rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      background: #fffaf0; border: 1px solid #f0e0bd; border-radius: 16px;
+      padding: 1rem 1.25rem; margin-bottom: 1.25rem;
+      font-size: 0.9rem; color: #7a5f14; line-height: 1.6;
+    }
+    .quiet-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta { font-size: 0.82rem; color: #a68a99; text-align: center; margin-bottom: 1rem; }
+
+    /* ── Jump nav ── */
+    .digest-nav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 1.5rem; }
+    .digest-nav a {
+      display: inline-block; padding: 7px 15px;
+      font-size: 0.79rem; font-weight: 600; color: #8a5f7a;
+      background: #fffbfd; border: 1px solid #f0d3e3;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .digest-nav a:hover { background: #e0559a; color: #fff; border-color: #e0559a; }
+    .digest-nav a.tp-nav { background: #f6f0ff; border-color: #ddd0f5; color: #7a5fbd; }
+    .digest-nav a.tp-nav:hover { background: #7a5fbd; color: #fff; border-color: #7a5fbd; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fffdfb; border: 1px solid #f3d9e7;
+      border-radius: 18px; padding: 1.4rem 1.5rem; margin-bottom: 0.9rem;
+      box-shadow: 0 8px 22px rgba(224, 85, 154, 0.07);
+    }
+    .thought-provoker { background: #fffaf0; border-color: #f0e0bd; box-shadow: none; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.2rem;
+    }
+    .creator-header h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 600; line-height: 1.3; }
+    .thought-provoker .creator-header h2 { color: #4a3a1a; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 600;
+      color: #c2437f; background: #ffeef6;
+      padding: 4px 11px; border-radius: 999px; white-space: nowrap;
+    }
+    .thought-provoker .date-badge { color: #a07800; background: #fdf0d3; }
+    .badge-hot {
+      display: inline-block; background: #e0559a; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 2px 8px;
+      border-radius: 999px; margin-left: 6px; vertical-align: middle;
+    }
+    .creator-headline { font-size: 0.86rem; color: #9a7a8b; font-style: italic; margin-bottom: 0.85rem; }
+    .thought-provoker .creator-headline { color: #9a875f; }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f7f2ff; border-left: 4px solid #9a86d6;
+      border-radius: 0 12px 12px 0; padding: 0.75rem 0.95rem;
+      font-size: 0.86rem; color: #3b2340; line-height: 1.68;
+      margin-bottom: 0.7rem;
+    }
+    .tldr-label {
+      font-size: 0.66rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: #7a5fbd; display: block; margin-bottom: 5px;
+    }
+    .thought-provoker .tldr { background: #fffdf6; border-color: #d9b154; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 4px; }
+    summary {
+      cursor: pointer; font-size: 0.79rem; font-weight: 700; color: #e0559a;
+      list-style: none; display: inline-flex; align-items: center; gap: 4px;
+      user-select: none; padding: 4px 0;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.7rem; }
+    .thought-provoker summary { color: #a07800; }
+
+    .detail-body p { font-size: 0.875rem; color: #5c4a55; line-height: 1.75; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol { font-size: 0.875rem; color: #5c4a55; padding-left: 1.2rem; margin-bottom: 0.7rem; }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #f0d3e3; padding: 0.3rem 0.9rem;
+      color: #8a6b7d; font-style: italic; font-size: 0.86rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.9rem; }
+    .creator-links a {
+      display: inline-block; background: #e0559a; color: #fff;
+      text-decoration: none; font-size: 0.79rem; font-weight: 700;
+      padding: 9px 18px; border-radius: 999px;
+    }
+    .creator-links a:hover { background: #c2437f; }
+    .thought-provoker .creator-links a { background: #a07800; }
+    .thought-provoker .creator-links a:hover { background: #856300; }
+    .creator-links span { color: #e8cbdb; margin: 0 6px; }
+
+    /* ── Top pick ── */
+    .top-pick {
+      background: linear-gradient(135deg, #ffc2dd, #d9c8f5 55%, #bcd8f8);
+      border: none; border-radius: 20px;
+      padding: 1.5rem 1.6rem; margin-bottom: 1.25rem;
+      color: #3b2340;
+    }
+    .top-pick-label {
+      font-family: 'Playfair Display', serif; font-size: 0.88rem; font-style: italic;
+      letter-spacing: 0.04em; margin-bottom: 0.6rem;
+    }
+    .top-pick-content { font-size: 0.98rem; line-height: 1.68; }
+
+    /* ── No updates fallback ── */
+    .no-updates { text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #bfa3b3; }
+
+    .footer {
+      text-align: center; padding: 1.6rem;
+      font-size: 0.8rem; color: #bfa3b3; border-top: 1px solid #f3d9e7;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.6rem 1rem 1.3rem; }
+      .header h1 { font-size: 1.35rem; }
+      .container { padding: 1rem 0.9rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1.05rem 1.05rem; border-radius: 16px; }
+      .creator-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+      .creator-header h2 { font-size: 1.2rem; }
+      .digest-nav { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding-bottom: 4px; }
+      .digest-nav a { flex-shrink: 0; padding: 10px 15px; }
+      .creator-links a { display: block; text-align: center; padding: 13px 18px; }
+      summary { padding: 9px 0; font-size: 0.85rem; }
+      .quiet-banner { font-size: 0.87rem; padding: 0.9rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Thursday, November 19, 2026</div>
+  </div>
+
+  <div class="container">
+    <div class="top-pick">
+  <div class="top-pick-label">🔥 Top pick this issue</div>
+  <div class="top-pick-content">Rohan Varma (ex-OpenAI Codex, ex-Cursor's first PM) lays out the exact skill stack, portfolio projects, and 90-day onboarding plan needed to become an AI PM in 2027—with no prior AI experience required. This is the most concrete, actionable career blueprint for PMs pivoting into AI-native product work.</div>
+</div>
+
+<div class="digest-meta">20 thought leaders tracked &nbsp;·&nbsp; 10 had updates this issue</div>
+
+<nav class="digest-nav">
+  <a href="#teresa">Teresa Torres</a>
+  <a href="#itamar">Itamar Gilad</a>
+  <a href="#rich">Rich Mironov</a>
+  <a href="#john">John Cutler</a>
+  <a href="#pawel">Pawel Huryn</a>
+  <a href="#deb">Deb Liu</a>
+  <a href="#kristen">Kristen Berman</a>
+  <a href="#swyx">Swyx</a>
+  <a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+</nav>
+
+<div class="creator" id="teresa">
+  <div class="creator-header"><h2>Teresa Torres</h2><span class="date-badge">Nov 18</span></div>
+  <div class="creator-headline">Personal annual review process now automated in Claude Code plugin</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Torres built a Claude Code plugin that runs her annual review framework—demonstrating how PMs can operationalize their own decision-making rituals with AI agents. The plugin automates reflection exercises while keeping control in your hands.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Torres published both her personal annual review framework and a Claude Code plugin that implements it. The process includes four reflection exercises designed to help PMs evaluate the past year and plan the next. Rather than a one-off article, she's shown how to turn a decision-making process into a reusable tool that you can run on demand.</p><p>This is a practical example of the kind of agent-based workflow that scales personal rigor across a team—once one person builds the prompt structure, others can fork it and adapt it. It's also proof that PMs don't need to wait for vendors to build intelligence into their tools; they can build it themselves using Claude Code.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.producttalk.org/personal-annual-review/" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="itamar">
+  <div class="creator-header"><h2>Itamar Gilad</h2><span class="date-badge">Nov 17</span></div>
+  <div class="creator-headline">Five ways teams misuse ICE scoring and how to fix them</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>ICE scoring's simplicity is also its trap—teams often ignore confidence bands, multiply scores mechanically, and skip the deeper conversation. Gilad shows how to use ICE as a conversation starter, not a black box, and when to override it entirely.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Gilad identifies five antipatterns in how teams implement ICE (Impact, Confidence, Ease) scoring. The core issue: teams treat the final score as gospel, when the framework is really designed to surface disagreement and force discussion. Common mistakes include scoring confidence as if it's binary, using the same scale for unrelated projects, and treating multiplication as the only way to rank ideas.</p><p>His fix is to use ICE as a conversation tool, not a decision algorithm. High-confidence, high-impact ideas should be prioritized, but the disagreement on confidence or impact across team members is where the actual learning happens. Sometimes the lower-scoring idea wins because it unblocks something bigger, or because one person's expertise shifts the team's true confidence level.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://itamargilad.com/ice-antipatterns/" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="rich">
+  <div class="creator-header"><h2>Rich Mironov</h2><span class="date-badge">Nov 19</span></div>
+  <div class="creator-headline">Second edition of Money Stories adds platform work and AI-era quick wins</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Mironov's reissue of Money Stories now includes story patterns for AI products and platform models—essential if you're building the business case for AI-native initiatives. The quick wins section has been updated to reflect where AI is actually delivering value.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Money Stories is Mironov's guide to communicating the business impact of product work. The second edition expands coverage to two domains many PMs are now working in: platform products and AI-native features. Rather than theoretical frameworks, the book uses narrative patterns—the kinds of stories that actually move executive opinion.</p><p>The updates to the quick wins section are particularly relevant right now, since AI is shifting what counts as a "quick win." Mironov has added patterns for how to frame agent automation, agentic features, and other AI-powered deliverables in ways that resonate with business stakeholders who may not understand the technical depth.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.mironov.com/2nd-edition/" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="john">
+  <div class="creator-header"><h2>John Cutler</h2><span class="date-badge">Nov 18</span></div>
+  <div class="creator-headline">Contexting vs. context: why senior people struggle to describe what they know</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Cutler distinguishes between active contexting (the process of gathering and synthesizing information) and static context (the facts themselves)—and shows how even expert PMs often skip the work of making their reasoning visible to others. This matters because distributed AI teams need context, not just conclusions.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Cutler observes that highly experienced people are often bad at explaining their expertise. They've internalized so much context—customer signals, failed experiments, roadmap constraints—that they jump to conclusions without laying out the intermediate reasoning. When they say "we should do X," they're drawing on years of pattern recognition, but the person listening just hears "do X" without understanding why.</p><p>In an AI-native workflow, this gap matters even more. If you're prompting an agent to make a decision, you need to encode not just the facts but the reasoning framework. That means senior PMs need to get better at contexting—the active process of making their thinking visible and reproducible, not just dumping their conclusions into a Slack channel.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://cutlefish.substack.com/p/tbm-452-contexting-vs-context" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="pawel">
+  <div class="creator-header"><h2>Pawel Huryn</h2><span class="date-badge">Nov 17</span></div>
+  <div class="creator-headline">How to become an AI PM in 2027: the complete guide from Cursor's first PM</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Varma (ex-OpenAI Codex, ex-Cursor) breaks down the 8-skill stack every AI PM needs, the three portfolio projects to build, and the exact resume and interview strategies that land the role—with a 90-day onboarding plan included. No prior AI experience required; prior PM experience is the foundation.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Rohan Varma published through Pawel Huryn's newsletter a comprehensive playbook for PMs transitioning into AI product roles. The eight-skill stack includes: (1) understanding how LLMs work and their constraints, (2) prompt engineering and agent design, (3) product design for agentic UIs, (4) metrics for AI products, (5) safety and alignment thinking, (6) working with ML teams, (7) GTM for AI features, and (8) staying current with the model landscape.</p><p>The portfolio projects he recommends are concrete: build a real agent that solves a problem you face, write a detailed case study of an AI product's decisions, and create a small internal tool that uses a chain-of-thought system. The interview section covers what AI-native companies are actually testing for (not trivia, but applied thinking), and the 90-day plan shows how to onboard into an AI role with velocity. This is the most specific, non-generic guide for the transition available right now.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.productcompass.pm/p/how-to-become-an-ai-product-manager" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="deb">
+  <div class="creator-header"><h2>Deb Liu</h2><span class="date-badge">Nov 19</span></div>
+  <div class="creator-headline">In praise of keeping your options open</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Liu argues that career optionality—having multiple credible paths forward—is more valuable than committed expertise in a single domain. For PMs in a shifting market, this means building skills and relationships across multiple industries and company stages, not betting everything on one specialization.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Liu reflects on how the best career moves often come from unexpected doors—opportunities that only became visible because she had maintained relationships and skills across different domains. In a fast-moving market, the PMs who get the first look at high-leverage roles are often those who've stayed engaged with multiple communities, not those who went deep into a single vertical.</p><p>This is especially relevant now as companies reorganize around AI. If you're locked into "fintech PM" or "infrastructure PM," you may miss the moment when your skills become central to a new kind of problem. Liu's argument is not to be a generalist, but to be deliberately positioned at the intersection of your expertise and emerging opportunity.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://debliu.substack.com/p/the-doors-you-cant-see-yet" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="kristen">
+  <div class="creator-header"><h2>Kristen Berman</h2><span class="date-badge">Nov 19</span></div>
+  <div class="creator-headline">26 behavioral scientists tackled downtown revitalization in a one-day hackathon</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Berman ran a behavioral science workshop in Louisville that showed how applying decision-making frameworks and behavioral insights to city planning can unblock real policy work. For PMs, the lesson: behavioral science isn't just a product lever, it's a way to reframe stuck civic and organizational problems.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Berman and a team of behavioral scientists ran a one-day hackathon in Louisville focused on downtown revitalization. Rather than top-down urban planning, they applied behavioral science to understand why people do (or don't) visit downtowns, what friction they encounter, and what small changes in choice architecture might shift behavior at scale.</p><p>The workshop demonstrates how behavioral thinking translates beyond consumer apps into structural problems. For PMs working on products with network effects or civic features, this model—observing friction, testing hypotheses about behavior, iterating on nudges—is directly applicable.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://kristenberman.substack.com/p/how-do-you-revitalize-a-downtown" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="swyx">
+  <div class="creator-header"><h2>Swyx</h2><span class="date-badge">Nov 19</span></div>
+  <div class="creator-headline">Scaling Linear's GTM to $100M ARR with 50% of tickets written by agents</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Cristina Cordova (Linear's COO) reveals how agents are now doing half the work in support and triage, what the actual AI budget looks like for a $100M-in-months revenue company, and why they've sold largely without traditional SDRs or field engineers. This is a live example of how agentic workflows change go-to-market strategy.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>In an interview with Swyx, Cordova discusses Linear's bet on AI-native processes. More than 50% of support tickets are now being written (or triaged) by agents before humans see them. This isn't a customer-facing feature; it's internal infrastructure that scales their support model without proportional headcount growth.</p><p>Cordova also discusses Linear's AI budget and how they think about compute costs relative to revenue. The company has scaled to $100M ARR in a year partly because they've eliminated entire classes of roles (SDRs, field demand generation) in favor of product-led and agent-assisted flows. For PMs building enterprise tools, this is a blueprint for how agentic features change both customer experience and unit economics.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://latent.space/p/linear-scaling/" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker" id="thought-provokers">
+  <div class="creator-header"><h2>Nikhyl Singhal</h2><span class="date-badge">Oct 15</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>Singhal interviewed leaders who recently landed at Runway, Eli Lilly, and Google Search—and found that job-search advice from two years ago is now obsolete. The interview bar, the skills that matter, and the way companies evaluate PMs have shifted. If you're job hunting or hiring, this reframes what success looks like.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Singhal's core insight is that the PM hiring market moves faster than conventional wisdom updates. The types of problems these three companies care about now (agentic workflows, speed, shipping over planning) are different from what was valued 18–24 months ago. That gap between outdated advice and market reality is where misalignment happens in interviews.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://theskip.substack.com/p/job-search-advice-now-expires-every" target="_blank">Read →</a></div>
+</div>
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 20 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
