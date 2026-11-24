@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian's PM Skills Digest — Monday, November 23, 2026</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Karla', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fdf2f7;
+      color: #3b2340;
+      line-height: 1.7;
+    }
+
+    .header {
+      background: linear-gradient(180deg, #fffbfd, #fdf2f7);
+      border-bottom: 1px solid #f3d9e7;
+      padding: 2.6rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 600; }
+    .header .tagline { font-size: 0.95rem; font-style: italic; color: #8a6b7d; margin-top: 0.35rem; }
+    .header .updated {
+      display: inline-block; margin-top: 0.9rem;
+      font-size: 0.8rem; font-weight: 600;
+      background: #ffeef6; color: #c2437f;
+      padding: 0.35rem 1rem; border-radius: 999px;
+    }
+
+    .container { max-width: 760px; margin: 0 auto; padding: 1.75rem 1.5rem 3rem; }
+
+    /* ── Quiet week banner ── */
+    .quiet-banner {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      background: #fffaf0; border: 1px solid #f0e0bd; border-radius: 16px;
+      padding: 1rem 1.25rem; margin-bottom: 1.25rem;
+      font-size: 0.9rem; color: #7a5f14; line-height: 1.6;
+    }
+    .quiet-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── Digest meta line ── */
+    .digest-meta { font-size: 0.82rem; color: #a68a99; text-align: center; margin-bottom: 1rem; }
+
+    /* ── Jump nav ── */
+    .digest-nav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 1.5rem; }
+    .digest-nav a {
+      display: inline-block; padding: 7px 15px;
+      font-size: 0.79rem; font-weight: 600; color: #8a5f7a;
+      background: #fffbfd; border: 1px solid #f0d3e3;
+      border-radius: 999px; text-decoration: none;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .digest-nav a:hover { background: #e0559a; color: #fff; border-color: #e0559a; }
+    .digest-nav a.tp-nav { background: #f6f0ff; border-color: #ddd0f5; color: #7a5fbd; }
+    .digest-nav a.tp-nav:hover { background: #7a5fbd; color: #fff; border-color: #7a5fbd; }
+
+    /* ── Creator + thought-provoker cards ── */
+    .creator, .thought-provoker {
+      background: #fffdfb; border: 1px solid #f3d9e7;
+      border-radius: 18px; padding: 1.4rem 1.5rem; margin-bottom: 0.9rem;
+      box-shadow: 0 8px 22px rgba(224, 85, 154, 0.07);
+    }
+    .thought-provoker { background: #fffaf0; border-color: #f0e0bd; box-shadow: none; }
+
+    .creator-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 0.2rem;
+    }
+    .creator-header h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 600; line-height: 1.3; }
+    .thought-provoker .creator-header h2 { color: #4a3a1a; }
+    .date-badge {
+      flex-shrink: 0; font-size: 0.7rem; font-weight: 600;
+      color: #c2437f; background: #ffeef6;
+      padding: 4px 11px; border-radius: 999px; white-space: nowrap;
+    }
+    .thought-provoker .date-badge { color: #a07800; background: #fdf0d3; }
+    .badge-hot {
+      display: inline-block; background: #e0559a; color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 2px 8px;
+      border-radius: 999px; margin-left: 6px; vertical-align: middle;
+    }
+    .creator-headline { font-size: 0.86rem; color: #9a7a8b; font-style: italic; margin-bottom: 0.85rem; }
+    .thought-provoker .creator-headline { color: #9a875f; }
+
+    /* ── TL;DR block ── */
+    .tldr {
+      background: #f7f2ff; border-left: 4px solid #9a86d6;
+      border-radius: 0 12px 12px 0; padding: 0.75rem 0.95rem;
+      font-size: 0.86rem; color: #3b2340; line-height: 1.68;
+      margin-bottom: 0.7rem;
+    }
+    .tldr-label {
+      font-size: 0.66rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: #7a5fbd; display: block; margin-bottom: 5px;
+    }
+    .thought-provoker .tldr { background: #fffdf6; border-color: #d9b154; }
+    .thought-provoker .tldr-label { color: #a07800; }
+
+    /* ── Collapsible body ── */
+    details { margin-top: 4px; }
+    summary {
+      cursor: pointer; font-size: 0.79rem; font-weight: 700; color: #e0559a;
+      list-style: none; display: inline-flex; align-items: center; gap: 4px;
+      user-select: none; padding: 4px 0;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '↓ '; }
+    details[open] summary::before { content: '↑ '; }
+    details[open] summary { margin-bottom: 0.7rem; }
+    .thought-provoker summary { color: #a07800; }
+
+    .detail-body p { font-size: 0.875rem; color: #5c4a55; line-height: 1.75; margin-bottom: 0.7rem; }
+    .detail-body ul, .detail-body ol { font-size: 0.875rem; color: #5c4a55; padding-left: 1.2rem; margin-bottom: 0.7rem; }
+    .detail-body li { margin-bottom: 0.4rem; }
+    .detail-body blockquote {
+      border-left: 3px solid #f0d3e3; padding: 0.3rem 0.9rem;
+      color: #8a6b7d; font-style: italic; font-size: 0.86rem; margin: 0.5rem 0;
+    }
+
+    .creator-links { margin-top: 0.9rem; }
+    .creator-links a {
+      display: inline-block; background: #e0559a; color: #fff;
+      text-decoration: none; font-size: 0.79rem; font-weight: 700;
+      padding: 9px 18px; border-radius: 999px;
+    }
+    .creator-links a:hover { background: #c2437f; }
+    .thought-provoker .creator-links a { background: #a07800; }
+    .thought-provoker .creator-links a:hover { background: #856300; }
+    .creator-links span { color: #e8cbdb; margin: 0 6px; }
+
+    /* ── Top pick ── */
+    .top-pick {
+      background: linear-gradient(135deg, #ffc2dd, #d9c8f5 55%, #bcd8f8);
+      border: none; border-radius: 20px;
+      padding: 1.5rem 1.6rem; margin-bottom: 1.25rem;
+      color: #3b2340;
+    }
+    .top-pick-label {
+      font-family: 'Playfair Display', serif; font-size: 0.88rem; font-style: italic;
+      letter-spacing: 0.04em; margin-bottom: 0.6rem;
+    }
+    .top-pick-content { font-size: 0.98rem; line-height: 1.68; }
+
+    /* ── No updates fallback ── */
+    .no-updates { text-align: center; padding: 3rem 1rem; font-size: 0.9rem; color: #bfa3b3; }
+
+    .footer {
+      text-align: center; padding: 1.6rem;
+      font-size: 0.8rem; color: #bfa3b3; border-top: 1px solid #f3d9e7;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 1.6rem 1rem 1.3rem; }
+      .header h1 { font-size: 1.35rem; }
+      .container { padding: 1rem 0.9rem 2.5rem; }
+      .creator, .thought-provoker, .top-pick { padding: 1.05rem 1.05rem; border-radius: 16px; }
+      .creator-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+      .creator-header h2 { font-size: 1.2rem; }
+      .digest-nav { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding-bottom: 4px; }
+      .digest-nav a { flex-shrink: 0; padding: 10px 15px; }
+      .creator-links a { display: block; text-align: center; padding: 13px 18px; }
+      summary { padding: 9px 0; font-size: 0.85rem; }
+      .quiet-banner { font-size: 0.87rem; padding: 0.9rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Vivian's PM Skills Digest</h1>
+    <div class="tagline">What the best PM &amp; AI thinkers are saying</div>
+    <div class="updated">Updated Monday, November 23, 2026</div>
+  </div>
+
+  <div class="container">
+    <div class="top-pick">
+  <div class="top-pick-label">🔥 Top pick this issue</div>
+  <div class="top-pick-content">Sherif Mansour (Atlassian's Head of AI and Product Craft) makes a critical case for why PM roles are expanding fastest in the AI era—and why the "shared brain" is now your #1 job. This reframes what product leadership means when coding and execution are being automated away.</div>
+</div>
+
+<div class="digest-meta">20 thought leaders tracked &nbsp;·&nbsp; 5 had updates this issue</div>
+
+<nav class="digest-nav">
+  <a href="#lenny">Lenny Rachitsky</a>
+  <a href="#teresa">Teresa Torres</a>
+  <a href="#rich">Rich Mironov</a>
+  <a href="#peter">Peter Yang</a>
+  <a href="#swyx">Swyx</a>
+  <a href="#thought-provokers" class="tp-nav">📚 Thought Provokers</a>
+</nav>
+
+<div class="creator" id="lenny">
+  <div class="creator-header"><h2>Sherif Mansour</h2><span class="date-badge">Nov 22</span></div>
+  <div class="creator-headline">What it takes to be a great product manager in the AI era.</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Your primary job is building a "shared brain" across the org—alignment and context-setting matter more than individual decisions. PMs who blend artist intuition, scientific rigor, and GM orchestration are thriving; and hiring more junior PMs now gives you the edge, since they learn AI-native workflows from day one.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Mansour identifies three PM archetypes: the artist (intuition-driven vision), the scientist (data and experimentation), and the GM (orchestrator of teams and decisions). The best PMs blend all three. In the AI era, the balance has shifted—when execution is fast and cheap, your leverage moves upstream to making sure everyone shares the same mental model of the problem and strategy.</p><p>He also notes that Atlassian is hiring more junior PMs than senior ones, because experienced PMs often carry habits from pre-AI product cycles. Juniors learn prompt-driven discovery, agent-based roadmapping, and rapid iteration as their native mode. The common mistake new PM managers make: trying to force AI tools into old workflows instead of rethinking the craft itself.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.lennysnewsletter.com/p/state-of-the-tech-job-market-late" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="teresa">
+  <div class="creator-header"><h2>Teresa Torres</h2><span class="date-badge">Nov 17–18</span></div>
+  <div class="creator-headline">Two new resources on sharing product work and automating annual reviews with Claude Code.</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Torres surfaces a real trend: product professionals have stopped publicly sharing their actual work, and the field loses learning when that happens. She's also released a Claude Code plugin to streamline personal annual reviews—a small but telling example of how PMs can offload reflection and synthesis to agentic tools.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>In her podcast with Petra Wille, Torres explores why PMs and designers have retreated from open sharing of real case studies and decision-making processes. The hypothesis: social media and LinkedIn incentivize polished narratives over messy, honest product work. The cost is slower collective learning across the industry.</p><p>Separately, she released a Claude Code plugin designed to help PMs run structured personal annual reviews—asking reflective questions, pulling in data, and surfacing patterns. It's a lightweight example of how modern agentic tools can handle the busywork of reflection, freeing PMs to focus on synthesis and narrative.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.producttalk.org/the-sharing-gap-all-things-product-podcast-with-teresa-torres-petra-wille/" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="rich">
+  <div class="creator-header"><h2>Rich Mironov</h2><span class="date-badge">Nov 21</span></div>
+  <div class="creator-headline">Speaking event: Money Stories—communicating the value of product work.</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Mironov continues his focus on how PMs articulate the business impact of their work. This talk emphasizes narrative and financial framing as a core PM skill—especially timely as AI changes how we measure and explain product value.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Mironov is speaking at ProductTank Porto on December 3 on "Money Stories: Communicating the Value of Product Work." The theme reflects his ongoing thesis that PMs often underinvest in storytelling around business outcomes. As budgets tighten and AI automation raises questions about ROI, the ability to frame product initiatives in financial and strategic terms becomes sharper.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://www.mironov.com/porto1226/" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="peter">
+  <div class="creator-header"><h2>Peter Yang</h2><span class="date-badge">Nov 22</span></div>
+  <div class="creator-headline">What engineers should do when AI writes all the code—Charles Lamanna on Copilot's future.</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>Microsoft's EVP for Copilot argues that when coding becomes free and instant, engineering value shifts to architectural judgment, problem scoping, and human taste. PMs need to think about how to scope work and partner with engineers differently when their leverage point is no longer implementation effort.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Lamanna frames the near-term reality: AI can generate most routine code, so engineering skill will centralize around hard problems, design decisions, and taste. This has direct PM implications. PMs can no longer trade effort or velocity as a primary currency; instead, they're asking engineers to invest in the right problems and architectural choices. The bottleneck moves from "can we build this" to "should we build this, and how do we build it right."</p><p>Yang's roundtable with Satya Nadella and others surfaces a broader theme: as AI commoditizes execution, human judgment and problem selection become scarce. PMs who shift their leadership model from planning to taste-making and problem-framing will adapt faster.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://creatoreconomy.so/p/what-should-engineers-do-when-ai-writes-all-the-code-charles-lamanna" target="_blank">Read →</a></div>
+</div>
+
+<div class="creator" id="swyx">
+  <div class="creator-header"><h2>Swyx</h2><span class="date-badge">Nov 17–20</span></div>
+  <div class="creator-headline">Formal verification as a tool against AI slop, and Cloudflare's move into System One models.</div>
+  <div class="tldr"><span class="tldr-label">TL;DR — PM Takeaway</span>As AI output quality becomes a liability, formal verification (proving software correctness mathematically) is emerging as a defensible quality moat. Meanwhile, Cloudflare is building System One models for real-time decisions, signaling that infrastructure PMs need to think about sub-100ms reasoning loops and correctness guarantees.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Richard MacManus reports that formal verification—traditionally expensive specialist work—is now being partially automated by AI and Lean proof assistants. For PMs building AI-powered systems, this means a path to encode guardrails and correctness proofs that make output more defensible and predictable. It's a technical shift with product implications: you can sell higher-confidence AI features to risk-averse customers.</p><p>Cloudflare's pivot to System One models (designed for ultra-fast, high-stakes decisions) reflects a different PM angle: how to integrate AI reasoning into user-facing workflows at millisecond latency. PMs at infrastructure or high-velocity product companies should track this trend—it's about embedding AI agents into customer workflows, not adding AI as a feature layer.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://latent.space/p/formal-verification/" target="_blank">Read →</a></div>
+</div>
+
+<div class="thought-provoker" id="thought-provokers">
+  <div class="creator-header"><h2>Wes Kao</h2><span class="date-badge">Jun 10</span></div>
+  <div class="creator-headline">Worth your time regardless of when it was published.</div>
+  <div class="tldr"><span class="tldr-label">Why it's worth your time</span>Kao tackles the fear that stops high performers from sharing a point of view—a skill that's now mission-critical as PMs move into orchestration and taste-making roles. Learning to voice your perspective with confidence (and without over-hedging) is a forcing function for leadership.</div>
+  <details><summary>Read more</summary>
+  <div class="detail-body"><p>Kao identifies a common trap: talented PMs collect data and insights but hesitate to synthesize them into a clear, authored point of view. Fear of being wrong or seeming presumptuous leads to over-qualification and hedging. The paradox is that silence costs more than a well-reasoned, humble opinion stated clearly.</p><p>In an AI-native environment where execution is fast and feedback loops are tight, this becomes even more important. Your job is increasingly to propose direction and rally the organization around it, not to execute flawlessly. The confidence to say "I think we should do X" and defend it with evidence is a core PM superpower.</p></div>
+  </details>
+  <div class="creator-links"><a href="https://newsletter.weskao.com/p/fundamentals-how-to-share-your-point" target="_blank">Read →</a></div>
+</div>
+  </div>
+
+  <div class="footer">
+    Updates every Monday &amp; Thursday &nbsp;·&nbsp; Tracking 20 PM &amp; AI thought leaders
+  </div>
+
+</body>
+</html>
